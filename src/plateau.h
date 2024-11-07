@@ -1,4 +1,4 @@
-#ifendef _PLATEAU_H_
+#ifndef _PLATEAU_H_
 #define _PLATEAU_H_
 
 /*std lib*/
@@ -19,8 +19,8 @@ typedef struct{
   
 }plateau;
 
-int gameIsOver(plateau p);
+int gameIsOver(plateau* p);
 
-int lineIsFull(plateau p, int n);
+int lineIsFull(plateau* p, int n);
 
 #endif /*_PLATEAU_H_*/

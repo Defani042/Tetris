@@ -1,6 +1,12 @@
+#ifndef _MAINWINDOW_C_
+#define _MAINWINDOW_C_
+
+/*std lib*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <MLV/MLV_all.h>
+
+#include "MainWindow.h"
 
 /* 
 R: Permet de creer le bouton start
@@ -90,7 +96,5 @@ void SetMainWindow(){
     MLV_free_window();
 }
 
-int main(){
-    SetMainWindow();
-    exit(EXIT_SUCCESS);
-}
+
+#endif /*_PLATEAU_C_*/

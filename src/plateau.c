@@ -1,4 +1,4 @@
-#ifendef _PLATEAU_C_
+#ifndef _PLATEAU_C_
 #define _PLATEAU_C_
 
 /*std lib*/
@@ -18,10 +18,10 @@ E: 1 structure plateau
 S: 1 entier (1 si la partie est terminé) (0 si la partie est en cours)
 */
 
-int gameIsOver(plateau p){
+int gameIsOver(plateau* p){
   int i;
   for(i=0;i<LARGEUR_P;i++){
-    if(p[LONGUEUR][i] == 1){
+    if(p->plateau[LONGUEUR_P -1][i] == 1){
       return 1;
     }
   }
@@ -36,7 +36,7 @@ S: 1 entier (1 si la ligne est complète)(sinon 0)
 */
 
 
-int lineIsFull(plateau p, int n){
+int lineIsFull(plateau* p, int n){
   
 
 }
