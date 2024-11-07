@@ -8,8 +8,13 @@ E: Vide
 S: Vide
 */
 void setButonStart(){
-    MLV_draw_filled_rectangle(300,400,400,100,MLV_COLOR_GREEN);
-    MLV_draw_text(300,400,"Start new game",MLV_COLOR_WHITE);
+    MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 30 );
+    MLV_draw_filled_rectangle(300,400,400,100,MLV_COLOR_BLUE);
+    MLV_draw_text_with_font(
+        350, 450,
+        "START NEW GAME", 
+        font, MLV_COLOR_WHITE
+    );
 }
 
 /* 
@@ -18,7 +23,7 @@ E: Vide
 S: Vide
 */
 void setButonLoad(){
-     MLV_draw_filled_rectangle(350,550,300,75,MLV_COLOR_GREEN);
+     MLV_draw_filled_rectangle(350,550,300,75,MLV_COLOR_BLUE);
 }
 
 /* 
@@ -27,7 +32,7 @@ E: Vide
 S: Vide
 */
 void setButonOption(){
-    MLV_draw_filled_rectangle(350,675,300,75,MLV_COLOR_GREEN);
+    MLV_draw_filled_rectangle(350,675,300,75,MLV_COLOR_BLUE);
 }
 
 /* 
