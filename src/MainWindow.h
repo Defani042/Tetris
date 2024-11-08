@@ -11,6 +11,10 @@
 
 /* Fonctions */
 
+void setScoreboard(char *filename);
+
+void setLogo();
+
 void setButonStart();
 
 void setButonLoad();
