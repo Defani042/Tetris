@@ -23,4 +23,8 @@ int gameIsOver(plateau* p);
 
 int lineIsFull(plateau* p, int n);
 
+void setPlateau(plateau *p);
+
+void printPlateau(plateau *p);
+
 #endif /*_PLATEAU_H_*/
