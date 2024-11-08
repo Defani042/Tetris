@@ -10,12 +10,10 @@
 int main(){
 /*Put the main code here*/
 /*variable*/
-  int n;
   plateau p; /* variable plateau*/
   plateau* pp = &p; /* pointeur vers la variable plateau*/ 
   
 /*Test plateau*/
-  n = 2;
   printf("RAZ tableau \n");
   setPlateau(pp);
   printf("Affichage : \n");
