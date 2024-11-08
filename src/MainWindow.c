@@ -6,7 +6,81 @@
 #include <stdio.h>
 #include <MLV/MLV_all.h>
 
+/*local lib*/
 #include "MainWindow.h"
+
+/*Macro*/
+#define LINE_MAX 32
+
+
+/* 
+R: Permet de creer le logo
+E: Vide
+S: Vide
+*/
+
+void setLogo(){
+    MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 100 );
+    MLV_draw_text_with_font(
+        200, 100,
+        "TETRIS", 
+        font, MLV_COLOR_WHITE
+    );
+    font = MLV_load_font( "04B_30__.TTF" , 15 );
+        MLV_draw_text_with_font(
+        473, 935,
+        "Created by Adrien Defay and Gaultier Peyrard", 
+        font, MLV_COLOR_BLUE
+    );
+        font = MLV_load_font( "04B_30__.TTF" , 35 );
+        MLV_draw_text_with_font(
+            675, 175,
+            "LIKE", 
+            font, MLV_COLOR_BLUE
+            );
+}
+
+/* 
+R: Permet de creer le tableau de score
+E: Nom du fichier
+S: Vide
+*/
+
+void setScoreboard(char *filename){
+    int i=0, linelen=0;
+    char line[LINE_MAX];
+    MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 17 );
+    FILE* fich;
+    MLV_draw_filled_rectangle(300,400,400,100,MLV_COLOR_WHITE);
+    MLV_draw_text_with_font(
+       825, 350,
+        "SCOREBOARD", 
+        font, MLV_COLOR_BLUE
+    );
+    font = MLV_load_font( "04B_30__.TTF" , 15 );
+    fich = fopen(filename,"r");
+    if (fich == NULL) {
+        MLV_draw_filled_rectangle(300,400,400,100,MLV_COLOR_WHITE);
+        MLV_draw_text_with_font(
+            875, 350,
+            "No data", 
+            font, MLV_COLOR_WHITE
+        );
+    }
+    else{
+        while (i<3 && fgets(line,LINE_MAX,fich) != NULL){
+            linelen = strlen(line)-1;
+            if(line[linelen] == '\n') line[strlen(line)-1] = '\0';
+            MLV_draw_filled_rectangle(300,400,400,100,MLV_COLOR_WHITE);
+            MLV_draw_text_with_font(
+                880, 350+(i+1)*25,
+                line, 
+                font, MLV_COLOR_WHITE
+                );
+            i++;
+        }
+    }
+}
 
 /* 
 R: Permet de creer le bouton start
@@ -17,7 +91,7 @@ void setButonStart(){
     MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 30 );
     MLV_draw_filled_rectangle(300,400,400,100,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
-        350, 450,
+        307, 435,
         "START NEW GAME", 
         font, MLV_COLOR_WHITE
     );
@@ -29,7 +103,13 @@ E: Vide
 S: Vide
 */
 void setButonLoad(){
+     MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 25 );
      MLV_draw_filled_rectangle(350,550,300,75,MLV_COLOR_BLUE);
+     MLV_draw_text_with_font(
+        372, 575,
+        "LOAD A GAME", 
+        font, MLV_COLOR_WHITE
+    );
 }
 
 /* 
@@ -38,7 +118,13 @@ E: Vide
 S: Vide
 */
 void setButonOption(){
+    MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 25 );
     MLV_draw_filled_rectangle(350,675,300,75,MLV_COLOR_BLUE);
+    MLV_draw_text_with_font(
+        430, 700,
+        "OPTION", 
+        font, MLV_COLOR_WHITE
+    );
 }
 
 /* 
@@ -47,9 +133,15 @@ E: Vide
 S: Vide
 */
 void setButonExit(){
+    MLV_Font* font = MLV_load_font( "04B_30__.TTF" , 80 );
     MLV_draw_filled_rectangle(900,0,100,100,MLV_COLOR_RED);
+    MLV_draw_text_with_font(
+        920, 8,
+        "x", 
+        font, MLV_COLOR_WHITE
+    );
 }
-
+/*3 fonctions test*/ 
 void startGame(){
     printf("Start a new game\n");
 }
@@ -68,9 +160,13 @@ S: vide
 */
 
 void SetMainWindow(){
-    int x,y,i;
+    int x,y,i/*,height,width*/;
+    /*height = MLV_get_desktop_height();
+      width = MLV_get_desktop_width();*/
     i=1;
-    MLV_create_window("rectangle","rectangle2",1000,1000);
+    MLV_create_window("rectangle","rectangle2",1000,950);
+    setLogo();
+    setScoreboard("scoreboard.txt");
     setButonStart();
     setButonLoad();
     setButonOption();
