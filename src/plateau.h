@@ -27,4 +27,10 @@ void setPlateau(plateau *p);
 
 void printPlateau(plateau *p);
 
+void clearLine(plateau *p, int n);
+
+int checkPlateauState(plateau* p);
+
+void filledline(plateau *p, int n);
+
 #endif /*_PLATEAU_H_*/

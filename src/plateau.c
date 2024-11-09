@@ -48,6 +48,8 @@ int lineIsFull(plateau* p, int n){
     }
     
   }
+  /*on vérifie que le nombre de case est égale à la largeur du plateau*/
+  /*si oui = 1 sinon = 0 */
   if( casefull == LARGEUR_P){
     return 1;
   }
@@ -87,7 +89,57 @@ void printPlateau(plateau *p){
     }
     printf("\n");
   }
-} 
+}
 
+/*
+R: netoyage d' une ligne n (toutes les case de ligne[n] passe à 0 )
+E: 1 Plateau et 1 entier (numéro de la ligne)
+S: vide
+*/
+
+void clearLine(plateau *p, int n){
+  int i;
+  /*on parcourps la ligne n*/
+  for(i=0;i<LARGEUR_P;i++){
+    p->plateau[n-1][i] = 0;
+  }
+
+}
+
+/*
+R: parcourps toute les ligne du tableau pour vérifier si elle sont remplie
+E: 1 Plateau
+S: 1 entier (nb ligne qui ont été clear)
+*/
+
+
+int checkPlateauState(plateau* p){
+  int i,nb_line= 0;
+  /*on parcourps toute les lignes du plateau*/
+  for(i=0;i < LONGUEUR_P ;i++){
+    /*si une ligne est remplie*/
+    if(lineIsFull(p,i)){
+      clearLine(p,i); /*on la remet à zero*/
+      nb_line++; /*incrémentation de la variable nb_line*/ 
+    }
+    
+  }
+  return nb_line;
+}
+
+/*
+R: fonction Test pour remplir une ligne du plateau à 1
+E: 1 Plateau et 1 entier le numéro de la ligne 
+S: vide 
+*/
+
+void filledline(plateau *p, int n){
+  int i;
+  /*on parcourps la ligne n*/
+  for(i=0;i<LARGEUR_P;i++){
+    p->plateau[n-1][i] = 1;
+  }
+
+}
 
 #endif /*_PLATEAU_C_*/
