@@ -9,8 +9,6 @@
 #define LARGEUR_P 10
 #define LONGUEUR_P 22
 
-/*local lib*/
-#include "plateau.h"
 
 /*Structure Plateau*/
 typedef struct{
