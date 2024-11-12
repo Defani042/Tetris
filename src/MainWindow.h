@@ -11,15 +11,17 @@
 
 /* Fonctions */
 
-void setScoreboard(char *filename);
+void setScoreboard(char *filename,int w,int h);
 
-void setLogo();
+void setLogo(int h, int w);
 
-void setButonStart();
+void setButonStart(int w,int h);
 
-void setButonLoad();
+void setButonLoad(int w,int h);
 
-void setButonOption();
+void setButonOption(int w,int h);
+
+void setButonExit(int w,int h);
 
 void startGame();
 
