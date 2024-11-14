@@ -15,7 +15,7 @@
 
 /* 
 R: Permet de creer le logo
-E: indice longueur et indice largeur
+E: longueur ecran,hauteur ecran
 S: Vide
 */
 
@@ -53,12 +53,12 @@ void setLogo(int h, int w){
 
 /* 
 R: Permet de creer le tableau de score
-E: Nom du fichier
+E: Nom du fichier,longueur ecran,hauteur ecran
 S: Vide
 */
 
 void setScoreboard(char *filename,int w,int h){
-    int i=0, linelen=0;
+    int i=0,j=0;
     int w1,h1,p;
     MLV_Font* font;
     char line[LINE_MAX];
@@ -78,7 +78,6 @@ void setScoreboard(char *filename,int w,int h){
     fich = fopen(filename,"a+");
     while (i<10){
         h1=((350+((i+1)*35))*h)/1000;
-        linelen = strlen(line)-1;
         if (fgets(line,LINE_MAX,fich) == NULL){
             MLV_draw_text_with_font(
 			    w1, h1,
@@ -87,12 +86,18 @@ void setScoreboard(char *filename,int w,int h){
 			    ); 
         }
         else{
-            if(line[linelen] == '\n') line[strlen(line)-1] = '\0';
-                MLV_draw_text_with_font(
+            printf("%s", line);
+            j = 0;
+            do {
+                if(line[j] == '\n') line[j] = '\0';
+                j++;
+            } while(line[j]!='\0');
+
+            MLV_draw_text_with_font(
 			    w1, h1,
 			    line, 
 			    font, MLV_COLOR_WHITE
-			    ); 
+			); 
         }
       i++;
     }
@@ -100,7 +105,7 @@ void setScoreboard(char *filename,int w,int h){
 
 /* 
 R: Permet de creer le bouton start
-E: Vide
+E: longueur ecran,hauteur ecran
 S: Vide
 */
 void setButonStart(int w,int h){
@@ -124,7 +129,7 @@ void setButonStart(int w,int h){
 
 /* 
 R: Permet de creer le bouton load
-E: Vide
+E: longueur ecran,hauteur ecran
 S: Vide
 */
 void setButonLoad(int w,int h){
@@ -148,7 +153,7 @@ void setButonLoad(int w,int h){
 
 /* 
 R: Permet de creer le bouton load
-E: Vide
+E: longueur ecran,hauteur ecran
 S: Vide
 */
 void setButonOption(int w,int h){
@@ -172,7 +177,7 @@ void setButonOption(int w,int h){
 
 /* 
 R: Permet de creer le bouton load
-E: Vide
+E: longueur ecran,hauteur ecran
 S: Vide
 */
 void setButonExit(int w,int h){
@@ -246,4 +251,4 @@ void SetMainWindow(){
 
 
 
-#endif /*_PLATEAU_C_*/
+#endif /*_MAINWINDOW_C_*/
