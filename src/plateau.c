@@ -15,7 +15,7 @@
 
 /*
 R: déterminer si la partie est finie renvoi 1 si partie fini sinon 0
-E: 1 structure plateau
+E: 1  pointeur structure plateau
 S: 1 entier (1 si la partie est terminé) (0 si la partie est en cours)
 */
 
@@ -34,7 +34,7 @@ int gameIsOver(plateau* p){
 
 /*
 R: vérifie si une ligne est complète (que des 1)
-E: 1 plateau et 1 entier (le numéro de la ligne)
+E: 1 pointeur plateau et 1 entier (le numéro de la ligne)
 S: 1 entier (1 si la ligne est complète)(sinon 0)
 */
 
@@ -77,9 +77,10 @@ void setPlateau(plateau *p){
 
 /*
 R: afficher le plateau dans le terminal
-E: 1 Plateau
+E: 1  pointeur Plateau
 S: vide 
 */
+
 void printPlateau(plateau *p){
   int i,j;
   /*on parcourps le tableau et on afiche la case indince i,j*/
@@ -94,7 +95,7 @@ void printPlateau(plateau *p){
 
 /*
 R: netoyage d' une ligne n (toutes les case de ligne[n] passe à 0 )
-E: 1 Plateau et 1 entier (numéro de la ligne)
+E: 1  pointeur Plateau et 1 entier (numéro de la ligne)
 S: vide
 */
 
@@ -109,7 +110,7 @@ void clearLine(plateau *p, int n){
 
 /*
 R: parcourps toute les ligne du tableau pour vérifier si elle sont remplie
-E: 1 Plateau
+E: 1  pointeur Plateau
 S: 1 entier (nb ligne qui ont été clear)
 */
 
@@ -131,7 +132,7 @@ int checkPlateauState(plateau* p){
 
 /*
 R: fonction Test pour remplir une ligne du plateau à 1
-E: 1 Plateau et 1 entier le numéro de la ligne 
+E: 1 pointeur Plateau et 1 entier le numéro de la ligne 
 S: vide 
 */
 
@@ -146,7 +147,7 @@ void filledline(plateau *p, int n){
 
 /*
 R: fonction qui permet de décaller une ligne du plateau
-E: 1 Plateau 
+E: 1 pointeur Plateau 
 S: vide
 */
 
@@ -166,7 +167,7 @@ void gapline(plateau *p) {
 }
 /*
 R: Fonction permettant d'insérer une valeur dans une case d'indice n,m
-E: 1 plateau et 3 entiers (n et m indice de la case dans le plateau) (valeur de la case) 
+E: 1 pointeur plateau et 3 entiers (n et m indice de la case dans le plateau) (valeur de la case) 
 S: vide
 */  
 
@@ -184,7 +185,7 @@ void setcase(plateau *p, int n , int m, int value){
 
 /*
 R: vérifie si une ligne est vide (que des 0)
-E: 1 plateau et 1 entier (le numéro de la ligne)
+E: 1 pointeur plateau et 1 entier (le numéro de la ligne)
 S: 1 entier (1 si la ligne est complète)(sinon 0)
 */
 
