@@ -31,19 +31,19 @@ void setLogo(int h, int w){
     p1=(100*w)/1000;
     p2=(15*w)/1000;
     p3=(35*w)/1000;
-    font= MLV_load_font( "04B_30__.TTF" , p1 );
+    font= MLV_load_font( "../fich/04B_30__.TTF" , p1 );
     MLV_draw_text_with_font(
         w1,h1,
         "TETRIS", 
         font, MLV_COLOR_WHITE
     );
-    font = MLV_load_font( "04B_30__.TTF" , p2 );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p2 );
         MLV_draw_text_with_font(
         w2, h2,
         "Created by Adrien Defay and Gaultier Peyrard", 
         font, MLV_COLOR_BLUE
     );
-        font = MLV_load_font( "04B_30__.TTF" , p3 );
+        font = MLV_load_font( "../fich/04B_30__.TTF" , p3 );
         MLV_draw_text_with_font(
             w3, h3,
             "LIKE", 
@@ -66,7 +66,7 @@ void setScoreboard(char *filename,int w,int h){
     w1=(825*w)/1000;
     h1=(350*h)/1000;
     p=(17*w)/1000;
-    font = MLV_load_font( "04B_30__.TTF" , p );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     MLV_draw_text_with_font(
        w1, h1,
         "SCOREBOARD", 
@@ -74,7 +74,7 @@ void setScoreboard(char *filename,int w,int h){
     );
     w1=(880*w)/1000;
     p=(15*w)/1000;
-    font = MLV_load_font( "04B_30__.TTF" , p );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     fich = fopen(filename,"a+");
     while (i<10){
         h1=((350+((i+1)*35))*h)/1000;
@@ -118,7 +118,7 @@ void setButonStart(int w,int h){
     h2=(435*h)/1000;
     h3=(100*h)/1000;
     p=(30*w)/1000;
-    font = MLV_load_font( "04B_30__.TTF" , p );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     MLV_draw_filled_rectangle(w1,h1,w3,h3,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w2, h2,
@@ -142,7 +142,7 @@ void setButonLoad(int w,int h){
     h2=(75*h)/1000;
     h3=(575*h)/1000;
     p=(25*w)/1000;
-    font = MLV_load_font( "04B_30__.TTF" , p );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
      MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
      MLV_draw_text_with_font(
         w3, h3,
@@ -166,7 +166,7 @@ void setButonOption(int w,int h){
     h2=(75*h)/1000;
     h3=(700*h)/1000;
     p=(25*w)/1000;
-    font = MLV_load_font( "04B_30__.TTF" , p );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w3,h3,
@@ -189,7 +189,7 @@ void setButonExit(int w,int h){
     h1=(0*h)/1000;
     h3=(8*h)/1000;
     p=(80*w)/1000;
-    font = MLV_load_font( "04B_30__.TTF" , p );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     MLV_draw_filled_rectangle(w1,h1,w2,w2,MLV_COLOR_RED);
     MLV_draw_text_with_font(
         w3, h3,
@@ -209,26 +209,39 @@ void loadGame(){
 void option(){
     printf("Option\n");
 }
+
+
 /*
-R: permet d'afficher le menu principale
-E: vide
-S: vide
+R: Permet de creer le fentre
+E: rien
+S:rien
 */
 
-void SetMainWindow(){
-    int x,y,i,height,width;
+void createWindow(){
+    int width,height;
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
-    i=1;
-    printf("%d,%d",width,height);
     MLV_create_window("Tetris","Tetris-like",width,height);
     setLogo(height,width);
-    setScoreboard("scoreboard.txt",width,height);
+    setScoreboard("../fich/scoreboard.txt",width,height);
     setButonStart(width,height);
     setButonLoad(width,height);
     setButonOption(width,height);
     setButonExit(width,height);
     MLV_actualise_window();
+}
+
+/*
+R: permet d'afficher le menu principale
+E: vide
+S: vide
+*/
+void SetMainWindow(){
+    int x,y,i,width,height;
+    height = MLV_get_desktop_height();
+    width = MLV_get_desktop_width();
+    i=1;
+    createWindow();
 
     while(i){
         MLV_wait_mouse(&x,&y);

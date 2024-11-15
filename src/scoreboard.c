@@ -77,7 +77,7 @@ void printfichier(char* filename,int tab[NB_MAX]){
 
 /*
 Fonction test
-
+*/
 
 void testaffichage(int tab[NB_MAX]){
     int i=0;
@@ -96,17 +96,17 @@ S: rien
 
 void setScoreboard(int new_score){
     int tab[NB_MAX];
-    readFich("scoreboard.txt",tab,new_score);
+    readFich("../fich/scoreboard.txt",tab,new_score);
     testaffichage(tab);
     tri(tab);
     testaffichage(tab);
-    printfichier("scoreboard.txt",tab);
+    printfichier("../fich/scoreboard.txt",tab);
 }
 
-/*Main de test
+/*Main de test*/
 int main(){
     setScoreboard(12);
     exit(EXIT_SUCCESS);
 }
-*/
+
 #endif /*_SCOREBOARD_C_*/

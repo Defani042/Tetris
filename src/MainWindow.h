@@ -29,6 +29,8 @@ void loadGame();
 
 void option();
 
+void createWindow();
+
 void SetMainWindow();
 
 #endif /*_PLATEAU_H_*/
