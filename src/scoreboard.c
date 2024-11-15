@@ -103,10 +103,10 @@ void setScoreboard(int new_score){
     printfichier("../fich/scoreboard.txt",tab);
 }
 
-/*Main de test*/
+/*Main de test
 int main(){
     setScoreboard(12);
     exit(EXIT_SUCCESS);
-}
+}*/
 
 #endif /*_SCOREBOARD_C_*/

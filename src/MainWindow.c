@@ -5,9 +5,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <MLV/MLV_all.h>
+#include <unistd.h>
 
 /*local lib*/
 #include "MainWindow.h"
+#include "save.h"
 
 /*Macro*/
 #define LINE_MAX 32
@@ -23,10 +25,10 @@ void setLogo(int h, int w){
     int h1,h2,h3,w1,w2,w3,p1,p2,p3;
     MLV_Font* font;
     h1=(100*h)/1000;
-    h2=(880*h)/1000;
+    h2=(0*h)/1000;
     h3=(230*h)/1000;
     w1=(200*w)/1000;
-    w2=(473*w)/1000;
+    w2=(0*w)/1000;
     w3=(675*w)/1000;
     p1=(100*w)/1000;
     p2=(15*w)/1000;
@@ -57,7 +59,7 @@ E: Nom du fichier,longueur ecran,hauteur ecran
 S: Vide
 */
 
-void setScoreboard(char *filename,int w,int h){
+void printScore(char *filename,int w,int h){
     int i=0,j=0;
     int w1,h1,p;
     MLV_Font* font;
@@ -115,7 +117,7 @@ void setButonStart(int w,int h){
     w2=(307*w)/1000;
     w3=(400*w)/1000;
     h1=(400*h)/1000;
-    h2=(435*h)/1000;
+    h2=(427*h)/1000;
     h3=(100*h)/1000;
     p=(30*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
@@ -140,7 +142,7 @@ void setButonLoad(int w,int h){
     w3=(372*w)/1000;
     h1=(550*h)/1000;
     h2=(75*h)/1000;
-    h3=(575*h)/1000;
+    h3=(567*h)/1000;
     p=(25*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
      MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
@@ -164,7 +166,7 @@ void setButonOption(int w,int h){
     w3=(430*w)/1000;
     h1=(675*h)/1000;
     h2=(75*h)/1000;
-    h3=(700*h)/1000;
+    h3=(692*h)/1000;
     p=(25*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
@@ -176,27 +178,29 @@ void setButonOption(int w,int h){
 }
 
 /* 
-R: Permet de creer le bouton load
+R: Permet de creer le bouton exit
 E: longueur ecran,hauteur ecran
 S: Vide
 */
 void setButonExit(int w,int h){
-    int w1,w2,w3,h1,h3,p;
+    int w1,w2,w3,h1,h2,h3,p;
     MLV_Font* font;
-    w1=(900*w)/1000;
-    w2=(100*w)/1000;
-    w3=(920*w)/1000;
-    h1=(0*h)/1000;
-    h3=(8*h)/1000;
-    p=(80*w)/1000;
+    w1=(350*w)/1000;
+    w2=(300*w)/1000;
+    w3=(455*w)/1000;
+    h1=(800*h)/1000;
+    h2=(75*h)/1000;
+    h3=(820*h)/1000;
+    p=(25*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
-    MLV_draw_filled_rectangle(w1,h1,w2,w2,MLV_COLOR_RED);
+    MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_RED);
     MLV_draw_text_with_font(
         w3, h3,
-        "x", 
+        "EXIT", 
         font, MLV_COLOR_WHITE
     );
 }
+
 /*3 fonctions test*/ 
 void startGame(){
     printf("Start a new game\n");
@@ -221,9 +225,8 @@ void createWindow(){
     int width,height;
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
-    MLV_create_window("Tetris","Tetris-like",width,height);
     setLogo(height,width);
-    setScoreboard("../fich/scoreboard.txt",width,height);
+    printScore("../fich/scoreboard.txt",width,height);
     setButonStart(width,height);
     setButonLoad(width,height);
     setButonOption(width,height);
@@ -241,6 +244,7 @@ void SetMainWindow(){
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
     i=1;
+    MLV_create_window("Tetris","Tetris-like",width,height);
     createWindow();
 
     while(i){
@@ -250,11 +254,14 @@ void SetMainWindow(){
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
             loadGame();
+            setSaveMenu();
+            MLV_clear_window( MLV_COLOR_BLACK );
+            createWindow();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(675*height/1000) && y<(750*height/1000)){
             option();
         }
-        if (x>(900*width/1000) && x<(1000*width/1000) && y>(0*height/1000) && y<(100*width/1000)){
+        if (x>(350*width/1000) && x<(650*width/1000) && y>(800*height/1000) && y<(875*height/1000)){
             i=0;
         }
         MLV_actualise_window();

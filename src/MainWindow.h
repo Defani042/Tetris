@@ -11,7 +11,7 @@
 
 /* Fonctions */
 
-void setScoreboard(char *filename,int w,int h);
+void printScore(char *filename,int w,int h);
 
 void setLogo(int h, int w);
 
