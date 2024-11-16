@@ -13,7 +13,7 @@ void setSaveButton(int width, int height);
 
 void setButonBack(int w,int h);
 
-void saveScore(int w,int h);
+void saveScore(int w,int h,char* fichier,int num_save);
 
 void setSaveMenu();
 
