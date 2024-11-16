@@ -74,7 +74,7 @@ void printScore(char *filename,int w,int h){
         "SCOREBOARD", 
         font, MLV_COLOR_BLUE
     );
-    w1=(880*w)/1000;
+    w1=(886*w)/1000;
     p=(15*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     fich = fopen(filename,"a+");
@@ -83,7 +83,7 @@ void printScore(char *filename,int w,int h){
         if (fgets(line,LINE_MAX,fich) == NULL){
             MLV_draw_text_with_font(
 			    w1, h1,
-			    "-----", 
+			    "-", 
 			    font, MLV_COLOR_WHITE
 			    ); 
         }
