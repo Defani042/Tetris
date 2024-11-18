@@ -121,26 +121,35 @@ void saveScore(int w,int h,char* fichier,int num_save){
         case 4: w1=w*610/1000;h1=h*625/1000;w2=w*645/1000;h2=h*625/1000;break;
     }
     fich = fopen(fichier,"a+");
-    if (fgets(line,LINE_MAX,fich) == NULL){
-            MLV_draw_text_with_font(
+    if (fich == NULL){
+        MLV_draw_text_with_font(
 			    w1, h1,
 			    "EMPTY", 
-			    font, MLV_COLOR_WHITE
+			    font, MLV_COLOR_RED
 			    );
     }
-    else{   
-        j=0;
-        do {
-                if(line[j] == '\n') line[j] = '\0';
-                j++;
+    else{
+        if (fgets(line,LINE_MAX,fich) == NULL){
+                MLV_draw_text_with_font(
+			        w1, h1,
+			        "EMPTY", 
+			        font, MLV_COLOR_WHITE
+			        );
+        }
+        else{   
+            j=0;
+            do {
+	        if(line[j] == '\n') line[j] = '\0';
+	        j++;
             } while(line[j]!='\0');
-        MLV_draw_text_with_font(
-			    w2, h2,
-			    line, 
-			    font, MLV_COLOR_WHITE
-			    );
+            MLV_draw_text_with_font(
+			            w2, h2,
+			            line, 
+			            font, MLV_COLOR_WHITE
+			            );
+            fclose(fich);
+        }
     }
-    fclose(fich);
 }
 
 /*

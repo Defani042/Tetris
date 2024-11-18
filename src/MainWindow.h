@@ -25,7 +25,7 @@ void setButonExit(int w,int h);
 
 void startGame();
 
-void loadGame();
+/*void loadGame();*/
 
 void option();
 

@@ -25,12 +25,17 @@ void readFich(char* filename,int tab[NB_MAX], int new_score){
     i=0;
     fich = fopen(filename,"a+");
     while (i<11){
-        if (i==10){
-            tab[i]=new_score;
+        if (fich == NULL){
+            tab[i]= -1;
         }
         else{
-            if (fgets(line,LINE_MAX,fich) == NULL) tab[i]=0;
-            else tab[i]=atoi(line);
+            if (i==10){
+                tab[i]=new_score;
+            }
+            else{
+                if (fgets(line,LINE_MAX,fich) == NULL) tab[i]=0;
+                else tab[i]=atoi(line);
+            }
         }
         i++;
     }
@@ -66,18 +71,20 @@ void printfichier(char* filename,int tab[NB_MAX]){
     FILE* fich;
     i=0;
     fich = fopen(filename,"w+");
-    while (i<11){
-        if (tab[i]!=0){
-        fprintf(fich,"%d\n",tab[i]);
+    if (fich != NULL){
+        while (i<11){
+            if (tab[i]!=0){
+            fprintf(fich,"%d\n",tab[i]);
+            }
+            i++;
         }
-        i++;
+        fclose(fich);
     }
-    fclose(fich);
 }
 
 /*
 Fonction test
-*/
+
 
 void testaffichage(int tab[NB_MAX]){
     int i=0;
@@ -87,6 +94,7 @@ void testaffichage(int tab[NB_MAX]){
     }
     printf("\n");
 }
+*/
 
 /*
 R: fonction principale du programme
@@ -97,9 +105,9 @@ S: rien
 void setScoreboard(int new_score){
     int tab[NB_MAX];
     readFich("../fich/scoreboard.txt",tab,new_score);
-    testaffichage(tab);
+    /*testaffichage(tab);*/
     tri(tab);
-    testaffichage(tab);
+    /*testaffichage(tab);*/
     printfichier("../fich/scoreboard.txt",tab);
 }
 

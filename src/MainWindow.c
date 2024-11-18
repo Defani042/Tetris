@@ -206,9 +206,9 @@ void startGame(){
     printf("Start a new game\n");
 }
 
-void loadGame(){
+/*void loadGame(){
     printf("Load game\n");
-}
+}*/
 
 void option(){
     printf("Option\n");
@@ -253,7 +253,7 @@ void SetMainWindow(){
             startGame();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
-            loadGame();
+            /*loadGame();*/
             setSaveMenu();
             MLV_clear_window( MLV_COLOR_BLACK );
             createWindow();
