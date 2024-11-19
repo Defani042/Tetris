@@ -1,5 +1,8 @@
 # Tetris 
 
+## Avant propos
+le jeu tetris et son concept sont attribué à Alekseï Pajitnov, pour plus d'information consulter le [lien](https://fr.wikipedia.org/wiki/Tetris)
+
 ## Préambule
 Ce jeu a été réalisé dans un cadre universitaire en tant que projet de programmation impérative pour la seconde année de licence en informatique à l'université Jean Monnet. 
 Les personnes ayant participé au projet sont :
@@ -8,3 +11,17 @@ Les personnes ayant participé au projet sont :
 
 ## Prérequis
 Pour pouvoir exécuter le Makefile du projet, il vous faut installer la librairie MLV pour plus d'information veuillez consulter le site officiel de MLV et rendez vous dans la rubrique installation : [MLV_INSTALATION](http://www-igm.univ-mlv.fr/~boussica/mlv/api/French/html/installation.html)  
+
+
+## Module et structure du code
+
+le code est aagencer en différent module :
+
+   - MainWindow: gestion de la fentre de menu principal
+   - Plateau: gestion et création du plateau de jeu
+   - Piece: gestion et création des piéce du jeu
+   - Main: le module principale
+
+## Condition d'utilisation
+
+toutes formes de distribution illégalles à des fin monétaire est strictement interdites

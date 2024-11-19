@@ -18,11 +18,23 @@ int main(){
   setPieceLine(pp1);
   setPieceSquare(pp2);
 
+
+
+  
   printf("p1 :\n");
   printpiece(pp1);
   printf("p2 : \n");
   printpiece(pp2);
-	 
+
+  printf("p1 aprés rotation : \n");
+  rotate_anticlockwise(pp1);
+  printpiece(pp1);
+  
+  
+  printf("p2 aprés rotation : \n");
+  rotate_anticlockwise(pp2);
+  printpiece(pp2);
+  
 /*Test MainWindows*/  
   SetMainWindow();
   exit(EXIT_SUCCESS);
