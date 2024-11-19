@@ -31,4 +31,10 @@ int checkPlateauState(plateau* p);
 
 void filledline(plateau *p, int n);
 
+void gapline(plateau *p);
+
+void setcase(plateau *p , int n , int m, int value);
+
+int lineIsEmpty(plateau* p, int n);
+
 #endif /*_PLATEAU_H_*/

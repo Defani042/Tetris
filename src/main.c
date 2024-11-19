@@ -1,42 +1,39 @@
-/*librairi standart*/
+/*librairie standart*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <MLV/MLV_all.h>
+#include <unistd.h>/*permet de faire des sleep*/
 
 /*librairie local*/
 #include "plateau.h"
 #include "MainWindow.h"
+#include "piece.h"
 
 int main(){
 /*Put the main code here*/
-/*variable*/
-  int lineclear = 0;
-  plateau p; /* variable plateau*/
-  plateau* pp = &p; /* pointeur vers la variable plateau*/ 
-  
-/*Test plateau*/
-  printf("RAZ tableau \n");
-  setPlateau(pp);
-  printf("Affichage : \n");
-  printPlateau(pp);
-  /*remplissage des lignes  1, 2, 3, 5*/
-  filledline(pp,1);
-  filledline(pp,2);
-  filledline(pp,3);
-  filledline(pp,5);
-  
-  printf("Affichage du tableau remplie : \n");
-  printPlateau(pp);
+  piece p1,p2;
+  piece *pp1 = &p1;
+  piece *pp2 = &p2;
 
-  printf("Tableau aprés 1er vérification : \n");
-  lineclear = checkPlateauState(pp);
-  printf("%d ligne clear \n",lineclear);
-  printPlateau(pp);
+  setPieceLine(pp1);
+  setPieceSquare(pp2);
 
-   printf("Tableau aprés seconde vérification : \n");
-  lineclear = checkPlateauState(pp);
-  printf("%d ligne clear \n",lineclear);
-  printPlateau(pp);
+
+
+  
+  printf("p1 :\n");
+  printpiece(pp1);
+  printf("p2 : \n");
+  printpiece(pp2);
+
+  printf("p1 aprés rotation : \n");
+  rotate_anticlockwise(pp1);
+  printpiece(pp1);
+  
+  
+  printf("p2 aprés rotation : \n");
+  rotate_anticlockwise(pp2);
+  printpiece(pp2);
   
 /*Test MainWindows*/  
   SetMainWindow();
