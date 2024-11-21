@@ -1,7 +1,7 @@
 # Tetris 
 
 ## Avant propos
-le jeu tetris et son concept sont attribué à Alekseï Pajitnov, pour plus d'information consulter le [lien](https://fr.wikipedia.org/wiki/Tetris)
+Le jeu tetris et son concept sont attribué à Alekseï Pajitnov, pour plus d'information consulter [le lien](https://fr.wikipedia.org/wiki/Tetris).
 
 ## Préambule
 Ce jeu a été réalisé dans un cadre universitaire en tant que projet de programmation impérative pour la seconde année de licence en informatique à l'université Jean Monnet. 
@@ -21,7 +21,9 @@ le code est aagencer en différent module :
    - Plateau: gestion et création du plateau de jeu
    - Piece: gestion et création des piéce du jeu
    - Main: le module principale
+   - Scoreboard: module pour gerer gestion de la savegarde du scoreboard
+   - Save: module de gestion des sauvegarde
 
 ## Condition d'utilisation
 
-toutes formes de distribution illégalles à des fin monétaire est strictement interdites
+Toutes forment de distribution illégale à des fins monétaire est strictement interdites et sans l'autorisation des auteurs.
