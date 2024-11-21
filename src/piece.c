@@ -4,6 +4,7 @@
 /*std lib*/
 #include <stdio.h>
 #include <stdlib.h>
+#include <MLV/MLV_all.h>
 
 /*lib local*/
 #include "piece.h"
@@ -53,10 +54,17 @@ S: vide
 
 void setPieceLine(piece *p){
   SetPiece(p); /*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=43;
+  p->g=255;
+  p->b=255;
+  p->a=255;
+  /* aspect de la pièce */  
   p->piece[0][3]=1;
   p->piece[1][3]=1;
   p->piece[2][3]=1;
   p->piece[3][3]=1;
+  
 }
 
 /*
@@ -67,6 +75,12 @@ S: vide
 
 void setPieceSquare(piece *p){
   SetPiece(p);/*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=255;
+  p->g=255;
+  p->b=0;
+  p->a=255;
+  /* aspect de la pièce */
   p->piece[2][3]=1;
   p->piece[2][2]=1;
   p->piece[3][3]=1;
@@ -81,6 +95,12 @@ S: vide
 
 void setPieceT(piece *p){
   SetPiece(p);/*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=238;
+  p->g=130;
+  p->b=238;
+  p->a=255;
+  /* aspect de la pièce */
   p->piece[2][2]=1;
   p->piece[3][3]=1;
   p->piece[3][2]=1;
@@ -96,6 +116,12 @@ S: vide
 
 void setPieceZ(piece *p){
   SetPiece(p);/*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=255;
+  p->g=0;
+  p->b=0;
+  p->a=255;
+  /* aspect de la pièce */
   p->piece[1][2]=1;
   p->piece[2][2]=1;
   p->piece[2][3]=1;
@@ -111,6 +137,12 @@ S: vide
 
 void setPieceZinv(piece *p){
   SetPiece(p);/*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=0;
+  p->g=255;
+  p->b=0;
+  p->a=255;
+  /* aspect de la pièce */
   p->piece[1][3]=1;
   p->piece[2][2]=1;
   p->piece[2][3]=1;
@@ -126,6 +158,12 @@ S: vide
 
 void setPieceL(piece *p){
   SetPiece(p);/*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=255;
+  p->g=128;
+  p->b=0;
+  p->a=255;
+  /* aspect de la pièce */
   p->piece[1][2]=1;
   p->piece[2][2]=1;
   p->piece[2][3]=1;
@@ -141,6 +179,12 @@ S: vide
 
 void setPieceLinv(piece *p){
   SetPiece(p);/*mise à zero de la piece*/
+  /* couleur de la pièce */
+  p->r=0;
+  p->g=0;
+  p->b=255;
+  p->a=255;
+  /* aspect de la pièce */
   p->piece[1][3]=1;
   p->piece[2][3]=1;
   p->piece[2][3]=1;

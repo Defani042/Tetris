@@ -4,6 +4,7 @@
 /*std lib*/
 #include <stdio.h>
 #include <stdlib.h>
+#include <MLV/MLV_all.h>
 
 /*Macro*/
 #define ROW 4
@@ -12,6 +13,7 @@
 /*Structure piece*/
 typedef struct{
   int piece[ROW][COLUMN];/*réprésentation piece  si case = 1 il y a une pièces sinon case =0 */
+  int r,g,b,a;
 }piece;
 
 /*Déclaration d'un tableau de piece*/

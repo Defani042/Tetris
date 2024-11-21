@@ -1,7 +1,7 @@
 Tetris: main.o MainWindow.o plateau.o piece.o scoreboard.o save.o
 	gcc -o Tetris main.o MainWindow.o plateau.o piece.o scoreboard.o save.o `pkg-config --libs-only-other --libs-only-L --libs-only-l MLV`
 
-main.o: main.c MainWindow.h plateau.h piece.h  
+main.o: main.c MainWindow.h plateau.h piece.h save.h scoreboard.h 
 	gcc -c -Wall -W -std=c89 -pedantic -O2 `pkg-config --cflags MLV` main.c -o main.o
 
 MainWindow.o: MainWindow.c MainWindow.h
