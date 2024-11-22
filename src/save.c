@@ -158,7 +158,7 @@ E: rien
 S: rien
 */
 
-void setSaveMenu(){
+void setSaveMenu(int page){
     int i,width,height,x,y;
     i=1;
     height = MLV_get_desktop_height();
@@ -173,16 +173,36 @@ void setSaveMenu(){
     while (i){
         MLV_wait_mouse(&x,&y);
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>(height/20) && y<(height/20+((height*6)/20))){
-                printf("fichier1\n");
+                if (page == 1){
+                    printf("load fichier1\n");
+                }
+                else {
+                    printf("save fichier1\n");
+                }
             }
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/20) && y<(height/20+((height*6)/20))){
-                printf("fichier2\n");
+                if (page == 1){
+                    printf("load fichier2\n");
+                }
+                else {
+                    printf("save fichier2\n");
+                }
             }
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>(height*9/20) && y<(height*9/20+((height*6)/20))){
-                printf("fichier3\n");
+                if (page == 1){
+                    printf("load fichier3\n");
+                }
+                else {
+                    printf("save fichier3\n");
+                }
             }
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height*9/20) && y<(height*9/20+((height*6)/20))){
-                printf("fichier4\n");
+                if (page == 1){
+                    printf("load fichier4\n");
+                }
+                else {
+                    printf("save fichier4\n");
+                }
             }
             if (x>(350*width/1000) && x<(650*width/1000) && y>(800*height/1000) && y<(875*height/1000)){
             i=0;

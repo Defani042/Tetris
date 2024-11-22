@@ -10,6 +10,7 @@
 /*local lib*/
 #include "MainWindow.h"
 #include "save.h"
+#include "gameWindow.h"
 
 /*Macro*/
 #define LINE_MAX 32
@@ -145,7 +146,7 @@ void setButonLoad(int w,int h){
     h3=(567*h)/1000;
     p=(25*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
-     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
+     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_rgba(0,0,255,255));
      MLV_draw_text_with_font(
         w3, h3,
         "LOAD A GAME", 
@@ -251,10 +252,13 @@ void SetMainWindow(){
         MLV_wait_mouse(&x,&y);
         if (x>(300*width/1000) && x<(700*width/1000) && y>(400*height/1000) && y<(500*height/1000)){
             startGame();
+            setGameWindow();
+            MLV_clear_window( MLV_COLOR_BLACK );
+            createWindow();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
             /*loadGame();*/
-            setSaveMenu();
+            setSaveMenu(1);
             MLV_clear_window( MLV_COLOR_BLACK );
             createWindow();
         }
