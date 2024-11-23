@@ -18,27 +18,122 @@ S: rien
 */
 
 void createGameWindow(int w,int h){
-    int t,i,j;
+    int t;
     MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
     t=30;
     MLV_clear_window( MLV_COLOR_BLACK );
-    MLV_draw_rectangle((w/2)-(5*t)-5,((h/20)*9)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE);
-    MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5,t*4+5,MLV_COLOR_BLUE);
+    MLV_draw_rectangle((w/2)-(5*t)-5,((h/20)*9)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
+    MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5,t*4+5,MLV_COLOR_BLUE);                 /*contour prochaine pièce*/
+    MLV_draw_filled_rectangle(w/10,h/10,100,30,MLV_COLOR_BLUE);          /*carré pause*/                   
+    MLV_draw_text_with_font(
+        (w/10)+5, h/10 +5,
+        "PAUSE  ESC", 
+        font, MLV_COLOR_WHITE
+    );
     MLV_draw_text_with_font(
         (w/20)*13+25, h/20,
         "NEXT", 
         font, MLV_COLOR_WHITE
     );
-    for(i=0;i<10;i++){
-        for(j=0;j<22;j++){
-            MLV_draw_filled_rectangle((w/2)-(5*t)-4+31*i,((h/20)*9)-(11*t)+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+    MLV_draw_text_with_font(
+        (w/20)*16, h/2-100,
+        "SCORE", 
+        font, MLV_COLOR_WHITE
+    );
+}
+
+/*
+R: créer la fenetre de pause
+E: taille x et y de la fenetre
+S: rien
+*/
+
+void stopWindow(int w, int h){
+    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLACK);     /*carré pause*/
+    MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLUE);             /*contour pause*/
+    MLV_draw_filled_rectangle(w/2-w/10,h/5+h/20,w/5,50,MLV_COLOR_BLUE);     /*carré RESUME*/
+    MLV_draw_filled_rectangle(w/2-w/10,h/5+h/20+130,w/5,50,MLV_COLOR_BLUE); /*carré SAVE */
+    MLV_draw_filled_rectangle(w/2-w/10,h/5+h/20+260,w/5,50,MLV_COLOR_RED);  /*carré LEAVE*/
+    MLV_draw_text_with_font(
+        (w/2)-45, h/5+h/20+275,
+        "LEAVE", 
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/2)-40, h/5+h/20+145,
+        "SAVE", 
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/2)-55, h/5+h/20+15,
+        "RESUME", 
+        font, MLV_COLOR_WHITE
+    );
+    MLV_actualise_window();
+}
+
+int setStopWindow(int w,int h){
+    int x,y,i=1,j=1;
+    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    stopWindow(w,h);
+    while(i){
+        MLV_wait_mouse(&x,&y);
+        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/5+h/20) && y<(h/5+h/20+50)){
+            i=0;
         }
-    }
-    for(i=0;i<4;i++){
-        for(j=0;j<4;j++){
-            MLV_draw_filled_rectangle((w/20)*13+31*i,(h/20)*2+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/5+h/20+130) && y<(h/5+h/20+50+130)){
+            setSaveMenu(2);
+            MLV_clear_window(MLV_COLOR_BLACK);
+            stopWindow(w,h);
+
         }
+        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/5+h/20+260) && y<(h/5+h/20+50+310)){
+            MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLACK); /*carré exit*/
+            MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLUE);         /*contour exit*/
+            MLV_draw_filled_rectangle(w/5+(w/25)*3,h/5+h/20+260,(w/25)*3,50,MLV_COLOR_RED);
+            /*carré yes*/
+            MLV_draw_filled_rectangle(w/5+(w/25)*9,h/5+h/20+260,(w/25)*3,50,MLV_COLOR_BLUE);
+            /*carré no*/
+
+            MLV_draw_text_with_font(
+                (w/2)-275, h/5+h/20+15,
+                "ALL NON SAVED DATA WILL BE LOST", 
+                font, MLV_COLOR_RED
+            );
+            MLV_draw_text_with_font(
+                (w/2)-80, h/5+h/20+145,
+                "CONTINUE ?", 
+                font, MLV_COLOR_WHITE
+            );
+            MLV_draw_text_with_font(
+                (w/2)-195, h/5+h/20+275,
+                "YES", 
+                font, MLV_COLOR_WHITE
+            );
+            MLV_draw_text_with_font(
+                (w/2)+140, h/5+h/20+275,
+                "NO", 
+                font, MLV_COLOR_WHITE
+            );
+
+            MLV_actualise_window();
+            j=1;
+            while (j){
+                MLV_wait_mouse(&x,&y);
+                if (x>(w/5+(w/25)*3) && x<(w/5+(w/25)*6) && y>(h/5+h/20+260) && y<(h/5+h/20+50+310)){
+                    return 0;
+                }
+                if (x>(w/5+(w/25)*9) && x<(w/5+(w/25)*12) && y>(h/5+h/20+260) && y<(h/5+h/20+50+310)){
+                    j=0;
+                }
+            }
+            
+        }
+        stopWindow(w,h);
+        MLV_actualise_window();
     }
+    return 1;
 }
 
 /*
@@ -48,16 +143,36 @@ S: rien
 */
 
 void setGameWindow(){
-    int i,width,height,x,y;
+    int i,width,height,j,k,t,w,h;
     i=1;
+    t=30;
     srand(time(NULL));
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
+    h=height;
+    w=width;
     createGameWindow(width,height);
     MLV_actualise_window();
     while(i){
-        MLV_wait_mouse(&x,&y);
         MLV_actualise_window();
+        if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
+            i=setStopWindow(width,height);
+            MLV_clear_window(MLV_COLOR_BLACK);
+            createGameWindow(width,height);
+        }
+        for(k=0;k<10;k++){
+            for(j=0;j<22;j++){
+                MLV_draw_filled_rectangle((w/2)-(5*t)-4+31*k,((h/20)*9)-(11*t)+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+                /*test grille*/
+            }
+        }
+        for(k=0;k<4;k++){
+            for(j=0;j<4;j++){
+                MLV_draw_filled_rectangle((w/20)*13+31*k,(h/20)*2+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+                /*test grille prochaine pièce*/
+            }
+        }   
+        MLV_wait_milliseconds(33);
     }
 }
 
