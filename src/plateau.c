@@ -73,6 +73,7 @@ void setPlateau(plateau *p){
     }
   }
   p->gameover = 0; /* on met la variable gameover à 0 */
+  p->score = 0; /*on met la variable score à 0*/
 }
 
 /*

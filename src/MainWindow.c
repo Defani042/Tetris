@@ -240,7 +240,7 @@ R: permet d'afficher le menu principale
 E: vide
 S: vide
 */
-void SetMainWindow(){
+void SetMainWindow(plateau *p){
     int x,y,i,width,height;
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
@@ -252,14 +252,14 @@ void SetMainWindow(){
     while(i){
         MLV_wait_mouse(&x,&y);
         if (x>(300*width/1000) && x<(700*width/1000) && y>(400*height/1000) && y<(500*height/1000)){
-            startGame();
-            setGameWindow();
+            /*startGame();*/
+            setGameWindow(p);
             MLV_clear_window( MLV_COLOR_BLACK );
             createWindow();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
             /*loadGame();*/
-            setSaveMenu(1);
+            setSaveMenu(1,p);
             MLV_clear_window( MLV_COLOR_BLACK );
             createWindow();
         }

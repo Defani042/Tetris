@@ -11,31 +11,12 @@
 
 int main(){
 /*Put the main code here*/
-  piece p1,p2;
-  piece *pp1 = &p1;
-  piece *pp2 = &p2;
+plateau p;
+plateau* pp = &p;
+setPlateau(pp);
 
-  setPieceLine(pp1);
-  setPieceSquare(pp2);
-
-
-
-  
-  printf("p1 :\n");
-  printpiece(pp1);
-  printf("p2 : \n");
-  printpiece(pp2);
-
-  printf("p1 aprés rotation : \n");
-  rotate_anticlockwise(pp1);
-  printpiece(pp1);
-  
-  
-  printf("p2 aprés rotation : \n");
-  rotate_anticlockwise(pp2);
-  printpiece(pp2);
   
 /*Test MainWindows*/  
-  SetMainWindow();
+  SetMainWindow(pp);
   exit(EXIT_SUCCESS);
 }

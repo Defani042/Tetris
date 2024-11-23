@@ -5,13 +5,82 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <MLV/MLV_all.h>
+#include <time.h>
 
 /*local lib*/
 #include "save.h"
+#include "plateau.h"
+#include "gameWindow.h"
 
 /*Macro*/
 #define LINE_MAX 32
+#define LARGEUR_P 10
+#define LONGUEUR_P 22
 
+/*
+R: créer la fenêtre de sauvegarde finie.
+E: taille écran
+S: rien 
+*/
+void WindowCheckSave(int w, int h){
+    MLV_Font* font;
+    font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLACK);     /*carré*/
+    MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLUE);            /*contour*/
+    MLV_draw_text_with_font(
+        w/2-225, h/2-25,
+        "SAVE DONE !", 
+        font, MLV_COLOR_GREEN
+    );
+    MLV_actualise_window();
+    MLV_wait_seconds(3);
+}
+
+/*
+R: créer une sauvegarde dans un fichier
+E: plateau, nom du fichier de save
+S: rien
+*/
+
+void saveInFich(plateau* p, char* filename,int score){
+    int i,j;
+    FILE* fich;
+    fich = fopen(filename,"w+");
+    if (fich != NULL){
+        fprintf(fich,"%d\n",score);
+        for(i=0;i<LONGUEUR_P-1;i++){
+            for(j=0;j<LARGEUR_P;j++){
+                fprintf(fich,"%d",p->plateau[i][j]);
+            }
+    }
+    fclose(fich);
+    }
+}
+
+/*
+R: charge une sauvegarde dans un fichier
+E: plateau, nom du fichier de save
+S: rien
+*/
+/*
+void loadInFich(plateau* p,char* filename){
+    int i,j,k;
+    FILE* fich;
+    fich = fopen(filename,"w+");
+    if (fich != NULL){
+        fscanf(fich,"%d\n",p->score);
+        for(i=0;i<LONGUEUR_P-1;i++){
+            for(j=0;j<LARGEUR_P;j++){
+                if (fscanf(fich,"%d",p->plateau[i][j])==0){
+                    p->plateau[i][j]=0;
+                }
+            }
+        }
+        fclose(fich);
+        setGameWindow(p);
+    }
+}
+*/
 /*
 R: creer les bouttons sauvegarde
 E: longueur ecran,hauteur ecran
@@ -123,8 +192,8 @@ void saveScore(int w,int h,char* fichier,int num_save){
     fich = fopen(fichier,"a+");
     if (fich == NULL){
         MLV_draw_text_with_font(
-			    w1, h1,
-			    "EMPTY", 
+			    w1-55, h1,
+			    "not found", 
 			    font, MLV_COLOR_RED
 			    );
     }
@@ -153,16 +222,12 @@ void saveScore(int w,int h,char* fichier,int num_save){
 }
 
 /*
-R: créer la fenetre sauvegarde
-E: rien
+R: créer les boutons de la fenetre sauvegarde
+E: taille de l'écran
 S: rien
 */
 
-void setSaveMenu(int page){
-    int i,width,height,x,y;
-    i=1;
-    height = MLV_get_desktop_height();
-    width = MLV_get_desktop_width();
+void createAllSaveMenu(int width,int height){
     setSaveButton(width,height);
     setButonBack(width,height);
     saveScore(width,height,"../fich/save1.txt",1);
@@ -170,6 +235,20 @@ void setSaveMenu(int page){
     saveScore(width,height,"../fich/save3.txt",3);
     saveScore(width,height,"../fich/save4.txt",4);
     MLV_actualise_window();
+}
+
+/*
+R: créer la fenetre sauvegarde
+E: rien
+S: rien
+*/
+
+void setSaveMenu(int page, plateau* p){
+    int i,width,height,x,y;
+    height = MLV_get_desktop_height();
+    width = MLV_get_desktop_width();
+    createAllSaveMenu(width,height);
+    i=1;
     while (i){
         MLV_wait_mouse(&x,&y);
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
@@ -177,7 +256,10 @@ void setSaveMenu(int page){
                     printf("load fichier1\n");
                 }
                 else {
-                    printf("save fichier1\n");
+                    saveInFich(p,"../fich/save1.txt",p->score);
+                    WindowCheckSave(width,height);
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
             }
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
@@ -185,7 +267,10 @@ void setSaveMenu(int page){
                     printf("load fichier2\n");
                 }
                 else {
-                    printf("save fichier2\n");
+                    saveInFich(p,"../fich/save2.txt",p->score);
+                    WindowCheckSave(width,height);
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
             }
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*21) && y<((height/40)*21+((height*6)/20))){
@@ -193,7 +278,10 @@ void setSaveMenu(int page){
                     printf("load fichier3\n");
                 }
                 else {
-                    printf("save fichier3\n");
+                    saveInFich(p,"../fich/save3.txt",p->score);
+                    WindowCheckSave(width,height);
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
             }
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/40)*21 && y<(((height/40)*21+(height*6)/20))){
@@ -201,12 +289,16 @@ void setSaveMenu(int page){
                     printf("load fichier4\n");
                 }
                 else {
-                    printf("save fichier4\n");
+                    saveInFich(p,"../fich/save4.txt",p->score);
+                    WindowCheckSave(width,height);
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
             }
             if (x>(350*width/1000) && x<(650*width/1000) && y>(900*height/1000) && y<(975*height/1000)){
             i=0;
         }
+        MLV_actualise_window();
     }
 }
 

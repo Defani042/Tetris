@@ -10,6 +10,11 @@
 /*local lib*/
 #include "gameWindow.h"
 #include "save.h"
+#include "plateau.h"
+
+/*Macro*/
+#define LARGEUR_P 10
+#define LONGUEUR_P 22
 
 /*
 R: créer la fenetre de jeu
@@ -79,7 +84,7 @@ void stopWindow(int w, int h){
     MLV_actualise_window();
 }
 
-int setStopWindow(int w,int h){
+int setStopWindow(int w,int h,plateau* p){
     int x,y,i=1,j=1;
     MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
     stopWindow(w,h);
@@ -89,7 +94,7 @@ int setStopWindow(int w,int h){
             i=0;
         }
         if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/2-h/10+130) && y<(h/2-h/10+50+130)){
-            setSaveMenu(2);
+            setSaveMenu(2,p);
             MLV_clear_window(MLV_COLOR_BLACK);
             stopWindow(w,h);
 
@@ -128,7 +133,7 @@ int setStopWindow(int w,int h){
             while (j){
                 MLV_wait_mouse(&x,&y);
                 if (x>(w/5+(w/25)*3) && x<(w/5+(w/25)*6) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
-                    return 0;
+                        srand(time(NULL));return 0;
                 }
                 if (x>(w/5+(w/25)*9) && x<(w/5+(w/25)*12) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
                     j=0;
@@ -148,7 +153,7 @@ E: rien
 S: rien
 */
 
-void setGameWindow(){
+void setGameWindow(plateau *p){
     int i,width,height,j,k,t,w,h;
     i=1;
     t=30;
@@ -162,7 +167,7 @@ void setGameWindow(){
     while(i){
         MLV_actualise_window();
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
-            i=setStopWindow(width,height);
+            i=setStopWindow(width,height,p);
             MLV_clear_window(MLV_COLOR_BLACK);
             createGameWindow(width,height);
         }

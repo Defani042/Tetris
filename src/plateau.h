@@ -14,7 +14,7 @@
 typedef struct{
   int plateau[LONGUEUR_P][LARGEUR_P]; /*réprésentation du plateau si case = 1 il y a une pièces sinon case =0 */
   int gameover; /*0 si la partie continue  1 si la partie est terminé*/
-  
+  int score;
 }plateau;
 
 int gameIsOver(plateau* p);
