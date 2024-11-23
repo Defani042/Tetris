@@ -23,9 +23,9 @@ void setSaveButton(int width, int height){
     MLV_Font* font;
     MLV_clear_window( MLV_COLOR_BLACK );
     font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
-    MLV_draw_filled_rectangle(width*3/20,height/20,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    MLV_draw_filled_rectangle(width*3/20,(height/40)*5,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
     w=(200*width)/1000;
-    h=(50*height)/1000;
+    h=(150*height)/1000;
     MLV_draw_text_with_font(
         w, h,
         "FILE 1", 
@@ -37,7 +37,7 @@ void setSaveButton(int width, int height){
         font, MLV_COLOR_WHITE
     );
     w=((600*width)/1000);
-    MLV_draw_filled_rectangle((width*11)/20,height/20,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    MLV_draw_filled_rectangle((width*11)/20,(height/40)*5,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w, h,
         "FILE 2", 
@@ -48,8 +48,8 @@ void setSaveButton(int width, int height){
         "SCORE:", 
         font, MLV_COLOR_WHITE
     );
-    h=(450*height)/1000;
-    MLV_draw_filled_rectangle((width*11)/20,(height*9)/20,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    h=(550*height)/1000;
+    MLV_draw_filled_rectangle((width*11)/20,(height/40)*21,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w, h,
         "FILE 4", 
@@ -61,7 +61,7 @@ void setSaveButton(int width, int height){
         font, MLV_COLOR_WHITE
     );
     w=(200*width)/1000;
-    MLV_draw_filled_rectangle(width*3/20,(height*9)/20,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    MLV_draw_filled_rectangle(width*3/20,(height/40)*21,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w, h,
         "FILE 3", 
@@ -85,9 +85,9 @@ void setButonBack(int w,int h){
     w1=(350*w)/1000;
     w2=(300*w)/1000;
     w3=(455*w)/1000;
-    h1=(800*h)/1000;
+    h1=(900*h)/1000;
     h2=(75*h)/1000;
-    h3=(820*h)/1000;
+    h3=(920*h)/1000;
     p=(25*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
@@ -115,10 +115,10 @@ void saveScore(int w,int h,char* fichier,int num_save){
     h2=0;
     font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
     switch (num_save){
-        case 1: w1=w*210/1000;h1=h*225/1000;w2=w*245/1000;h2=h*225/1000;break;
-        case 2: w1=w*610/1000;h1=h*225/1000;w2=w*645/1000;h2=h*225/1000;break;
-        case 3: w1=w*210/1000;h1=h*625/1000;w2=w*245/1000;h2=h*625/1000;break;
-        case 4: w1=w*610/1000;h1=h*625/1000;w2=w*645/1000;h2=h*625/1000;break;
+        case 1: w1=w*210/1000;h1=h*325/1000;w2=w*245/1000;h2=h*325/1000;break;
+        case 2: w1=w*610/1000;h1=h*325/1000;w2=w*645/1000;h2=h*325/1000;break;
+        case 3: w1=w*210/1000;h1=h*725/1000;w2=w*245/1000;h2=h*725/1000;break;
+        case 4: w1=w*610/1000;h1=h*725/1000;w2=w*645/1000;h2=h*725/1000;break;
     }
     fich = fopen(fichier,"a+");
     if (fich == NULL){
@@ -172,7 +172,7 @@ void setSaveMenu(int page){
     MLV_actualise_window();
     while (i){
         MLV_wait_mouse(&x,&y);
-            if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>(height/20) && y<(height/20+((height*6)/20))){
+            if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){
                     printf("load fichier1\n");
                 }
@@ -180,7 +180,7 @@ void setSaveMenu(int page){
                     printf("save fichier1\n");
                 }
             }
-            if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/20) && y<(height/20+((height*6)/20))){
+            if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){
                     printf("load fichier2\n");
                 }
@@ -188,7 +188,7 @@ void setSaveMenu(int page){
                     printf("save fichier2\n");
                 }
             }
-            if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>(height*9/20) && y<(height*9/20+((height*6)/20))){
+            if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*21) && y<((height/40)*21+((height*6)/20))){
                 if (page == 1){
                     printf("load fichier3\n");
                 }
@@ -196,7 +196,7 @@ void setSaveMenu(int page){
                     printf("save fichier3\n");
                 }
             }
-            if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height*9/20) && y<(height*9/20+((height*6)/20))){
+            if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/40)*21 && y<(((height/40)*21+(height*6)/20))){
                 if (page == 1){
                     printf("load fichier4\n");
                 }
@@ -204,7 +204,7 @@ void setSaveMenu(int page){
                     printf("save fichier4\n");
                 }
             }
-            if (x>(350*width/1000) && x<(650*width/1000) && y>(800*height/1000) && y<(875*height/1000)){
+            if (x>(350*width/1000) && x<(650*width/1000) && y>(900*height/1000) && y<(975*height/1000)){
             i=0;
         }
     }

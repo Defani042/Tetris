@@ -26,10 +26,10 @@ void setLogo(int h, int w){
     int h1,h2,h3,w1,w2,w3,p1,p2,p3;
     MLV_Font* font;
     h1=(100*h)/1000;
-    h2=(0*h)/1000;
+    h2=(965*h)/1000;
     h3=(230*h)/1000;
     w1=(200*w)/1000;
-    w2=(0*w)/1000;
+    w2=(35*w)/1000;
     w3=(675*w)/1000;
     p1=(100*w)/1000;
     p2=(15*w)/1000;
@@ -246,6 +246,7 @@ void SetMainWindow(){
     width = MLV_get_desktop_width();
     i=1;
     MLV_create_window("Tetris","Tetris-like",width,height);
+    MLV_enable_full_screen( );
     createWindow();
 
     while(i){

@@ -22,7 +22,7 @@ void createGameWindow(int w,int h){
     MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
     t=30;
     MLV_clear_window( MLV_COLOR_BLACK );
-    MLV_draw_rectangle((w/2)-(5*t)-5,((h/20)*9)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
+    MLV_draw_rectangle((w/2)-(5*t)-5,(h/2)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
     MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5,t*4+5,MLV_COLOR_BLUE);                 /*contour prochaine pièce*/
     MLV_draw_filled_rectangle(w/10,h/10,100,30,MLV_COLOR_BLUE);          /*carré pause*/                   
     MLV_draw_text_with_font(
@@ -49,24 +49,30 @@ S: rien
 */
 
 void stopWindow(int w, int h){
-    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
-    MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLACK);     /*carré pause*/
-    MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLUE);             /*contour pause*/
-    MLV_draw_filled_rectangle(w/2-w/10,h/5+h/20,w/5,50,MLV_COLOR_BLUE);     /*carré RESUME*/
-    MLV_draw_filled_rectangle(w/2-w/10,h/5+h/20+130,w/5,50,MLV_COLOR_BLUE); /*carré SAVE */
-    MLV_draw_filled_rectangle(w/2-w/10,h/5+h/20+260,w/5,50,MLV_COLOR_RED);  /*carré LEAVE*/
+    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 30 );
+    MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLACK);     /*carré pause*/
+    MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLUE);             /*contour pause*/
+    MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10,w/5,50,MLV_COLOR_BLUE);     /*carré RESUME*/
+    MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10+130,w/5,50,MLV_COLOR_BLUE); /*carré SAVE */
+    MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10+260,w/5,50,MLV_COLOR_RED);  /*carré LEAVE*/
     MLV_draw_text_with_font(
-        (w/2)-45, h/5+h/20+275,
+        (w/2)-70, h/2-h/4,
+        "PAUSE", 
+        font, MLV_COLOR_BLUE
+    );
+    font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    MLV_draw_text_with_font(
+        (w/2)-45, h/2-h/10+275,
         "LEAVE", 
         font, MLV_COLOR_WHITE
     );
     MLV_draw_text_with_font(
-        (w/2)-40, h/5+h/20+145,
+        (w/2)-40, h/2-h/10+145,
         "SAVE", 
         font, MLV_COLOR_WHITE
     );
     MLV_draw_text_with_font(
-        (w/2)-55, h/5+h/20+15,
+        (w/2)-55, h/2-h/10+15,
         "RESUME", 
         font, MLV_COLOR_WHITE
     );
@@ -79,40 +85,40 @@ int setStopWindow(int w,int h){
     stopWindow(w,h);
     while(i){
         MLV_wait_mouse(&x,&y);
-        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/5+h/20) && y<(h/5+h/20+50)){
+        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/2-h/10) && y<(h/2-h/10+50)){
             i=0;
         }
-        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/5+h/20+130) && y<(h/5+h/20+50+130)){
+        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/2-h/10+130) && y<(h/2-h/10+50+130)){
             setSaveMenu(2);
             MLV_clear_window(MLV_COLOR_BLACK);
             stopWindow(w,h);
 
         }
-        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/5+h/20+260) && y<(h/5+h/20+50+310)){
-            MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLACK); /*carré exit*/
-            MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/4)*2,MLV_COLOR_BLUE);         /*contour exit*/
-            MLV_draw_filled_rectangle(w/5+(w/25)*3,h/5+h/20+260,(w/25)*3,50,MLV_COLOR_RED);
+        if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
+            MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLACK); /*carré exit*/
+            MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLUE);         /*contour exit*/
+            MLV_draw_filled_rectangle(w/5+(w/25)*3,h/2-h/10+260,(w/25)*3,50,MLV_COLOR_RED);
             /*carré yes*/
-            MLV_draw_filled_rectangle(w/5+(w/25)*9,h/5+h/20+260,(w/25)*3,50,MLV_COLOR_BLUE);
+            MLV_draw_filled_rectangle(w/5+(w/25)*9,h/2-h/10+260,(w/25)*3,50,MLV_COLOR_BLUE);
             /*carré no*/
 
             MLV_draw_text_with_font(
-                (w/2)-275, h/5+h/20+15,
+                (w/2)-275, h/2-h/10+15,
                 "ALL NON SAVED DATA WILL BE LOST", 
                 font, MLV_COLOR_RED
             );
             MLV_draw_text_with_font(
-                (w/2)-80, h/5+h/20+145,
+                (w/2)-80, h/2-h/10+145,
                 "CONTINUE ?", 
                 font, MLV_COLOR_WHITE
             );
             MLV_draw_text_with_font(
-                (w/2)-195, h/5+h/20+275,
+                (w/2)-195, h/2-h/10+275,
                 "YES", 
                 font, MLV_COLOR_WHITE
             );
             MLV_draw_text_with_font(
-                (w/2)+140, h/5+h/20+275,
+                (w/2)+140, h/2-h/10+275,
                 "NO", 
                 font, MLV_COLOR_WHITE
             );
@@ -121,10 +127,10 @@ int setStopWindow(int w,int h){
             j=1;
             while (j){
                 MLV_wait_mouse(&x,&y);
-                if (x>(w/5+(w/25)*3) && x<(w/5+(w/25)*6) && y>(h/5+h/20+260) && y<(h/5+h/20+50+310)){
+                if (x>(w/5+(w/25)*3) && x<(w/5+(w/25)*6) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
                     return 0;
                 }
-                if (x>(w/5+(w/25)*9) && x<(w/5+(w/25)*12) && y>(h/5+h/20+260) && y<(h/5+h/20+50+310)){
+                if (x>(w/5+(w/25)*9) && x<(w/5+(w/25)*12) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
                     j=0;
                 }
             }
@@ -162,7 +168,7 @@ void setGameWindow(){
         }
         for(k=0;k<10;k++){
             for(j=0;j<22;j++){
-                MLV_draw_filled_rectangle((w/2)-(5*t)-4+31*k,((h/20)*9)-(11*t)+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+                MLV_draw_filled_rectangle((w/2)-(5*t)-4+31*k,(h/2)-(11*t)+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
                 /*test grille*/
             }
         }

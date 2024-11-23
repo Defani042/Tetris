@@ -8,6 +8,10 @@
 
 void createGameWindow(int w,int h);
 
+void stopWindow(int w, int h);
+
+int setStopWindow(int w,int h);
+
 void setGameWindow();
 
 #endif /*_MAINWINDOW_H_*/
