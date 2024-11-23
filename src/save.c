@@ -50,7 +50,7 @@ void saveInFich(plateau* p, char* filename,int score){
         fprintf(fich,"%d\n",score);
         for(i=0;i<LONGUEUR_P-1;i++){
             for(j=0;j<LARGEUR_P;j++){
-                fprintf(fich,"%d",p->plateau[i][j]);
+                fprintf(fich,"%d ",p->plateau[i][j]);
             }
     }
     fclose(fich);
@@ -62,25 +62,30 @@ R: charge une sauvegarde dans un fichier
 E: plateau, nom du fichier de save
 S: rien
 */
-/*
+
 void loadInFich(plateau* p,char* filename){
-    int i,j,k;
+    int i,j;
     FILE* fich;
-    fich = fopen(filename,"w+");
+    fich = fopen(filename,"r+");
     if (fich != NULL){
-        fscanf(fich,"%d\n",p->score);
+        if (fscanf(fich,"%d\n",&(p->score))==0){
+            p->score=0;
+        }
         for(i=0;i<LONGUEUR_P-1;i++){
             for(j=0;j<LARGEUR_P;j++){
-                if (fscanf(fich,"%d",p->plateau[i][j])==0){
+                if (fscanf(fich,"%d ",&(p->plateau[i][j]))==0){
                     p->plateau[i][j]=0;
                 }
+                printf("%d",p->plateau[i][j]);
             }
+            printf("\n");
         }
+        printf("%d\n",p->score);
         fclose(fich);
         setGameWindow(p);
     }
 }
-*/
+
 /*
 R: creer les bouttons sauvegarde
 E: longueur ecran,hauteur ecran
@@ -253,7 +258,9 @@ void setSaveMenu(int page, plateau* p){
         MLV_wait_mouse(&x,&y);
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){
-                    printf("load fichier1\n");
+                    loadInFich(p,"../fich/save1.txt");
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
                 else {
                     saveInFich(p,"../fich/save1.txt",p->score);
@@ -264,7 +271,9 @@ void setSaveMenu(int page, plateau* p){
             }
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){
-                    printf("load fichier2\n");
+                    loadInFich(p,"../fich/save2.txt");
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
                 else {
                     saveInFich(p,"../fich/save2.txt",p->score);
@@ -275,7 +284,9 @@ void setSaveMenu(int page, plateau* p){
             }
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*21) && y<((height/40)*21+((height*6)/20))){
                 if (page == 1){
-                    printf("load fichier3\n");
+                    loadInFich(p,"../fich/save3.txt");
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
                 else {
                     saveInFich(p,"../fich/save3.txt",p->score);
@@ -286,7 +297,9 @@ void setSaveMenu(int page, plateau* p){
             }
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/40)*21 && y<(((height/40)*21+(height*6)/20))){
                 if (page == 1){
-                    printf("load fichier4\n");
+                    loadInFich(p,"../fich/save4.txt");
+                    MLV_clear_window(MLV_COLOR_BLACK);
+                    createAllSaveMenu(width,height);
                 }
                 else {
                     saveInFich(p,"../fich/save4.txt",p->score);
