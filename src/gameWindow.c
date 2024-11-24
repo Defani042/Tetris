@@ -25,7 +25,7 @@ S: rien
 void createGameWindow(int w,int h){
     int t;
     MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
-    t=30;
+    t=h/24;
     MLV_clear_window( MLV_COLOR_BLACK );
     MLV_draw_rectangle((w/2)-(5*t)-5,(h/2)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
     MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5,t*4+5,MLV_COLOR_BLUE);                 /*contour prochaine pièce*/
@@ -118,12 +118,12 @@ int setStopWindow(int w,int h,plateau* p){
                 font, MLV_COLOR_WHITE
             );
             MLV_draw_text_with_font(
-                (w/2)-195, h/2-h/10+275,
+                w/5+(w/25)*4, h/2-h/10+275,
                 "YES", 
                 font, MLV_COLOR_WHITE
             );
             MLV_draw_text_with_font(
-                (w/2)+140, h/2-h/10+275,
+                w/5+(w/25)*10+w/200, h/2-h/10+275,
                 "NO", 
                 font, MLV_COLOR_WHITE
             );
@@ -156,12 +156,12 @@ S: rien
 void setGameWindow(plateau *p){
     int i,width,height,j,k,t,w,h;
     i=1;
-    t=30;
     srand(time(NULL));
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
     h=height;
     w=width;
+    t=h/24;
     createGameWindow(width,height);
     MLV_actualise_window();
     while(i){
@@ -173,13 +173,13 @@ void setGameWindow(plateau *p){
         }
         for(k=0;k<10;k++){
             for(j=0;j<22;j++){
-                MLV_draw_filled_rectangle((w/2)-(5*t)-4+31*k,(h/2)-(11*t)+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+                MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*k,(h/2)-(11*t)+(t+1)*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
                 /*test grille*/
             }
         }
         for(k=0;k<4;k++){
             for(j=0;j<4;j++){
-                MLV_draw_filled_rectangle((w/20)*13+31*k,(h/20)*2+31*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
+                MLV_draw_filled_rectangle((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
                 /*test grille prochaine pièce*/
             }
         }   
