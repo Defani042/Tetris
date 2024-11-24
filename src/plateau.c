@@ -12,6 +12,7 @@
 
 /*local lib*/
 #include "plateau.h"
+#include "piece.h"
 
 /*
 R: déterminer si la partie est finie renvoi 1 si partie fini sinon 0
@@ -24,7 +25,7 @@ int gameIsOver(plateau* p){
   /*on regarde toutes les case de la denière ligne du plateau*/
   for(i=0;i<LARGEUR_P;i++){
     /*si une case = 1 game over*/
-    if(p->plateau[LONGUEUR_P -1][i] == 1){
+    if(p->plateau[0][i] == 1){
       return 1;
     }
   }
@@ -73,6 +74,13 @@ void setPlateau(plateau *p){
     }
   }
   p->gameover = 0; /* on met la variable gameover à 0 */
+  setTabpiece(p->tpiece); /*on créait le tableau de piece*/
+  p->score = 0; /*le score est à 0 de base*/
+  p->speed = 1; /*speed est à 1*/
+  piececpy(&(p->p_cur),&(p->tpiece[SelectPiece()])); /*piece courente séléctionner aléatoirement*/
+  piececpy(&(p->p_next),&(p->tpiece[SelectPiece()])); /*piece suivante courente séléctionner aléatoirement*/
+  
+  
 }
 
 /*
@@ -85,7 +93,7 @@ void printPlateau(plateau *p){
   int i,j;
   /*on parcourps le tableau et on afiche la case indince i,j*/
   /*on parcourps le tableau à l'envers sur les lignes pour que la case 2 soit la seconde en partant du bas du tableau*/
-  for(i=LONGUEUR_P-1;i>=0;i--){
+  for(i=0;i<LONGUEUR_P;i++){
     for(j=0;j<LARGEUR_P;j++){
       printf(" %d",p->plateau[i][j]);
     }
@@ -205,5 +213,113 @@ int lineIsEmpty(plateau* p, int n){
     return 1;
   }
   return 0;
-}  
+}
+
+/*
+R: Vérifie si la pièce peut être placée à la position actuelle
+E: 1 pointeur vers plateau et 1 pointeur vers piéces
+S: 1 entier 0 si la piéce ne peut êtres placé sinon 1
+*/
+
+int canPlacePiece(plateau *plat, piece *p) {
+  int newX,newY,i,j;  
+  for (i = 0; i < ROW; i++) {
+    for (j = 0; j < COLUMN; j++) {
+      if (p->piece[i][j] == 1) {
+	newX = p->x + j;
+	newY = p->y + i;
+	if (newX < 0 || newX >= LARGEUR_P || newY < 0 || newY >= LONGUEUR_P || plat->plateau[newY][newX] == 1) {
+	  return 0;
+	}
+      }
+    }
+  }
+  return 1;
+}
+
+/*
+R: Intègre la pièce dans le plateau 
+E: 1 pointeur vers plateau 
+S: vide
+*/
+
+void integratePiece(plateau *plat) {
+  int i,j;
+  piece *p = &plat->p_cur;
+  if (canPlacePiece(plat, p)) {
+    for (i = 0; i < ROW; i++) {
+      for (j = 0; j < COLUMN; j++) {
+                if (p->piece[i][j] == 1) {
+                    plat->plateau[p->y + i][p->x + j] = 1;
+                }
+            }
+        }
+    } else {
+      /* La pièce ne peut pas être placée, donc la partie est terminée*/
+        plat->gameover = 1;
+    }
+}
+
+/*
+R: copié une pièce dans un autre  
+E: 2 pointeurs vers pièces ( dest,sourc)
+S: vide
+*/
+
+void Plateaucpy(plateau *p1,plateau *p2){
+  int i,j;
+  /*on parcourps le plateau de jeux */
+  /*on copy le plateau 2 dans le plateau 1*/
+  for(i=0;i < LONGUEUR_P ;i++){
+    for(j=0;j < LARGEUR_P ;j++){
+      p1->plateau[i][j] =p2->plateau[i][j];
+    }
+  }
+  /* copy des champs simple du plateau */
+  p1->gameover = p2->gameover;
+  p1->score = p2->score;
+  p1->speed = p2->speed;
+
+  /* copy des pieces */
+  piececpy(&(p1->p_cur),&(p2->p_cur));
+  piececpy(&(p1->p_next),&(p2->p_next));
+}
+
+/*
+R: Fait descendre la pièce d'une ligne
+E: 1 pointeur vers plateau
+S: 1 entier 1 la piece peut décendre sinon 0
+*/
+
+int descendPiece(plateau *plat) {
+    piece *p = &plat->p_cur;
+    p->y++;  /* Essaye de descendre la pièce */
+    if (canPlacePiece(plat, p)) {
+      return 1; /* La pièce peut descendre */
+    } else {
+      p->y--; /* Remonte la pièce à sa position précédente */
+      integratePiece(plat); /* Intègre la pièce dans le plateau */
+        return 0; /* La pièce ne peut plus descendre */
+    }
+}
+
+/*
+R: charger la nouvelle piece dans le jeux
+E: 1 pointeur vers plateau
+S: vide
+*/
+
+void generateNewPiece(plateau *plat) {
+    plat->p_cur = plat->p_next;
+    /*la piece suivante devient p_cur*/
+    piececpy(&(plat->p_cur),&(plat->p_next));
+    /*nouvelle valuer pour p_next*/
+    piececpy(&(plat->p_next),&(plat->tpiece[SelectPiece()]));
+
+    if (!canPlacePiece(plat, &plat->p_cur)) {
+      plat->gameover = 1; /* Si la nouvelle pièce ne peut pas être placée, le jeu est terminé */
+    }
+}
+
 #endif /*_PLATEAU_C_*/
+

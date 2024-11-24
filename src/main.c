@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <MLV/MLV_all.h>
 #include <unistd.h>/*permet de faire des sleep*/
+#include <time.h> 
 
 
 /*librairie local*/
@@ -11,8 +12,16 @@
 #include "piece.h"
 
 int main(){
-/*Put the main code here*/
+/*Variable*/
 
+  plateau p;
+  plateau* pp = &p;
+
+  /*Srand*/
+  srand(time(NULL));
+  
+/*Put the main code here*/
+  setPlateau(pp);/*init le plateau*/
   
 /*Test MainWindows*/  
   SetMainWindow();

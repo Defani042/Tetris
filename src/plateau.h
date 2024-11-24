@@ -9,11 +9,18 @@
 #define LARGEUR_P 10
 #define LONGUEUR_P 22
 
+/*local lib*/
+#include "piece.h"
 
 /*Structure Plateau*/
 typedef struct{
   int plateau[LONGUEUR_P][LARGEUR_P]; /*réprésentation du plateau si case = 1 il y a une pièces sinon case =0 */
-  int gameover; /*0 si la partie continue  1 si la partie est terminé*/
+  int gameover;     /*0 si la partie continue  1 si la partie est terminé*/
+  tabpiece tpiece;  /*tableau de pièce*/
+  piece p_cur;      /*piece qu'on est entrain de jouer*/
+  piece p_next;     /*piece qui viens ensuite */
+  int score;        /*score du tetris*/
+  int speed;        /*vitesse des piéces*/
   
 }plateau;
 
@@ -36,5 +43,15 @@ void gapline(plateau *p);
 void setcase(plateau *p , int n , int m, int value);
 
 int lineIsEmpty(plateau* p, int n);
+
+int canPlacePiece(plateau *plat, piece *p);
+
+void Plateaucpy(plateau *p1,plateau *p2);
+
+void integratePiece(plateau *plat);
+
+int descendPiece(plateau *plat);
+
+void generateNewPiece(plateau *plat);
 
 #endif /*_PLATEAU_H_*/

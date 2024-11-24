@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <MLV/MLV_all.h>
+#include <time.h>
 
 /*lib local*/
 #include "piece.h"
@@ -64,7 +65,9 @@ void setPieceLine(piece *p){
   p->piece[1][3]=1;
   p->piece[2][3]=1;
   p->piece[3][3]=1;
-  
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 21;
 }
 
 /*
@@ -85,6 +88,9 @@ void setPieceSquare(piece *p){
   p->piece[2][2]=1;
   p->piece[3][3]=1;
   p->piece[3][2]=1;
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 21;
 }
 
 /*
@@ -126,7 +132,9 @@ void setPieceZ(piece *p){
   p->piece[2][2]=1;
   p->piece[2][3]=1;
   p->piece[3][3]=1;
-
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 21;
 }
 
 /*
@@ -147,7 +155,9 @@ void setPieceZinv(piece *p){
   p->piece[2][2]=1;
   p->piece[2][3]=1;
   p->piece[3][2]=1;
-
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 21;
 }
 
 /*
@@ -168,7 +178,9 @@ void setPieceL(piece *p){
   p->piece[2][2]=1;
   p->piece[2][3]=1;
   p->piece[3][3]=1;
-
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 21;
 }
 
 /*
@@ -189,7 +201,9 @@ void setPieceLinv(piece *p){
   p->piece[2][3]=1;
   p->piece[2][3]=1;
   p->piece[3][3]=1;
-
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 21;
 }
 
 /*
@@ -227,7 +241,7 @@ void reverse_rows(piece *p) {
 }
 
 /*
-R: fonction pour faire une inverse d'une piece
+R: fonction pour faire une rotation anti horaire
 E: un pointeur piece
 S: vide
 */
@@ -254,8 +268,88 @@ void reverse_columns(piece *p) {
   }
 }
 
+/*
+R: fonction pour faire une rotation horaire
+E: un pointeur piece
+S: vide
+*/
+
 void rotate_clockwise(piece *p) {
     transpose(p);
     reverse_columns(p);
 }
+
+/*
+R: fonction de remplissage du tableau avec les pieces de base du tetris
+E: un tableau de piece
+S: vide
+*/
+
+void setTabpiece(tabpiece t){
+  setPieceLine(&t[0]);       /*Piece ligne*/
+  setPieceSquare(&t[1]);     /*Piece carrer*/
+  setPieceT(&t[2]);          /*Piece T*/
+  setPieceZ(&t[3]);          /*Piece Z*/
+  setPieceZinv(&t[4]);       /*Piece Z inversé*/
+  setPieceL(&t[5]);          /*Piece L*/
+  setPieceLinv(&t[6]);       /*Piece L inversé*/
+	    
+}
+
+/*
+R: fonction d'affichage du tableau de piece
+E: un pointeur piece
+S: vide
+*/
+
+void printTabPiece(tabpiece t){
+  int i;
+  /*on parcours le tableau*/
+  for(i=0;i<NB_PIECE;i++){
+    printf("piece %d : \n",i);
+    printpiece(&t[i]); /*afichage de la piece indice i*/
+    printf("\n");
+
+  }
+
+}
+
+/*
+R: fonction pour générer un nombre compris entre 0 et 6 (indice des piece du tableau)
+E: vide
+S: 1 entier (compris entre 0 et 6)
+*/
+
+int SelectPiece(){
+  return rand() % 7;
+}
+
+/*
+R: copié une pièce dans un autre  
+E: 2 pointeurs vers pièces ( dest,sourc)
+S: vide
+*/
+
+void piececpy(piece* p1, piece *p2){
+  int i,j;
+  /* copy de la piece */
+  for (i = 0; i < COLUMN; i++) {
+    for (j = 0; j < COLUMN / 2; j++) {
+      p1->piece[i][j] = p2->piece[i][j];
+    }
+  }
+  /* copy des champs de couleurs de la piece */
+  p1->r=p2->r; /* niveau de ROUGE */
+  p1->g=p2->g; /* niveau de BLEU */
+  p1->b=p2->b; /* niveau de VERT */
+  p1->a=p2->a; /* niveau d' OPPACITE */
+
+  /* copy pos piece */
+  p1->y=p2->y; /*position Y de la piece*/
+  p1->x=p2->x; /*position X de la piece*/
+  
+}
+
+
+
 #endif /*_PIECE_C_*/
