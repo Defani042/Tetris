@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 Tetris: main.o MainWindow.o plateau.o piece.o scoreboard.o save.o
 	gcc -o Tetris main.o MainWindow.o plateau.o piece.o scoreboard.o save.o `pkg-config --libs-only-other --libs-only-L --libs-only-l MLV`
 
 main.o: main.c MainWindow.h plateau.h piece.h save.h scoreboard.h 
+=======
+Tetris: main.o MainWindow.o plateau.o piece.o scoreboard.o save.o gameWindow.o
+	gcc -o Tetris main.o MainWindow.o plateau.o piece.o scoreboard.o save.o gameWindow.o `pkg-config --libs-only-other --libs-only-L --libs-only-l MLV`
+
+main.o: main.c MainWindow.h plateau.h piece.h save.h scoreboard.h gameWindow.h
+>>>>>>> Gaultier
 	gcc -c -Wall -W -std=c89 -pedantic -O2 `pkg-config --cflags MLV` main.c -o main.o
 
 MainWindow.o: MainWindow.c MainWindow.h
@@ -18,6 +25,12 @@ save.o:	save.c save.h
 
 scoreboard.o: scoreboard.c scoreboard.h
 	gcc -c -Wall -W -std=c89 -pedantic -O2 `pkg-config --cflags MLV` scoreboard.c -o scoreboard.o
+<<<<<<< HEAD
+=======
+
+gameWindow.o: gameWindow.c gameWindow.h
+	gcc -c -Wall -W -std=c89 -pedantic -O2 `pkg-config --cflags MLV` gameWindow.c -o gameWindow.o
+>>>>>>> Gaultier
 
 clean:
 	rm -rf *.o *~ Tetris

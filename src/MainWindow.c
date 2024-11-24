@@ -10,6 +10,7 @@
 /*local lib*/
 #include "MainWindow.h"
 #include "save.h"
+#include "gameWindow.h"
 
 /*Macro*/
 #define LINE_MAX 32
@@ -25,10 +26,10 @@ void setLogo(int h, int w){
     int h1,h2,h3,w1,w2,w3,p1,p2,p3;
     MLV_Font* font;
     h1=(100*h)/1000;
-    h2=(0*h)/1000;
+    h2=(965*h)/1000;
     h3=(230*h)/1000;
     w1=(200*w)/1000;
-    w2=(0*w)/1000;
+    w2=(35*w)/1000;
     w3=(675*w)/1000;
     p1=(100*w)/1000;
     p2=(15*w)/1000;
@@ -145,7 +146,7 @@ void setButonLoad(int w,int h){
     h3=(567*h)/1000;
     p=(25*w)/1000;
     font = MLV_load_font( "../fich/04B_30__.TTF" , p );
-     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
+     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_rgba(0,0,255,255));
      MLV_draw_text_with_font(
         w3, h3,
         "LOAD A GAME", 
@@ -239,22 +240,26 @@ R: permet d'afficher le menu principale
 E: vide
 S: vide
 */
-void SetMainWindow(){
+void SetMainWindow(plateau *p){
     int x,y,i,width,height;
     height = MLV_get_desktop_height();
     width = MLV_get_desktop_width();
     i=1;
     MLV_create_window("Tetris","Tetris-like",width,height);
+    MLV_enable_full_screen( );
     createWindow();
 
     while(i){
         MLV_wait_mouse(&x,&y);
         if (x>(300*width/1000) && x<(700*width/1000) && y>(400*height/1000) && y<(500*height/1000)){
-            startGame();
+            /*startGame();*/
+            setGameWindow(p);
+            MLV_clear_window( MLV_COLOR_BLACK );
+            createWindow();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
             /*loadGame();*/
-            setSaveMenu();
+            setSaveMenu(1,p);
             MLV_clear_window( MLV_COLOR_BLACK );
             createWindow();
         }

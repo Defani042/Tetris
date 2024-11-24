@@ -7,7 +7,8 @@
 #include <MLV/MLV_all.h>
 
 /*local lib*/
-
+#include "save.h"
+#include "plateau.h"
 
 /* Fonctions */
 
@@ -31,6 +32,6 @@ void option();
 
 void createWindow();
 
-void SetMainWindow();
+void SetMainWindow(plateau *p);
 
 #endif /*_PLATEAU_H_*/

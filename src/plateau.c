@@ -74,6 +74,7 @@ void setPlateau(plateau *p){
     }
   }
   p->gameover = 0; /* on met la variable gameover à 0 */
+<<<<<<< HEAD
   setTabpiece(p->tpiece); /*on créait le tableau de piece*/
   p->score = 0; /*le score est à 0 de base*/
   p->speed = 1; /*speed est à 1*/
@@ -81,6 +82,9 @@ void setPlateau(plateau *p){
   piececpy(&(p->p_next),&(p->tpiece[SelectPiece()])); /*piece suivante courente séléctionner aléatoirement*/
   
   
+=======
+  p->score = 0; /*on met la variable score à 0*/
+>>>>>>> Gaultier
 }
 
 /*
