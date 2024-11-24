@@ -21,14 +21,7 @@ int main(){
   srand(time(NULL));
   
 /*Put the main code here*/
-<<<<<<< HEAD
   setPlateau(pp);/*init le plateau*/
-=======
-plateau p;
-plateau* pp = &p;
-setPlateau(pp);
-
->>>>>>> Gaultier
   
 /*Test MainWindows*/  
   SetMainWindow(pp);

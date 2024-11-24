@@ -15,18 +15,12 @@
 /*Structure Plateau*/
 typedef struct{
   int plateau[LONGUEUR_P][LARGEUR_P]; /*réprésentation du plateau si case = 1 il y a une pièces sinon case =0 */
-<<<<<<< HEAD
   int gameover;     /*0 si la partie continue  1 si la partie est terminé*/
   tabpiece tpiece;  /*tableau de pièce*/
   piece p_cur;      /*piece qu'on est entrain de jouer*/
   piece p_next;     /*piece qui viens ensuite */
   int score;        /*score du tetris*/
   int speed;        /*vitesse des piéces*/
-  
-=======
-  int gameover; /*0 si la partie continue  1 si la partie est terminé*/
-  int score;
->>>>>>> Gaultier
 }plateau;
 
 int gameIsOver(plateau* p);
