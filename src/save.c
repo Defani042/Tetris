@@ -26,8 +26,10 @@ E: taille écran
 S: rien 
 */
 void WindowCheckSave(int w, int h){
-    MLV_Font* font;
-    font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    MLV_Font* font=NULL;
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    }
     MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLACK);     /*carré*/
     MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLUE);            /*contour*/
     MLV_draw_text_with_font(
@@ -150,9 +152,11 @@ S: rien
 
 void setSaveButton(int width, int height){
     int w,h;
-    MLV_Font* font;
+    MLV_Font* font=NULL;
     MLV_clear_window( MLV_COLOR_BLACK );
-    font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );    
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );    
+    }
     MLV_draw_filled_rectangle(width*3/20,(height/40)*5,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
     w=(200*width)/1000;                                 /*créer le carré pour les fichier de save*/
     h=(150*height)/1000;
@@ -211,7 +215,7 @@ S: Vide
 */
 void setButonBack(int w,int h){
     int w1,w2,w3,h1,h2,h3,p;
-    MLV_Font* font;
+    MLV_Font* font=NULL;
     w1=(350*w)/1000;    /*prends toutes les coordonnées h pour hauteur, w pour largeur et p pour police*/
     w2=(300*w)/1000;
     w3=(455*w)/1000;
@@ -219,7 +223,9 @@ void setButonBack(int w,int h){
     h2=(75*h)/1000;
     h3=(920*h)/1000;
     p=(25*w)/1000;
-    font = MLV_load_font( "../fich/04B_30__.TTF" , p );
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , p );
+    }
     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE); /*crrer le carré du bouton back*/
     MLV_draw_text_with_font(
         w3, h3,
@@ -236,14 +242,16 @@ S: rien
 
 void saveScore(int w,int h,char* fichier,int num_save){
     int j,w1,w2,h1,h2;
-    MLV_Font* font;
+    MLV_Font* font=NULL;
     FILE* fich;
     char line[LINE_MAX];
     w1=0;
     w2=0;   /*initialise à 0 toutes les variables*/
     h1=0;
     h2=0;
-    font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    }
     switch (num_save){
         case 1: w1=w*210/1000;h1=h*325/1000;w2=w*245/1000;h2=h*325/1000;break;
         case 2: w1=w*610/1000;h1=h*325/1000;w2=w*645/1000;h2=h*325/1000;break;

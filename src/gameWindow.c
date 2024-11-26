@@ -18,25 +18,19 @@
 
 /*
 R: affiche le temps 
-E: temps en hh:mm:ss en tableau de char
+E: temps en hh:mm:ss en tableau de char et le font
 S: rien
 */
 
-void printTime(char* t){
-    int i;
+void printTime(char* t,MLV_Font* font){
     int h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     int w = MLV_get_desktop_width();
-    MLV_Font* font;
-    i=MLV_path_exists("../fich/04B_30__.TTF");
     MLV_draw_filled_rectangle((w/20)*2, h/3+20,(w/20)*2,25,MLV_COLOR_BLACK);
-    if (i==1){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
         MLV_draw_text_with_font(
             (w/20)*2, h/3+25,
             t,         /*affiche le temps aux bonnes coordonnées*/
             font, MLV_COLOR_WHITE
         );
-    }
 
 }
 
@@ -48,7 +42,10 @@ S: rien
 
 void createGameWindow(int w,int h){
     int t;
-    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    MLV_Font* font=NULL;
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    }
     t=h/24;
     MLV_clear_window( MLV_COLOR_BLACK );
     MLV_draw_rectangle((w/2)-(5*t)-5,(h/2)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
@@ -83,7 +80,10 @@ S: rien
 */
 
 void stopWindow(int w, int h){
-    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 30 );
+    MLV_Font* font=NULL;
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 30 );
+    }
     MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLACK);     /*carré pause*/
     MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLUE);             /*contour pause*/
     MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10,w/5,50,MLV_COLOR_BLUE);     /*carré RESUME*/
@@ -121,7 +121,10 @@ S: rien
 
 int setStopWindow(int w,int h,plateau* p){
     int x,y,i=1,j=1; /*initialise i et j à vrai*/
-    MLV_Font* font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    MLV_Font* font=NULL;
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    }
     stopWindow(w,h);
     while(i){
         MLV_wait_mouse(&x,&y);
@@ -194,11 +197,13 @@ S: rien
 
 void setGameWindow(plateau *p){
     int i,width,height,j,k,t,w,h,hours,minutes,seconds;
-    struct timespec debut, fin;
+    struct timespec debut, fin,debut_jeu,mid_jeu;
+    MLV_Font* font=NULL;
     char text[32];
-    int frame =0;
-    uint temps=0; /*uint pour unsigned int*/
-    temps=0;
+    int unsigned temps;
+    if(MLV_path_exists("../fich/04B_30__.TTF")){
+        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    }
     i=1;
     srand(time(NULL));
     height = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
@@ -208,6 +213,7 @@ void setGameWindow(plateau *p){
     t=h/24;                             /*taille des carré de Tetris par rapport à la hauteur de l'écran*/
     createGameWindow(width,height);
     MLV_actualise_window();
+    clock_gettime(CLOCK_REALTIME, &debut_jeu);
     while(i){
         MLV_actualise_window();
         clock_gettime(CLOCK_REALTIME, &debut);
@@ -229,17 +235,16 @@ void setGameWindow(plateau *p){
                 /*test grille prochaine pièce*/
             }
         }
-        if (frame%30==0){
-            temps ++;
-            hours = temps / 3600;
-            minutes = (temps % 3600) / 60;
-            seconds = temps % 60;
-            sprintf(text, "%02d:%02d:%02d", hours, minutes, seconds); /* Met un texte avec des int dans une variable "string"*/
-            printTime(text);
-        }
-        frame=(frame + 1)%30;
+        clock_gettime(CLOCK_REALTIME, &mid_jeu);
+        temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
+        temps/=1000;
+        hours = temps / 3600;
+        minutes = (temps % 3600) / 60;
+        seconds = temps % 60;
+        sprintf(text, "%02d:%02d:%02d", hours, minutes, seconds); /* Met un texte avec des int dans une variable "string"*/
+        printTime(text,font);
         clock_gettime(CLOCK_REALTIME, &fin);
-        if((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) MLV_wait_milliseconds((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
+        if((1000/40)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) MLV_wait_milliseconds((1000/40)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
     }
 }
 
