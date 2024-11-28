@@ -15,31 +15,31 @@
 /*
 R: Met dans les tableau les scores actuels.
 E: Nom du fichier, tableau des éléments, nouvel element
-S: Rien
+S: Rienprécédent
 */
 
 void readFich(char* filename,int tab[NB_MAX], int new_score){
     int i;
     FILE* fich;
     char line[LINE_MAX];
-    i=0;
+    i=0;    /*initialise l'indice à 0*/
     fich = fopen(filename,"a+");
     while (i<11){
         if (fich == NULL){
-            tab[i]= -1;
+            tab[i]= 0; /*si le fichier n'existe pas, met 0 dans le tableau pour tous les scores*/
         }
         else{
             if (i==10){
-                tab[i]=new_score;
+                tab[i]=new_score;    /*ajouter le nouveau score en 11 élément de la liste des score si i==10*/
             }
             else{
-                if (fgets(line,LINE_MAX,fich) == NULL) tab[i]=0;
-                else tab[i]=atoi(line);
-            }
+                if (fgets(line,LINE_MAX,fich) == NULL) tab[i]=0; /*si il manque des ligne au fichier, met 0*/
+                else tab[i]=atoi(line);   /*sinon, met l'équivalent entier du score qui est sur la ligne*/
+            }                             /*je sais que atoi c argument to int mais j'ai pas d'erreur */
         }
-        i++;
+        i++; /*augmente l'indice de 1*/
     }
-    fclose(fich);
+    fclose(fich); /*ferme le fichier*/
 }
 
 /*
@@ -49,10 +49,10 @@ S: Rien
 */
 
 void tri(int tab[NB_MAX]){
-    int i,j,cmp;
+    int i,j,cmp;    /*initialise les indices et la variable temporaire*/
     for (i=10;i>0;i--){
         for (j=0;j<i;j++){
-            if (tab[j+1]>tab[j]){
+            if (tab[j+1]>tab[j]){ /*algorthme du tri à bulle*/
                 cmp=tab[j];
                 tab[j]=tab[j+1];
                 tab[j+1]=cmp;
@@ -67,18 +67,18 @@ E: nom du fichier, tableau de score
 S: rien
 */
 void printfichier(char* filename,int tab[NB_MAX]){
-    int i;
+    int i;      
     FILE* fich;
-    i=0;
+    i=0;        /*initialise l'indice à 0*/
     fich = fopen(filename,"w+");
-    if (fich != NULL){
+    if (fich != NULL){ /*si le fich existe*/
         while (i<11){
-            if (tab[i]!=0){
-            fprintf(fich,"%d\n",tab[i]);
+            if (tab[i]!=0){     /*si le nombre est égal à 0, ne lecopie pas dans les scores*/
+            fprintf(fich,"%d\n",tab[i]);    /*copie les scores triés dans le fichier de save*/
             }
-            i++;
+            i++;    /*incrémente i de 1*/
         }
-        fclose(fich);
+        fclose(fich);/*ferme le fichier*/
     }
 }
 
@@ -103,12 +103,12 @@ S: rien
 */
 
 void setScoreboard(int new_score){
-    int tab[NB_MAX];
-    readFich("../fich/scoreboard.txt",tab,new_score);
+    int tab[NB_MAX]; /*defini le tableau des scores*/
+    readFich("../fich/scoreboard.txt",tab,new_score); /*copie les données du fichier dans le tableau*/
     /*testaffichage(tab);*/
-    tri(tab);
+    tri(tab);                                         /*tri le tableau*/
     /*testaffichage(tab);*/
-    printfichier("../fich/scoreboard.txt",tab);
+    printfichier("../fich/scoreboard.txt",tab);       /*met le tableau dans le fichier*/
 }
 
 /*Main de test

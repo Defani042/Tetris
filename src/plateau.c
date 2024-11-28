@@ -80,8 +80,6 @@ void setPlateau(plateau *p){
   p->speed = 1; /*speed est à 1*/
   piececpy(&(p->p_cur),&(p->tpiece[SelectPiece()])); /*piece courente séléctionner aléatoirement*/
   piececpy(&(p->p_next),&(p->tpiece[SelectPiece()])); /*piece suivante courente séléctionner aléatoirement*/
-  
-  
 }
 
 /*
