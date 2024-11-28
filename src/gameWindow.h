@@ -10,6 +10,8 @@
 #include "save.h"
 #include "plateau.h"
 
+void printTime(char* t,MLV_Font* font);
+
 void createGameWindow(int w,int h);
 
 void stopWindow(int w, int h);

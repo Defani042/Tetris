@@ -4,6 +4,7 @@
 /*std lib*/
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <MLV/MLV_all.h>
 #include <time.h>
 
@@ -11,10 +12,40 @@
 #include "gameWindow.h"
 #include "save.h"
 #include "plateau.h"
+#include "piece.h"
 
 /*Macro*/
-#define LARGEUR_P 10
-#define LONGUEUR_P 22
+
+/*
+R : affiche le plateau avec MLV
+E : pointeur vers plateau, taille case (t), taille de l'ecran
+S : rien
+*/
+
+void afficherPlateau(plateau *p,int t,int w,int h){
+    int k,j;
+    integratePiece(p);
+    for(k=0;k<LARGEUR_P;k++){
+            for(j=0;j<LONGUEUR_P;j++){
+                if (p->plateau[j][k]>0){
+                    MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*k,(h/2)-(11*t)+(t+1)*j,t,t,MLV_rgba(p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a));
+                }
+                else {
+                    MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*k,(h/2)-(11*t)+(t+1)*j,t,t,MLV_rgba(10,10,10,255));
+                }
+            }
+        }
+    for(k=0;k<ROW;k++){
+        for(j=0;j<COLUMN;j++){
+            if (p->p_next.piece[j][k]>0){
+                MLV_draw_filled_rectangle((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,MLV_rgba(p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a));
+            }
+            else {
+                MLV_draw_filled_rectangle((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,MLV_rgba(10,10,10,255));
+            }
+        }
+    }
+}
 
 /*
 R: affiche le temps 
@@ -196,7 +227,7 @@ S: rien
 */
 
 void setGameWindow(plateau *p){
-    int i,width,height,j,k,t,w,h,hours,minutes,seconds;
+    int i,width,height,t,hours,minutes,seconds;
     struct timespec debut, fin,debut_jeu,mid_jeu;
     MLV_Font* font=NULL;
     char text[32];
@@ -208,9 +239,7 @@ void setGameWindow(plateau *p){
     srand(time(NULL));
     height = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     width = MLV_get_desktop_width();
-    h=height;
-    w=width;
-    t=h/24;                             /*taille des carré de Tetris par rapport à la hauteur de l'écran*/
+    t=height/24;                             /*taille des carré de Tetris par rapport à la hauteur de l'écran*/
     createGameWindow(width,height);
     MLV_actualise_window();
     clock_gettime(CLOCK_REALTIME, &debut_jeu);
@@ -218,23 +247,13 @@ void setGameWindow(plateau *p){
         MLV_actualise_window();
         clock_gettime(CLOCK_REALTIME, &debut);
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
-            /*si on appuie sur espace, alors on ouvre le menu pause*/
+            /*si on appuie sur echap, alors on ouvre le menu pause*/
             i=setStopWindow(width,height,p);
             MLV_clear_window(MLV_COLOR_BLACK);
             createGameWindow(width,height);
         }
-        for(k=0;k<10;k++){
-            for(j=0;j<22;j++){
-                MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*k,(h/2)-(11*t)+(t+1)*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
-                /*test grille*/
-            }
-        }
-        for(k=0;k<4;k++){
-            for(j=0;j<4;j++){
-                MLV_draw_filled_rectangle((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,MLV_rgba(rand()%256,rand()%256,rand()%256,255));
-                /*test grille prochaine pièce*/
-            }
-        }
+        afficherPlateau(p,t,width,height);
+        /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
         temps/=1000;

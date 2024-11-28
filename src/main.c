@@ -22,7 +22,7 @@ int main(){
   
 /*Put the main code here*/
   setPlateau(pp);/*init le plateau*/
-  
+  printTabPiece(pp->tpiece);
 /*Test MainWindows*/  
   SetMainWindow(pp);
   exit(EXIT_SUCCESS);
