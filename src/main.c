@@ -16,12 +16,16 @@ int main(){
 
   plateau p;
   plateau* pp = &p;
+  piece p1;
+  piece* pp1 = &p1;
+  
 
   /*Srand*/
   srand(time(NULL));
   
 /*Put the main code here*/
   setPlateau(pp);/*init le plateau*/
+  
   
 /*Test MainWindows*/  
   SetMainWindow();

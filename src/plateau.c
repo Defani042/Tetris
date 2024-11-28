@@ -73,6 +73,7 @@ void setPlateau(plateau *p){
       p->plateau[i][j] = 0;
     }
   }
+  setTabpiece(p->tpiece); /*set le plateau de piece*/
   p->gameover = 0; /* on met la variable gameover à 0 */
   setTabpiece(p->tpiece); /*on créait le tableau de piece*/
   p->score = 0; /*le score est à 0 de base*/
@@ -310,7 +311,6 @@ S: vide
 */
 
 void generateNewPiece(plateau *plat) {
-    plat->p_cur = plat->p_next;
     /*la piece suivante devient p_cur*/
     piececpy(&(plat->p_cur),&(plat->p_next));
     /*nouvelle valuer pour p_next*/

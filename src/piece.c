@@ -67,7 +67,7 @@ void setPieceLine(piece *p){
   p->piece[3][3]=1;
   /*position de la piece*/
   p->x= 4;
-  p->y= 21;
+  p->y= 0;
 }
 
 /*
@@ -90,7 +90,7 @@ void setPieceSquare(piece *p){
   p->piece[3][2]=1;
   /*position de la piece*/
   p->x= 4;
-  p->y= 21;
+  p->y= 0;
 }
 
 /*
@@ -111,7 +111,9 @@ void setPieceT(piece *p){
   p->piece[3][3]=1;
   p->piece[3][2]=1;
   p->piece[3][1]=1;
-
+  /*position de la piece*/
+  p->x= 4;
+  p->y= 0;
 }
 
 /*
@@ -134,7 +136,7 @@ void setPieceZ(piece *p){
   p->piece[3][3]=1;
   /*position de la piece*/
   p->x= 4;
-  p->y= 21;
+  p->y= 0;
 }
 
 /*
@@ -157,7 +159,7 @@ void setPieceZinv(piece *p){
   p->piece[3][2]=1;
   /*position de la piece*/
   p->x= 4;
-  p->y= 21;
+  p->y= 0;
 }
 
 /*
@@ -176,11 +178,11 @@ void setPieceL(piece *p){
   /* aspect de la pièce */
   p->piece[1][2]=1;
   p->piece[2][2]=1;
-  p->piece[2][3]=1;
   p->piece[3][3]=1;
+  p->piece[3][2]=1;
   /*position de la piece*/
   p->x= 4;
-  p->y= 21;
+  p->y= 0;
 }
 
 /*
@@ -199,11 +201,11 @@ void setPieceLinv(piece *p){
   /* aspect de la pièce */
   p->piece[1][3]=1;
   p->piece[2][3]=1;
-  p->piece[2][3]=1;
   p->piece[3][3]=1;
+  p->piece[3][2]=1;
   /*position de la piece*/
   p->x= 4;
-  p->y= 21;
+  p->y= 0;
 }
 
 /*
@@ -214,6 +216,7 @@ S: vide
 
 void transpose(piece *p) {
   int i,j,tmp;
+
   for(i = 0; i < ROW; i++) {
     for (j = i + 1; j < ROW; j++) {
       tmp = p->piece[i][j];
@@ -334,7 +337,7 @@ void piececpy(piece* p1, piece *p2){
   int i,j;
   /* copy de la piece */
   for (i = 0; i < COLUMN; i++) {
-    for (j = 0; j < COLUMN / 2; j++) {
+    for (j = 0; j < ROW; j++) {
       p1->piece[i][j] = p2->piece[i][j];
     }
   }
@@ -349,7 +352,6 @@ void piececpy(piece* p1, piece *p2){
   p1->x=p2->x; /*position X de la piece*/
   
 }
-
 
 
 #endif /*_PIECE_C_*/
