@@ -228,10 +228,11 @@ S: rien
 
 void setGameWindow(plateau *p){
     int i,width,height,t,hours,minutes,seconds;
-    struct timespec debut, fin,debut_jeu,mid_jeu;
+    struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
     char text[32];
-    int unsigned temps;
+    int unsigned temps,temps_pause;
+    temps_pause=0;
     if(MLV_path_exists("../fich/04B_30__.TTF")){
         font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
     }
@@ -247,15 +248,19 @@ void setGameWindow(plateau *p){
         MLV_actualise_window();
         clock_gettime(CLOCK_REALTIME, &debut);
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
+            clock_gettime(CLOCK_REALTIME, &tmp_pause_deb);
             /*si on appuie sur echap, alors on ouvre le menu pause*/
             i=setStopWindow(width,height,p);
             MLV_clear_window(MLV_COLOR_BLACK);
             createGameWindow(width,height);
+            clock_gettime(CLOCK_REALTIME, &tmp_pause_fin);
+            temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
         afficherPlateau(p,t,width,height);
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
+        temps -=temps_pause;
         temps/=1000;
         hours = temps / 3600;
         minutes = (temps % 3600) / 60;
@@ -263,7 +268,7 @@ void setGameWindow(plateau *p){
         sprintf(text, "%02d:%02d:%02d", hours, minutes, seconds); /* Met un texte avec des int dans une variable "string"*/
         printTime(text,font);
         clock_gettime(CLOCK_REALTIME, &fin);
-        if((1000/40)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) MLV_wait_milliseconds((1000/40)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
+        if((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) MLV_wait_milliseconds((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
     }
 }
 
