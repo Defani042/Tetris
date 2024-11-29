@@ -44,8 +44,8 @@ int lineIsFull(plateau* p, int n){
   int i, casefull = 0;
   /*on regarde si les cases de la ligne n sont égale à 1*/
   for(i=0;i<LARGEUR_P;i++){
-    /*récupération du nombre de case = 1*/
-    if(p->plateau[n][i] == 1){
+    /*récupération du nombre de case pleinne*/
+    if(p->plateau[n][i] != 0){
       casefull++;
     }
     
@@ -224,7 +224,7 @@ int canPlacePiece(plateau *plat, piece *p) {
   int newX,newY,i,j;  
   for (i = 0; i < ROW; i++) {
     for (j = 0; j < COLUMN; j++) {
-      if (p->piece[i][j] == 1) {
+      if (p->piece[i][j]>0) {
 	newX = p->x + j;
 	newY = p->y + i;
 	if (newX < 0 || newX >= LARGEUR_P || newY < 0 || newY >= LONGUEUR_P || plat->plateau[newY][newX] == 1) {
@@ -248,8 +248,8 @@ void integratePiece(plateau *plat) {
   if (canPlacePiece(plat, p)) {
     for (i = 0; i < ROW; i++) {
       for (j = 0; j < COLUMN; j++) {
-                if (p->piece[i][j] == 1) {
-                    plat->plateau[p->y + i][p->x + j] = 1;
+                if (p->piece[i][j] > 0) {
+                    plat->plateau[p->y + i][p->x + j] = plat->p_cur.id;
                 }
             }
         }
@@ -319,5 +319,56 @@ void generateNewPiece(plateau *plat) {
     }
 }
 
+/*
+R: incrémenter le score en fonction des ligne qui ont été nétoyer
+E: 1 pointeur vers plateau
+S: vide
+*/
+
+void increaseScore(plateau *p){
+  int lineclear;
+  lineclear = checkPlateauState(p);
+  switch(lineclear){
+  /* si on a clear 1 ligne*/
+  case 1:
+    p->score+=10;
+    break;
+  /* si on a clear 2 lignes*/   
+  case 2:
+    p->score+=25;
+    break;
+  /* si on a clear 3 lignes*/
+  case 3:
+    p->score+=50;
+    break;
+  /* si on a clear 4 ligne*/
+  case 4:
+    p->score+=100;
+    break;
+  /* cas default */
+  default:
+    break;
+  }
+}
+
+/*
+R: augmenter la vitesse en fonction du score
+E: 1 pointeur vers plateau
+S: vide
+*/
+
+void increaseSpeed(plateau *p){
+  if(p->score >= 0 && p->score < 500) p->speed = 0;           /*  level 0  */
+  if(p->score >= 500 && p->score < 1000) p->speed = 1;        /*  level 1  */
+  if(p->score >= 1000 && p->score < 2000) p->speed = 2;       /*  level 2  */
+  if(p->score >= 2000 && p->score < 4000) p->speed = 3;       /*  level 3  */
+  if(p->score >= 4000 && p->score < 8000) p->speed = 4;       /*  level 4  */
+  if(p->score >= 8000 && p->score < 16000) p->speed = 5;      /*  level 5  */
+  if(p->score >= 16000 && p->score < 32000) p->speed = 6;     /*  level 6  */
+  if(p->score >= 32000 && p->score < 64000) p->speed = 7;     /*  level 7  */
+  if(p->score >= 64000 && p->score < 128000) p->speed = 8;    /*  level 8  */
+  if(p->score >= 128000 && p->score < 256000) p->speed = 9;   /*  level 9  */
+  if(p->score > 256000) p->speed = 10;                        /*  level 10 */
+}
 #endif /*_PLATEAU_C_*/
 

@@ -10,12 +10,15 @@
 #define ROW 4
 #define COLUMN 4
 #define NB_PIECE 7
+#define INITY 0
+#define INITX 4
 
 /*Structure piece*/
 typedef struct{
   int piece[ROW][COLUMN];/*réprésentation piece  si case = 1 il y a une pièces sinon case =0 */
   int r,g,b,a; /*niveau de coleur(r,g,b) et oppacité(a) */
   int x,y; /*position de la piece dans le plateau*/
+  int id; /*id de la piece*/
 }piece;
 
 /*Déclaration d'un tableau de piece*/
@@ -57,6 +60,5 @@ void setTabpiece(tabpiece t);
 int SelectPiece();
 
 void piececpy(piece* p1, piece *p2);
-
 
 #endif /*_PIECE_H_*/
