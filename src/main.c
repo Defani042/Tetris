@@ -16,7 +16,7 @@ int main(){
 
   plateau p;
   plateau* pp = &p;
-  
+
 
   /*Srand*/
   srand(time(NULL));
@@ -24,7 +24,6 @@ int main(){
 /*Put the main code here*/
   setPlateau(pp);/*init le plateau*/
 
-  
 /*Test MainWindows*/  
   SetMainWindow(pp);
   exit(EXIT_SUCCESS);
