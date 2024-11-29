@@ -27,3 +27,7 @@ le code est aagencer en différent module :
 ## Condition d'utilisation
 
 Toutes forment de distribution illégale à des fins monétaire est strictement interdites et sans l'autorisation des auteurs.
+
+## GITIGNORE
+
+Le fichier '.gitignore' permet d'ignorer les modifications effectuées sur le dossier '/build' ou sont stocker les fichiers objet du projet. Il ne faut donc pas mettre de fichier important dans ce répertoire.
