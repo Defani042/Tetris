@@ -25,8 +25,12 @@ int main(){
   
 /*Put the main code here*/
   setPlateau(pp);/*init le plateau*/
+<<<<<<< HEAD
   printTabPiece(pp->tpiece);
 
+=======
+  
+>>>>>>> 68a50e3848acb0fc2172a14e273a4685d9e70fb1
 /*Test MainWindows*/  
   SetMainWindow(pp);
   exit(EXIT_SUCCESS);

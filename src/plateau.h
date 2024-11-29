@@ -53,4 +53,8 @@ int descendPiece(plateau *plat);
 
 void generateNewPiece(plateau *plat);
 
+void increaseScore(plateau *p);
+
+void increaseSpeed(plateau *p);
+
 #endif /*_PLATEAU_H_*/

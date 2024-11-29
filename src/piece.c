@@ -68,6 +68,8 @@ void setPieceLine(piece *p){
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 1;
 }
 
 /*
@@ -84,13 +86,15 @@ void setPieceSquare(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[2][3]=1;
-  p->piece[2][2]=1;
-  p->piece[3][3]=1;
-  p->piece[3][2]=1;
+  p->piece[2][3]=2;
+  p->piece[2][2]=2;
+  p->piece[3][3]=2;
+  p->piece[3][2]=2;
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 2;
 }
 
 /*
@@ -107,13 +111,15 @@ void setPieceT(piece *p){
   p->b=238;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[2][2]=1;
-  p->piece[3][3]=1;
-  p->piece[3][2]=1;
-  p->piece[3][1]=1;
+  p->piece[2][2]=3;
+  p->piece[3][3]=3;
+  p->piece[3][2]=3;
+  p->piece[3][1]=3;
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 3;
 }
 
 /*
@@ -130,13 +136,15 @@ void setPieceZ(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][2]=1;
-  p->piece[2][2]=1;
-  p->piece[2][3]=1;
-  p->piece[3][3]=1;
+  p->piece[1][2]=4;
+  p->piece[2][2]=4;
+  p->piece[2][3]=4;
+  p->piece[3][3]=4;
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 4;
 }
 
 /*
@@ -153,13 +161,15 @@ void setPieceZinv(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][3]=1;
-  p->piece[2][2]=1;
-  p->piece[2][3]=1;
-  p->piece[3][2]=1;
+  p->piece[1][3]=5;
+  p->piece[2][2]=5;
+  p->piece[2][3]=5;
+  p->piece[3][2]=5;
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 5;
 }
 
 /*
@@ -176,13 +186,15 @@ void setPieceL(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][2]=1;
-  p->piece[2][2]=1;
-  p->piece[3][3]=1;
-  p->piece[3][2]=1;
+  p->piece[1][2]=6;
+  p->piece[2][2]=6;
+  p->piece[3][3]=6;
+  p->piece[3][2]=6;
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 6;
 }
 
 /*
@@ -199,13 +211,15 @@ void setPieceLinv(piece *p){
   p->b=255;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][3]=1;
-  p->piece[2][3]=1;
-  p->piece[3][3]=1;
-  p->piece[3][2]=1;
+  p->piece[1][3]=7;
+  p->piece[2][3]=7;
+  p->piece[3][3]=7;
+  p->piece[3][2]=7;
   /*position de la piece*/
   p->x= 4;
   p->y= 0;
+  /*id de la piece*/
+  p->id = 7;
 }
 
 /*
@@ -350,6 +364,7 @@ void piececpy(piece* p1, piece *p2){
   /* copy pos piece */
   p1->y=p2->y; /*position Y de la piece*/
   p1->x=p2->x; /*position X de la piece*/
+  p1->id=p2->id; /*copy de l'id */
   
 }
 
