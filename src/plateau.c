@@ -22,7 +22,7 @@ int gameIsOver(plateau* p){
   /*on regarde toutes les case de la denière ligne du plateau*/
   for(i=2;i<LARGEUR_P-2;i++){
     /*si une case = 1 game over*/
-    if(p->plateau[0][i] == 1){
+    if(p->plateau[2][i] > 1){
       return 1;
     }
   }
@@ -49,7 +49,7 @@ int lineIsFull(plateau* p, int n){
   }
   /*on vérifie que le nombre de case est égale à la largeur du plateau*/
   /*si oui = 1 sinon = 0 */
-  if( casefull == LARGEUR_P){
+  if( casefull == LARGEUR_P-4){
     return 1;
   }
   return 0;
@@ -75,7 +75,6 @@ void setPlateau(plateau *p){
   }
   setTabpiece(p->tpiece); /*set le plateau de piece*/
   p->gameover = 0; /* on met la variable gameover à 0 */
-  setTabpiece(p->tpiece); /*on créait le tableau de piece*/
   p->score = 0; /*le score est à 0 de base*/
   p->speed = 1; /*speed est à 1*/
   piececpy(&(p->p_cur),&(p->tpiece[SelectPiece()])); /*piece courente séléctionner aléatoirement*/
@@ -147,7 +146,7 @@ void filledline(plateau *p, int n){
   int i;
   /*on parcourps la ligne n*/
   for(i=2;i<LARGEUR_P-2;i++){
-    p->plateau[n-1][i] = 1;
+    p->plateau[n][i] = 1;
   }
 
 }
@@ -165,7 +164,7 @@ void gapline(plateau *p) {
       dec++;
     }
     else if (dec > 0) {
-      for(j=0;j<LARGEUR_P;j++){
+      for(j=2;j<LARGEUR_P-2;j++){
 	p->plateau[i-dec][j] = 	p->plateau[i][j];	
       }
       clearLine(p,i);
@@ -229,6 +228,7 @@ int canPlacePiece(plateau *plat, piece *p) {
 	newY = p->y + i;
 	if (newX < 2 || newX >= LARGEUR_P-2 || newY < 2 || newY >= LONGUEUR_P-2 || plat->plateau[newY][newX] >0) {
 
+
 	  return 0;
 	}
       }
@@ -246,7 +246,6 @@ S: vide
 void integratePiece(plateau *plat) {
   int i,j;
   piece *p = &plat->p_cur;
-  supprPiece(plat);
   if (canPlacePiece(plat, p)) {
     for (i = 0; i < ROW; i++) {
       for (j = 0; j < COLUMN; j++) {
@@ -291,8 +290,10 @@ S: 1 entier 1 la piece peut décendre sinon 0
 
 int descendPiece(plateau *plat) {
     piece *p = &plat->p_cur;
+    supprPiece(plat);
     p->y++;  /* Essaye de descendre la pièce */
     if (canPlacePiece(plat, p)) {
+      integratePiece(plat); /* Intègre la pièce dans le plateau */
       return 1; /* La pièce peut descendre */
     } else {
       p->y--; /* Remonte la pièce à sa position précédente */
@@ -369,18 +370,25 @@ void increaseSpeed(plateau *p){
   if(p->score >= 128000 && p->score < 256000) p->speed = 9;   /*  level 9  */
   if(p->score > 256000) p->speed = 10;                        /*  level 10 */
 }
+
+/*
+R: supprime la piece (dans le but de réafficher la piece quand on a un deplacement
+E: 1 pointeur vers plateau
+S: vide
+*/
 void supprPiece(plateau *p){
   int i,j;
   int x = p->p_cur.x;
   int y = p->p_cur.y;
-  for(i = x; i > x+ROW ;i++){
-    for(j = y; j > y+COLUMN ;j++){  
-      if(p->p_cur.piece[i-x][j-y] == p->p_cur.id){
-	p->plateau[i][j]=0;
+  for(i = 0; i < ROW ;i++){
+    for(j = 0; j < COLUMN ;j++){  
+      if(p->p_cur.piece[i][j] != 0){
+	p->plateau[y+i][x+j]=0;
       }
     }
   }
 
 }
-#endif /*_PLATEAU_C_*/
 
+
+#endif /*_PLATEAU_C_*/

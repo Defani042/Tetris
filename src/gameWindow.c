@@ -15,6 +15,32 @@
 #include "piece.h"
 
 /*
+R : permet d'afficher la couleur
+E : plateau et taille ecran
+S : rien 
+*/
+
+void affichage_pixel(plateau *p,int t,int w,int h){
+    int k,j;
+    integratePiece(p);
+    for(k=2;k<LARGEUR_P-2;k++){
+        for(j=2;j<LONGUEUR_P-2;j++){
+            switch(p->plateau[j][k]){
+                case 0:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(10,10,10,255));break;
+		        case 1:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(43,255,255,255));break;
+                case 2:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,255,0,255));break;
+                case 3:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(238,130,238,255));break;
+                case 4:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,0,0,255));break;
+                case 5:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,255,0,255));break;
+                case 6:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,128,0,255));break;
+                case 7:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,0,255,255));break;
+            }
+        }
+    }
+}
+
+
+/*
 R: permet de créer le game over
 E: plateau
 S: valeur pour arreter la game
@@ -24,9 +50,10 @@ int gameoverWindow(plateau *p){
     int w,h;
     char afficscore[SCORE_PRINT];
     MLV_Font* font=NULL;
+    supprPiece(p);
     h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     w = MLV_get_desktop_width();
-    if ((p->gameover)==1){
+    if ( gameIsOver(p)){
         if(MLV_path_exists( FONT_PATH)){
             font = MLV_load_font( FONT_PATH, 50 );
         }
@@ -61,11 +88,15 @@ S : rien
 */
 
 void createGame(plateau *p, int conteur_speed){
-    if ((conteur_speed-p->speed)==(29-p->speed)){
-        if ((descendPiece(p))==0){
+    if ((conteur_speed-(p->speed))==(29-p->speed)){
+        if (!descendPiece(p)){
+            integratePiece(p);
             generateNewPiece(p);
         }
     }
+    printf("%d\n",p->tpiece->y);
+    printPlateau(p);
+    printf("\n");
 }
 
 /*
@@ -76,18 +107,6 @@ S : rien
 
 void afficherPlateau(plateau *p,int t,int w,int h){
     int k,j;
-    integratePiece(p);
-    for(k=2;k<LARGEUR_P-2;k++){
-            for(j=2;j<LONGUEUR_P-2;j++){
-                if (p->plateau[j][k]>0){
-		  MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a));
-                }
-                else {
-		  MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(10,10,10,255));
-                }
-            }
-        }
-
     for(k=0;k<ROW;k++){
         for(j=0;j<COLUMN;j++){
             if (p->p_next.piece[j][k]>0){
@@ -99,7 +118,6 @@ void afficherPlateau(plateau *p,int t,int w,int h){
         }
     }
 }
-
 /*
 R: affiche le temps 
 E: temps en hh:mm:ss en tableau de char et le font
@@ -299,8 +317,11 @@ void setGameWindow(plateau *p){
     MLV_actualise_window();
     clock_gettime(CLOCK_REALTIME, &debut_jeu);
     while(i){
+        i=gameoverWindow(p);
         MLV_actualise_window();
         clock_gettime(CLOCK_REALTIME, &debut);
+
+        /*partie pause*/
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_deb);
             /*si on appuie sur echap, alors on ouvre le menu pause*/
@@ -310,10 +331,15 @@ void setGameWindow(plateau *p){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_fin);
             temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
+
+        /*partie jeu*/
         createGame(p,conteur_speed);
+
+        /*partie affichage*/
+        affichage_pixel(p,t,width,height);
         afficherPlateau(p,t,width,height);
-        conteur_speed =  (conteur_speed+1)%30;
-        i=gameoverWindow(p);
+        conteur_speed = (conteur_speed+1)%30;
+
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
