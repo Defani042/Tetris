@@ -11,6 +11,10 @@
 
 /*Macro*/
 #define LINE_MAX 32
+#define FILE1 "fich/save1.txt"
+#define FILE2 "fich/save2.txt"
+#define FILE3 "fich/save3.txt"
+#define FILE4 "fich/save4.txt"
 
 void setSaveButton(int width, int height);
 
