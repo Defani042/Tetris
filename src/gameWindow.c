@@ -17,6 +17,20 @@
 /*Macro*/
 
 /*
+R : permet de jouer
+E : plateau et conteur_speed
+S : rien
+*/
+
+void createGame(plateau *p, int conteur_speed){
+    if ((conteur_speed-p->speed)==(29-p->speed)){
+        if ((descendPiece(p))==0){
+            generateNewPiece(p);
+        }
+    }
+}
+
+/*
 R : affiche le plateau avec MLV
 E : pointeur vers plateau, taille case (t), taille de l'ecran
 S : rien
@@ -24,7 +38,6 @@ S : rien
 
 void afficherPlateau(plateau *p,int t,int w,int h){
     int k,j;
-    printf("intégration de la piece \n");
     integratePiece(p);
     for(k=2;k<LARGEUR_P-2;k++){
             for(j=2;j<LONGUEUR_P-2;j++){
@@ -229,7 +242,7 @@ S: rien
 */
 
 void setGameWindow(plateau *p){
-    int i,width,height,t,hours,minutes,seconds;
+    int i,width,height,t,hours,minutes,seconds,conteur_speed;
     struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
     char text[32];
@@ -239,6 +252,7 @@ void setGameWindow(plateau *p){
         font = MLV_load_font( FONT_PATH , 20 );
     }
     i=1;
+    conteur_speed=0;
     srand(time(NULL));
     height = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     width = MLV_get_desktop_width();
@@ -258,7 +272,9 @@ void setGameWindow(plateau *p){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_fin);
             temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
+        createGame(p,conteur_speed);
         afficherPlateau(p,t,width,height);
+        conteur_speed =  (conteur_speed+1)%30;
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));

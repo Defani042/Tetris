@@ -11,6 +11,8 @@
 #include "plateau.h"
 #include "MainWindow.h"
 
+void createGameplay(plateau *p, int conteur_speed);
+
 void printTime(char* t,MLV_Font* font);
 
 void createGameWindow(int w,int h);
