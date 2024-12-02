@@ -253,9 +253,6 @@ void integratePiece(plateau *plat) {
                 }
             }
         }
-    } else {
-      /* La pièce ne peut pas être placée, donc la partie est terminée*/
-        plat->gameover = 1;
     }
 }
 
