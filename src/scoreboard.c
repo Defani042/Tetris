@@ -103,11 +103,11 @@ S: rien
 
 void setScoreboard(int new_score){
     int tab[NB_MAX]; /*defini le tableau des scores*/
-    readFich("fich/scoreboard.txt",tab,new_score); /*copie les données du fichier dans le tableau*/
+    readFich(SCORE_SAVE,tab,new_score); /*copie les données du fichier dans le tableau*/
     /*testaffichage(tab);*/
     tri(tab);                                         /*tri le tableau*/
     /*testaffichage(tab);*/
-    printfichier("fich/scoreboard.txt",tab);       /*met le tableau dans le fichier*/
+    printfichier(SCORE_SAVE,tab);       /*met le tableau dans le fichier*/
 }
 
 /*Main de test

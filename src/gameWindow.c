@@ -14,7 +14,59 @@
 #include "plateau.h"
 #include "piece.h"
 
-/*Macro*/
+/*
+R: permet de créer le game over
+E: plateau
+S: valeur pour arreter la game
+*/
+
+int gameoverWindow(plateau *p){
+    int w,h;
+    char afficscore[SCORE_PRINT];
+    MLV_Font* font=NULL;
+    h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
+    w = MLV_get_desktop_width();
+    if ((p->gameover)==1){
+        if(MLV_path_exists( FONT_PATH)){
+            font = MLV_load_font( FONT_PATH, 50 );
+        }
+        MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLACK);     /*carré*/
+        MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLUE);            /*contour*/
+        MLV_draw_text_with_font(
+            w/2-225, h/2-150,
+            "GAME OVER !",  /*affiche le GAME OVER ! aux bonnes coordonnées*/
+            font, MLV_COLOR_RED
+        );
+        if(MLV_path_exists( FONT_PATH)){
+            font = MLV_load_font( FONT_PATH, 25 );
+        }
+        sprintf(afficscore,"Score : %d",p->score);
+        MLV_draw_text_with_font(
+            w/2-125, h/2+100,
+            afficscore,  /*affiche le GAME OVER ! aux bonnes coordonnées*/
+            font, MLV_COLOR_WHITE
+        );
+        MLV_actualise_window(); /*actualise la fenêtre*/
+        MLV_wait_seconds(3);    /*attends 3 secondes pendant le message de save */
+        setScoreboard(p->score);
+        return 0;
+    }
+    return 1;
+}
+
+/*
+R : permet de jouer
+E : plateau et conteur_speed
+S : rien
+*/
+
+void createGame(plateau *p, int conteur_speed){
+    if ((conteur_speed-p->speed)==(29-p->speed)){
+        if ((descendPiece(p))==0){
+            generateNewPiece(p);
+        }
+    }
+}
 
 /*
 R : affiche le plateau avec MLV
@@ -24,7 +76,6 @@ S : rien
 
 void afficherPlateau(plateau *p,int t,int w,int h){
     int k,j;
-    printf("intégration de la piece \n");
     integratePiece(p);
     for(k=2;k<LARGEUR_P-2;k++){
             for(j=2;j<LONGUEUR_P-2;j++){
@@ -229,7 +280,7 @@ S: rien
 */
 
 void setGameWindow(plateau *p){
-    int i,width,height,t,hours,minutes,seconds;
+    int i,width,height,t,hours,minutes,seconds,conteur_speed;
     struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
     char text[32];
@@ -239,6 +290,7 @@ void setGameWindow(plateau *p){
         font = MLV_load_font( FONT_PATH , 20 );
     }
     i=1;
+    conteur_speed=0;
     srand(time(NULL));
     height = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     width = MLV_get_desktop_width();
@@ -258,7 +310,10 @@ void setGameWindow(plateau *p){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_fin);
             temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
+        createGame(p,conteur_speed);
         afficherPlateau(p,t,width,height);
+        conteur_speed =  (conteur_speed+1)%30;
+        i=gameoverWindow(p);
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));

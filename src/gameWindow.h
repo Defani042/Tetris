@@ -10,6 +10,14 @@
 #include "save.h"
 #include "plateau.h"
 #include "MainWindow.h"
+#include "scoreboard.h"
+
+/*macro*/
+#define SCORE_PRINT 32
+
+int gameoverWindow(plateau *p);
+
+void createGameplay(plateau *p, int conteur_speed);
 
 void printTime(char* t,MLV_Font* font);
 

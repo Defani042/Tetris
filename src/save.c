@@ -53,13 +53,13 @@ void saveInFich(plateau* p, char* filename,int score){
                 fprintf(fich,"%d ",p->plateau[i][j]);   /*copie le tableau dans le fichier de save*/
             }                                           /*alignée séparé par des espace*/
         }
-        fprintf(fich,"%d ",p->speed);                   /*copie la speed dans le fichier de save*/
+        fprintf(fich,"\n%d\n",p->speed);                   /*copie la speed dans le fichier de save*/
         for(i=0;i<ROW;i++){
             for(j=0;j<COLUMN;j++){
                 fprintf(fich,"%d ",p->tpiece->piece[i][j]); /*copie le tab de piéce posée dans le fichier de save*/
             }
         }
-        fprintf(fich,"%d %d %d %d %d %d ",p->tpiece->r,p->tpiece->g,p->tpiece->b,p->tpiece->a,p->tpiece->x,p->tpiece->y);
+        fprintf(fich,"\n%d %d %d %d %d %d\n",p->tpiece->r,p->tpiece->g,p->tpiece->b,p->tpiece->a,p->tpiece->x,p->tpiece->y);
         /*copie la couleur et le placement x et y dans la save*/
         for(i=0;i<ROW;i++){
             for(j=0;j<COLUMN;j++){
@@ -67,13 +67,13 @@ void saveInFich(plateau* p, char* filename,int score){
             }
         }
         /*copie la couleur et le placement x et y dans la save*/
-        fprintf(fich,"%d %d %d %d %d %d ",p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a,p->p_cur.x,p->p_cur.y);
+        fprintf(fich,"\n%d %d %d %d %d %d\n",p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a,p->p_cur.x,p->p_cur.y);
         for(i=0;i<ROW;i++){
             for(j=0;j<COLUMN;j++){
                 fprintf(fich,"%d ",p->p_next.piece[i][j]);/*copie la tab de la pièce suivante dans la save*/
             }
         }
-        fprintf(fich,"%d %d %d %d %d %d ",p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a,p->p_next.x,p->p_next.y);
+        fprintf(fich,"\n%d %d %d %d %d %d\n",p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a,p->p_next.x,p->p_next.y);
         /*copie la couleur et le placement x et y dans la save*/
         fclose(fich);
     }
@@ -101,7 +101,7 @@ void loadInFich(plateau* p,char* filename){
                 }
             }
         }
-        if (fscanf(fich,"%d ",&(p->speed))!=1){ /*copie du speed du fich au tableau*/
+        if (fscanf(fich,"\n%d\n",&(p->speed))!=1){ /*copie du speed du fich au tableau*/
             printf("0");
         }
         for(i=0;i<ROW;i++){
@@ -111,7 +111,7 @@ void loadInFich(plateau* p,char* filename){
                 }
             }
         }
-        if (fscanf(fich,"%d %d %d %d %d %d ",&(p->tpiece->r),&(p->tpiece->g),&(p->tpiece->b),&(p->tpiece->a),&(p->tpiece->x),&(p->tpiece->y))!=6){
+        if (fscanf(fich,"\n%d %d %d %d %d %d\n",&(p->tpiece->r),&(p->tpiece->g),&(p->tpiece->b),&(p->tpiece->a),&(p->tpiece->x),&(p->tpiece->y))!=6){
             printf("0"); /*copie des couleur et axes du fich au tableau*/
         }
         for(i=0;i<ROW;i++){
@@ -121,7 +121,7 @@ void loadInFich(plateau* p,char* filename){
                 }
             }
         }
-        if (fscanf(fich,"%d %d %d %d %d %d ",&(p->p_cur.r),&(p->p_cur.g),&(p->p_cur.b),&(p->p_cur.a),&(p->p_cur.x),&(p->p_cur.y))!=6){
+        if (fscanf(fich,"\n%d %d %d %d %d %d\n",&(p->p_cur.r),&(p->p_cur.g),&(p->p_cur.b),&(p->p_cur.a),&(p->p_cur.x),&(p->p_cur.y))!=6){
             printf("0");                /*copie des couleur et axes du fich au tableau*/
         }
         for(i=0;i<ROW;i++){
@@ -131,7 +131,7 @@ void loadInFich(plateau* p,char* filename){
                 }
             }
         }
-        if (fscanf(fich,"%d %d %d %d %d %d ",&(p->p_next.r),&(p->p_next.g),&(p->p_next.b),&(p->p_next.a),&(p->p_next.x),&(p->p_next.y))!=6){
+        if (fscanf(fich,"\n%d %d %d %d %d %d\n",&(p->p_next.r),&(p->p_next.g),&(p->p_next.b),&(p->p_next.a),&(p->p_next.x),&(p->p_next.y))!=6){
             printf("0\n");/*copie des couleurs et axes du fich au tableau*/
         }
         fclose(fich);
@@ -294,10 +294,10 @@ S: rien
 void createAllSaveMenu(int width,int height){
     setSaveButton(width,height);
     setButonBack(width,height);
-    saveScore(width,height,"fich/save1.txt",1); /*créer la fenêtre du bouton corespondant*/
-    saveScore(width,height,"fich/save2.txt",2);
-    saveScore(width,height,"fich/save3.txt",3);
-    saveScore(width,height,"fich/save4.txt",4);
+    saveScore(width,height,FILE1,1); /*créer la fenêtre du bouton corespondant*/
+    saveScore(width,height,FILE2,2);
+    saveScore(width,height,FILE3,3);
+    saveScore(width,height,FILE4,4);
     MLV_actualise_window();
 }
 
@@ -318,13 +318,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 1*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"fich/save1.txt");
+                    loadInFich(p,FILE1);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"fich/save1.txt",p->score);
+                    saveInFich(p,FILE1,p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
@@ -333,13 +333,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 2*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"fich/save2.txt");
+                    loadInFich(p,FILE2);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"fich/save2.txt",p->score);
+                    saveInFich(p,FILE2,p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
@@ -348,13 +348,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*21) && y<((height/40)*21+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 3*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"fich/save3.txt");
+                    loadInFich(p,FILE3);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"fich/save3.txt",p->score);
+                    saveInFich(p,FILE3,p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
@@ -363,13 +363,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/40)*21 && y<(((height/40)*21+(height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 4*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"fich/save4.txt");
+                    loadInFich(p,FILE4);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"fich/save4.txt",p->score);
+                    saveInFich(p,FILE4,p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);

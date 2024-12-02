@@ -227,7 +227,9 @@ int canPlacePiece(plateau *plat, piece *p) {
       if (p->piece[i][j]>0) {
 	newX = p->x + j;
 	newY = p->y + i;
+
 	if (newX < 2 || newX >= LARGEUR_P -2 || newY < 2 || newY >= LONGUEUR_P - 2 || plat->plateau[newY][newX] > 0) {
+
 	  return 0;
 	}
       }
