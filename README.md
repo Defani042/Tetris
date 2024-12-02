@@ -23,6 +23,7 @@ le code est aagencer en différent module :
    - Main: le module principale
    - Scoreboard: module pour gerer gestion de la savegarde du scoreboard
    - Save: module de gestion des sauvegarde
+   - Gamewindow: module de gestion de la fenetre de jeux  
 
 ## Condition d'utilisation
 
