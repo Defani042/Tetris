@@ -1,3 +1,4 @@
 # Ignorer le dossier build
-# ce dossier contient tous les fichier .o 
-# build/
+# ce dossier contient tous les fichier .o
+build/
+
