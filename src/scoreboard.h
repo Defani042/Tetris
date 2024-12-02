@@ -12,6 +12,7 @@
 #define NB_MAX 15
 #define LINE_MAX 32
 
+
 void readFich(char* filename,int tab[NB_MAX], int new_score);
 
 void tri(int tab[NB_MAX]);

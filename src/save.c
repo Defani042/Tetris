@@ -11,14 +11,9 @@
 #include "save.h"
 #include "plateau.h"
 #include "gameWindow.h"
+#include "piece.h"
+#include "MainWindow.h"
 
-/*Macro*/
-#define LINE_MAX 32
-#define LARGEUR_P 10
-#define LONGUEUR_P 22
-#define ROW 4
-#define COLUMN 4
-#define NB_PIECE 7
 
 /*
 R: créer la fenêtre de sauvegarde finie.
@@ -27,8 +22,8 @@ S: rien
 */
 void WindowCheckSave(int w, int h){
     MLV_Font* font=NULL;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font( FONT_PATH, 50 );
     }
     MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLACK);     /*carré*/
     MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/5)*3,MLV_COLOR_BLUE);            /*contour*/
@@ -53,7 +48,7 @@ void saveInFich(plateau* p, char* filename,int score){
     fich = fopen(filename,"w+");        /*ouvre le fichier en w+ (donc écrase)*/
     if (fich != NULL){
         fprintf(fich,"%d\n",score);     /*copie le score dans le fichier de save*/
-        for(i=0;i<LONGUEUR_P-1;i++){
+        for(i=0;i<LONGUEUR_P;i++){
             for(j=0;j<LARGEUR_P;j++){
                 fprintf(fich,"%d ",p->plateau[i][j]);   /*copie le tableau dans le fichier de save*/
             }                                           /*alignée séparé par des espace*/
@@ -99,7 +94,7 @@ void loadInFich(plateau* p,char* filename){
             p->score=0; /*tous les .....=0 servent à ne pas mettre le warning su fscanf*/
                         /*si la valeur n'as pas été trouvée ce sera celle mise par défault*/
         }
-        for(i=0;i<LONGUEUR_P-1;i++){
+        for(i=0;i<LONGUEUR_P;i++){
             for(j=0;j<LARGEUR_P;j++){
                 if (fscanf(fich,"%d ",&(p->plateau[i][j]))==0){ /*copie des elts du tableau du fich au tableau*/
                     p->plateau[i][j]=0;
@@ -154,8 +149,8 @@ void setSaveButton(int width, int height){
     int w,h;
     MLV_Font* font=NULL;
     MLV_clear_window( MLV_COLOR_BLACK );
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );    
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font(  FONT_PATH, 50 );    
     }
     MLV_draw_filled_rectangle(width*3/20,(height/40)*5,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
     w=(200*width)/1000;                                 /*créer le carré pour les fichier de save*/
@@ -223,8 +218,8 @@ void setButonBack(int w,int h){
     h2=(75*h)/1000;
     h3=(920*h)/1000;
     p=(25*w)/1000;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , p );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font( FONT_PATH , p );
     }
     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE); /*crrer le carré du bouton back*/
     MLV_draw_text_with_font(
@@ -249,8 +244,8 @@ void saveScore(int w,int h,char* fichier,int num_save){
     w2=0;   /*initialise à 0 toutes les variables*/
     h1=0;
     h2=0;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 50 );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font( FONT_PATH , 50 );
     }
     switch (num_save){
         case 1: w1=w*210/1000;h1=h*325/1000;w2=w*245/1000;h2=h*325/1000;break;
@@ -299,10 +294,10 @@ S: rien
 void createAllSaveMenu(int width,int height){
     setSaveButton(width,height);
     setButonBack(width,height);
-    saveScore(width,height,"../fich/save1.txt",1); /*créer la fenêtre du bouton corespondant*/
-    saveScore(width,height,"../fich/save2.txt",2);
-    saveScore(width,height,"../fich/save3.txt",3);
-    saveScore(width,height,"../fich/save4.txt",4);
+    saveScore(width,height,"fich/save1.txt",1); /*créer la fenêtre du bouton corespondant*/
+    saveScore(width,height,"fich/save2.txt",2);
+    saveScore(width,height,"fich/save3.txt",3);
+    saveScore(width,height,"fich/save4.txt",4);
     MLV_actualise_window();
 }
 
@@ -323,13 +318,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 1*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"../fich/save1.txt");
+                    loadInFich(p,"fich/save1.txt");
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"../fich/save1.txt",p->score);
+                    saveInFich(p,"fich/save1.txt",p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
@@ -338,13 +333,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 2*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"../fich/save2.txt");
+                    loadInFich(p,"fich/save2.txt");
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"../fich/save2.txt",p->score);
+                    saveInFich(p,"fich/save2.txt",p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
@@ -353,13 +348,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*21) && y<((height/40)*21+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 3*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"../fich/save3.txt");
+                    loadInFich(p,"fich/save3.txt");
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"../fich/save3.txt",p->score);
+                    saveInFich(p,"fich/save3.txt",p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
@@ -368,13 +363,13 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/40)*21 && y<(((height/40)*21+(height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 4*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,"../fich/save4.txt");
+                    loadInFich(p,"fich/save4.txt");
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
                 else {
                     /*si depuis le menu save du jeu, alors sauvegarde la game*/
-                    saveInFich(p,"../fich/save4.txt",p->score);
+                    saveInFich(p,"fich/save4.txt",p->score);
                     WindowCheckSave(width,height);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);

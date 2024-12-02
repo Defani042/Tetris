@@ -7,10 +7,9 @@
 
 /*local lib*/
 #include "scoreboard.h"
+#include "MainWindow.h"
 
-/*Macro*/
-#define NB_MAX 15
-#define LINE_MAX 32
+
 
 /*
 R: Met dans les tableau les scores actuels.
@@ -104,11 +103,11 @@ S: rien
 
 void setScoreboard(int new_score){
     int tab[NB_MAX]; /*defini le tableau des scores*/
-    readFich("../fich/scoreboard.txt",tab,new_score); /*copie les données du fichier dans le tableau*/
+    readFich("fich/scoreboard.txt",tab,new_score); /*copie les données du fichier dans le tableau*/
     /*testaffichage(tab);*/
     tri(tab);                                         /*tri le tableau*/
     /*testaffichage(tab);*/
-    printfichier("../fich/scoreboard.txt",tab);       /*met le tableau dans le fichier*/
+    printfichier("fich/scoreboard.txt",tab);       /*met le tableau dans le fichier*/
 }
 
 /*Main de test

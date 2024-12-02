@@ -6,9 +6,6 @@
 #include <stdlib.h>
 #include <unistd.h>/*permet de faire des sleep*/
 
-/*Macro*/
-#define LARGEUR_P 10
-#define LONGUEUR_P 22
 
 /*local lib*/
 #include "plateau.h"
@@ -23,7 +20,7 @@ S: 1 entier (1 si la partie est terminé) (0 si la partie est en cours)
 int gameIsOver(plateau* p){
   int i;
   /*on regarde toutes les case de la denière ligne du plateau*/
-  for(i=0;i<LARGEUR_P;i++){
+  for(i=2;i<LARGEUR_P-2;i++){
     /*si une case = 1 game over*/
     if(p->plateau[0][i] == 1){
       return 1;
@@ -43,7 +40,7 @@ S: 1 entier (1 si la ligne est complète)(sinon 0)
 int lineIsFull(plateau* p, int n){
   int i, casefull = 0;
   /*on regarde si les cases de la ligne n sont égale à 1*/
-  for(i=0;i<LARGEUR_P;i++){
+  for(i=2;i<LARGEUR_P-2;i++){
     /*récupération du nombre de case pleinne*/
     if(p->plateau[n][i] != 0){
       casefull++;
@@ -69,8 +66,11 @@ void setPlateau(plateau *p){
   /*on parcourps le plateau de jeux */
   for(i=0;i < LONGUEUR_P ;i++){
     for(j=0;j < LARGEUR_P ;j++){
-      /*on met la case à l'indice i,j à 0 */
-      p->plateau[i][j] = 0;
+      if (i < 2 || i >= LONGUEUR_P - 2 || j < 2 || j >= LARGEUR_P - 2) {
+	p->plateau[i][j] = 9; /* Bordure*/
+            } else {
+	p->plateau[i][j] = 0; /* Espace de jeu */
+            }
     }
   }
   setTabpiece(p->tpiece); /*set le plateau de piece*/
@@ -109,7 +109,7 @@ S: vide
 void clearLine(plateau *p, int n){
   int i;
   /*on parcourps la ligne n*/
-  for(i=0;i<LARGEUR_P;i++){
+  for(i=2;i<LARGEUR_P-2;i++){
     p->plateau[n][i] = 0;
   }
 
@@ -146,7 +146,7 @@ S: vide
 void filledline(plateau *p, int n){
   int i;
   /*on parcourps la ligne n*/
-  for(i=0;i<LARGEUR_P;i++){
+  for(i=2;i<LARGEUR_P-2;i++){
     p->plateau[n-1][i] = 1;
   }
 
@@ -160,7 +160,7 @@ S: vide
 
 void gapline(plateau *p) {
   int i,j,dec=0;
-  for(i=0;i<LONGUEUR_P;i++){
+  for(i=2;i<LONGUEUR_P-2;i++){
     if(lineIsEmpty(p,i)){
       dec++;
     }
@@ -200,7 +200,7 @@ S: 1 entier (1 si la ligne est complète)(sinon 0)
 int lineIsEmpty(plateau* p, int n){
   int i, emptycase = 0;
   /*on regarde si les cases de la ligne n sont égale à 1*/
-  for(i=0;i<LARGEUR_P;i++){
+  for(i=2;i<LARGEUR_P-2;i++){
     /*récupération du nombre de case = 0*/
     if(p->plateau[n][i]==0){
       emptycase++;
@@ -208,7 +208,7 @@ int lineIsEmpty(plateau* p, int n){
   }
   /*on vérifie que le nombre de case est égale à la largeur du plateau*/
   /*si oui = 1 sinon = 0 */
-  if( emptycase == LARGEUR_P){
+  if( emptycase == LARGEUR_P-4){
     return 1;
   }
   return 0;

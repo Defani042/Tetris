@@ -10,7 +10,7 @@
 #define ROW 4
 #define COLUMN 4
 #define NB_PIECE 7
-#define INITY 0
+#define INITY 1
 #define INITX 4
 
 /*Structure piece*/
@@ -60,5 +60,7 @@ void setTabpiece(tabpiece t);
 int SelectPiece();
 
 void piececpy(piece* p1, piece *p2);
+
+void movepiece(piece* p, char c);
 
 #endif /*_PIECE_H_*/

@@ -66,8 +66,8 @@ void setPieceLine(piece *p){
   p->piece[2][3]=1;
   p->piece[3][3]=1;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY+1;
   /*id de la piece*/
   p->id = 1;
 }
@@ -91,8 +91,8 @@ void setPieceSquare(piece *p){
   p->piece[3][3]=2;
   p->piece[3][2]=2;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY-1;
   /*id de la piece*/
   p->id = 2;
 }
@@ -116,8 +116,8 @@ void setPieceT(piece *p){
   p->piece[3][2]=3;
   p->piece[3][1]=3;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY-1;
   /*id de la piece*/
   p->id = 3;
 }
@@ -141,8 +141,8 @@ void setPieceZ(piece *p){
   p->piece[2][3]=4;
   p->piece[3][3]=4;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY;
   /*id de la piece*/
   p->id = 4;
 }
@@ -166,8 +166,8 @@ void setPieceZinv(piece *p){
   p->piece[2][3]=5;
   p->piece[3][2]=5;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY;
   /*id de la piece*/
   p->id = 5;
 }
@@ -191,8 +191,8 @@ void setPieceL(piece *p){
   p->piece[3][3]=6;
   p->piece[3][2]=6;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY;
   /*id de la piece*/
   p->id = 6;
 }
@@ -216,8 +216,8 @@ void setPieceLinv(piece *p){
   p->piece[3][3]=7;
   p->piece[3][2]=7;
   /*position de la piece*/
-  p->x= 4;
-  p->y= 0;
+  p->x= INITX;
+  p->y= INITY;
   /*id de la piece*/
   p->id = 7;
 }
@@ -368,5 +368,19 @@ void piececpy(piece* p1, piece *p2){
   
 }
 
+void movepiece(piece* p, char c){
+  /*cas ou on se déplace à droite*/
+  int Newy = p->y;
+
+  if(c == 'd'){
+    if(Newy-1>=0){
+      p->y-=1;
+    }
+  }/*cas ou on se deplace à gauche */
+  else{
+    p->y+=1;
+  }
+  
+}
 
 #endif /*_PIECE_C_*/

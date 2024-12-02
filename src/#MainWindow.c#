@@ -13,9 +13,7 @@
 #include "gameWindow.h"
 #include "plateau.h"
 
-/*Macro*/
-#define LINE_MAX 32
-#define FONT_PATH "fich/04B_30__.TTF"
+
 
 
 /* 
@@ -250,7 +248,6 @@ void createWindow(){
     width = MLV_get_desktop_width();
     
     setLogo(height,width);              /*appelle toutes les fonc pour afficher le menu pricipale*/
-    printScore("fich/scoreboard.txt",width,height);
     setButonStart(width,height);
     setButonLoad(width,height);
     setButonOption(width,height);

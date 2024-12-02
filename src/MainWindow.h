@@ -10,6 +10,10 @@
 #include "save.h"
 #include "plateau.h"
 
+/*Macro*/
+#define LINE_MAX 32
+#define FONT_PATH "fich/04B_30__.TTF"
+
 /* Fonctions */
 
 void printScore(char *filename,int w,int h);
