@@ -227,7 +227,7 @@ int canPlacePiece(plateau *plat, piece *p) {
       if (p->piece[i][j]>0) {
 	newX = p->x + j;
 	newY = p->y + i;
-	if (newX < 0 || newX >= LARGEUR_P || newY < 0 || newY >= LONGUEUR_P || plat->plateau[newY][newX] == 1) {
+	if (newX < 2 || newX >= LARGEUR_P -2 || newY < 2 || newY >= LONGUEUR_P - 2 || plat->plateau[newY][newX] > 0) {
 	  return 0;
 	}
       }
@@ -369,6 +369,19 @@ void increaseSpeed(plateau *p){
   if(p->score >= 64000 && p->score < 128000) p->speed = 8;    /*  level 8  */
   if(p->score >= 128000 && p->score < 256000) p->speed = 9;   /*  level 9  */
   if(p->score > 256000) p->speed = 10;                        /*  level 10 */
+}
+void supprPiece(plateau *p){
+  int i,j;
+  int x = p->p_cur.x;
+  int y = p->p_cur.y;
+  for(i = x; i > x+ROW ;i++){
+    for(j = y; j > y+COLUMN ;j++){  
+      if(p->p_cur.piece[i-x][j-y] == p->p_cur.id){
+	p->plateau[i][j]=0;
+      }
+    }
+  }
+
 }
 #endif /*_PLATEAU_C_*/
 
