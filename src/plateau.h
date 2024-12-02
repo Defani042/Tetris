@@ -57,4 +57,6 @@ void increaseScore(plateau *p);
 
 void increaseSpeed(plateau *p);
 
+void supprPiece(plateau *p);
+
 #endif /*_PLATEAU_H_*/
