@@ -246,6 +246,7 @@ S: vide
 void integratePiece(plateau *plat) {
   int i,j;
   piece *p = &plat->p_cur;
+  supprPiece(plat);
   if (canPlacePiece(plat, p)) {
     for (i = 0; i < ROW; i++) {
       for (j = 0; j < COLUMN; j++) {
