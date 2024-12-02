@@ -23,8 +23,11 @@ int main(){
   
 /*Put the main code here*/
   setPlateau(pp);/*init le plateau*/
+  printf("salut je viens d'init le tab\n");
+  printPlateau(pp);
 
-/*Test MainWindows*/  
+/*Test MainWindows*/
+  printf("avant de set la mainwindows\n");
   SetMainWindow(pp);
   exit(EXIT_SUCCESS);
 }

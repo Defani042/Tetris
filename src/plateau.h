@@ -6,8 +6,8 @@
 #include <stdlib.h>
 
 /*Macro*/
-#define LARGEUR_P 10
-#define LONGUEUR_P 22
+#define LARGEUR_P 14
+#define LONGUEUR_P 26
 
 /*local lib*/
 #include "piece.h"

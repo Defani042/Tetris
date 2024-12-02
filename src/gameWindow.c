@@ -24,17 +24,19 @@ S : rien
 
 void afficherPlateau(plateau *p,int t,int w,int h){
     int k,j;
+    printf("intégration de la piece \n");
     integratePiece(p);
-    for(k=0;k<LARGEUR_P;k++){
-            for(j=0;j<LONGUEUR_P;j++){
+    for(k=2;k<LARGEUR_P-2;k++){
+            for(j=2;j<LONGUEUR_P-2;j++){
                 if (p->plateau[j][k]>0){
-                    MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*k,(h/2)-(11*t)+(t+1)*j,t,t,MLV_rgba(p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a));
+		  MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a));
                 }
                 else {
-                    MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*k,(h/2)-(11*t)+(t+1)*j,t,t,MLV_rgba(10,10,10,255));
+		  MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(10,10,10,255));
                 }
             }
         }
+
     for(k=0;k<ROW;k++){
         for(j=0;j<COLUMN;j++){
             if (p->p_next.piece[j][k]>0){
@@ -74,8 +76,8 @@ S: rien
 void createGameWindow(int w,int h){
     int t;
     MLV_Font* font=NULL;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font(FONT_PATH, 20 );
     }
     t=h/24;
     MLV_clear_window( MLV_COLOR_BLACK );
@@ -112,8 +114,8 @@ S: rien
 
 void stopWindow(int w, int h){
     MLV_Font* font=NULL;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 30 );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font(  FONT_PATH , 30 );
     }
     MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLACK);     /*carré pause*/
     MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLUE);             /*contour pause*/
@@ -125,7 +127,7 @@ void stopWindow(int w, int h){
         "PAUSE",    /*affiche PAUSE aux bonnes coordonnées*/
         font, MLV_COLOR_BLUE
     );
-    font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    font = MLV_load_font(  FONT_PATH, 20 );
     MLV_draw_text_with_font(
         (w/2)-45, h/2-h/10+275,
         "LEAVE",    /*affiche LEAVE aux bonnes coordonnées*/
@@ -153,8 +155,8 @@ S: rien
 int setStopWindow(int w,int h,plateau* p){
     int x,y,i=1,j=1; /*initialise i et j à vrai*/
     MLV_Font* font=NULL;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font(  FONT_PATH , 20 );
     }
     stopWindow(w,h);
     while(i){
@@ -233,8 +235,8 @@ void setGameWindow(plateau *p){
     char text[32];
     int unsigned temps,temps_pause;
     temps_pause=0;
-    if(MLV_path_exists("../fich/04B_30__.TTF")){
-        font = MLV_load_font( "../fich/04B_30__.TTF" , 20 );
+    if(MLV_path_exists( FONT_PATH)){
+        font = MLV_load_font( FONT_PATH , 20 );
     }
     i=1;
     srand(time(NULL));

@@ -9,6 +9,7 @@
 /*local lib*/
 #include "save.h"
 #include "plateau.h"
+#include "MainWindow.h"
 
 void printTime(char* t,MLV_Font* font);
 
