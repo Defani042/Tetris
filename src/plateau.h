@@ -21,6 +21,7 @@ typedef struct{
   piece p_next;     /*piece qui viens ensuite */
   int score;        /*score du tetris*/
   int speed;        /*vitesse des piéces*/
+  int temps_jeu; /*temps passé en jeu*/
 }plateau;
 
 int gameIsOver(plateau* p);

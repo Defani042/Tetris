@@ -77,6 +77,7 @@ void setPlateau(plateau *p){
   p->gameover = 0; /* on met la variable gameover à 0 */
   p->score = 0; /*le score est à 0 de base*/
   p->speed = 1; /*speed est à 1*/
+  p->temps_jeu = 0;
   piececpy(&(p->p_cur),&(p->tpiece[SelectPiece()])); /*piece courente séléctionner aléatoirement*/
   piececpy(&(p->p_next),&(p->tpiece[SelectPiece()])); /*piece suivante courente séléctionner aléatoirement*/
 }
@@ -279,6 +280,7 @@ void Plateaucpy(plateau *p1,plateau *p2){
   p1->gameover = p2->gameover;
   p1->score = p2->score;
   p1->speed = p2->speed;
+  p1->temps_jeu = p2->temps_jeu;
 
   /* copy des pieces */
   piececpy(&(p1->p_cur),&(p2->p_cur));
