@@ -61,6 +61,4 @@ int SelectPiece();
 
 void piececpy(piece* p1, piece *p2);
 
-void movepiece(piece* p, char c);
-
 #endif /*_PIECE_H_*/

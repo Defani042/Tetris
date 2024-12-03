@@ -28,9 +28,9 @@ void SetPiece(piece *p){
 }
 
 /*
-R: fonction d
-E:
-S: 
+R: fonction d'affichage de la piece
+E: 1 pointeur vers piece
+S: vide 
 */
 
 void printpiece(piece *p){
@@ -368,19 +368,6 @@ void piececpy(piece* p1, piece *p2){
   
 }
 
-void movepiece(piece* p, char c){
-  /*cas ou on se déplace à droite*/
-  int Newy = p->y;
 
-  if(c == 'd'){
-    if(Newy-1>=0){
-      p->y-=1;
-    }
-  }/*cas ou on se deplace à gauche */
-  else{
-    p->y+=1;
-  }
-  
-}
 
 #endif /*_PIECE_C_*/

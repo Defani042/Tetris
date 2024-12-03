@@ -276,7 +276,7 @@ void SetMainWindow(plateau *p){
         MLV_wait_mouse(&x,&y);
         if (x>(300*width/1000) && x<(700*width/1000) && y>(400*height/1000) && y<(500*height/1000)){
             /*prends les cordonées de la case pour lancer une game et lance si on clique*/
-            setGameWindow(p);
+            setGameWindow(p,0);
             MLV_clear_window( MLV_COLOR_BLACK );
             createWindow();
         }

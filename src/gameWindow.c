@@ -15,18 +15,78 @@
 #include "piece.h"
 
 /*
+R : active les imput 
+E : plateau
+S : rien
+*/
+
+void imput(plateau *p,int compteur){
+
+    if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%2==0) ){
+        movepiece(p,'d');
+    }
+    else{
+        if( (MLV_get_keyboard_state( MLV_KEYBOARD_q ) == MLV_PRESSED) && (compteur%2==0)){
+            movepiece(p,'g');
+        }
+    } 
+    /*if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED ){
+        rotate_anticlockwise(p->p_cur);
+    } 
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED ){
+        rotate_clockwise(p->p_cur);
+    } */
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
+        if (!descendPiece(p)){
+            integratePiece(p);
+            generateNewPiece(p);
+        }
+    }
+    /*increaseScore(p);*/
+    increaseSpeed(p);
+}
+
+/*
+R : permet d'afficher la couleur
+E : plateau et taille ecran
+S : rien 
+*/
+
+void affichage_pixel(plateau *p,int t,int w,int h){
+    int k,j;
+    integratePiece(p);
+    for(k=2;k<LARGEUR_P-2;k++){
+        for(j=2;j<LONGUEUR_P-2;j++){
+            switch(p->plateau[j][k]){
+                case 0:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(10,10,10,255));break;
+		        case 1:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(43,255,255,255));break;
+                case 2:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,255,0,255));break;
+                case 3:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(238,130,238,255));break;
+                case 4:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,0,0,255));break;
+                case 5:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,255,0,255));break;
+                case 6:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,128,0,255));break;
+                case 7:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,0,255,255));break;
+            }
+        }
+    }
+}
+
+
+/*
 R: permet de créer le game over
 E: plateau
 S: valeur pour arreter la game
 */
 
-int gameoverWindow(plateau *p){
+int gameoverWindow(plateau *p,int id_fich){
     int w,h;
     char afficscore[SCORE_PRINT];
+    FILE* fich = NULL;
     MLV_Font* font=NULL;
+    supprPiece(p);
     h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     w = MLV_get_desktop_width();
-    if ((p->gameover)==1){
+    if ( gameIsOver(p)){
         if(MLV_path_exists( FONT_PATH)){
             font = MLV_load_font( FONT_PATH, 50 );
         }
@@ -49,6 +109,12 @@ int gameoverWindow(plateau *p){
         MLV_actualise_window(); /*actualise la fenêtre*/
         MLV_wait_seconds(3);    /*attends 3 secondes pendant le message de save */
         setScoreboard(p->score);
+        switch(id_fich){
+            case 1: fich=fopen(FILE1,"w");fclose(fich);break;
+            case 2: fich=fopen(FILE2,"w");fclose(fich);break;
+            case 3: fich=fopen(FILE3,"w");fclose(fich);break;
+            case 4: fich=fopen(FILE4,"w");fclose(fich);break;
+        }
         return 0;
     }
     return 1;
@@ -61,11 +127,15 @@ S : rien
 */
 
 void createGame(plateau *p, int conteur_speed){
-    if ((conteur_speed-p->speed)==(29-p->speed)){
-        if ((descendPiece(p))==0){
+    if ((conteur_speed-(p->speed))==(29-p->speed)){
+        if (!descendPiece(p)){
+            integratePiece(p);
             generateNewPiece(p);
         }
     }
+    printf("%d\n",p->tpiece->y);
+    printPlateau(p);
+    printf("\n");
 }
 
 /*
@@ -76,18 +146,6 @@ S : rien
 
 void afficherPlateau(plateau *p,int t,int w,int h){
     int k,j;
-    integratePiece(p);
-    for(k=2;k<LARGEUR_P-2;k++){
-            for(j=2;j<LONGUEUR_P-2;j++){
-                if (p->plateau[j][k]>0){
-		  MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(p->p_cur.r,p->p_cur.g,p->p_cur.b,p->p_cur.a));
-                }
-                else {
-		  MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(10,10,10,255));
-                }
-            }
-        }
-
     for(k=0;k<ROW;k++){
         for(j=0;j<COLUMN;j++){
             if (p->p_next.piece[j][k]>0){
@@ -99,22 +157,29 @@ void afficherPlateau(plateau *p,int t,int w,int h){
         }
     }
 }
-
 /*
-R: affiche le temps 
+R: affiche le temps et le score
 E: temps en hh:mm:ss en tableau de char et le font
 S: rien
 */
 
-void printTime(char* t,MLV_Font* font){
+void printTime(char* t,MLV_Font* font,plateau *p){
+    char score_txt[SCORE_PRINT];
     int h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     int w = MLV_get_desktop_width();
-    MLV_draw_filled_rectangle((w/20)*2, h/3+20,(w/20)*2,25,MLV_COLOR_BLACK);
+    sprintf(score_txt,"%d",p->score);
+    MLV_draw_filled_rectangle((w/20)*2, h/3+120,(w/20)*2,25,MLV_COLOR_BLACK);
         MLV_draw_text_with_font(
-            (w/20)*2, h/3+25,
+            (w/20)*2, h/3+125,
             t,         /*affiche le temps aux bonnes coordonnées*/
             font, MLV_COLOR_WHITE
         );
+    MLV_draw_filled_rectangle((w/20)*16, h/2-80,(w/20)*2,25,MLV_COLOR_BLACK);
+    MLV_draw_text_with_font(
+        (w/20)*16, h/2-75,
+        score_txt,         /*affiche le score aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
 
 }
 
@@ -134,10 +199,40 @@ void createGameWindow(int w,int h){
     MLV_clear_window( MLV_COLOR_BLACK );
     MLV_draw_rectangle((w/2)-(5*t)-5,(h/2)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
     MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5,t*4+5,MLV_COLOR_BLUE);                 /*contour prochaine pièce*/
-    MLV_draw_filled_rectangle(w/10,h/10,100,30,MLV_COLOR_BLUE);          /*carré pause*/                   
+    MLV_draw_filled_rectangle(w/10,h/10,100,30,MLV_COLOR_BLUE);          /*carré pause*/ 
+    MLV_draw_filled_rectangle(w/10,h/10+40,90,30,MLV_COLOR_BLUE);          /*carré droite*/
+    MLV_draw_filled_rectangle(w/10,h/10+80,80,30,MLV_COLOR_BLUE);          /*carré gauche*/
+    MLV_draw_filled_rectangle(w/10,h/10+120,80,30,MLV_COLOR_BLUE);          /*carré bas*/
+    MLV_draw_filled_rectangle(w/10,h/10+160,185,30,MLV_COLOR_BLUE);          /*carré rota h*/
+    MLV_draw_filled_rectangle(w/10,h/10+200,175,30,MLV_COLOR_BLUE);          /*carré rota ah*/                  
     MLV_draw_text_with_font(
         (w/10)+5, h/10 +5,
-        "PAUSE  ESC", /*affiche PAUSE et ESC aux bonnes coordonnées*/
+        "PAUSE           ESC", /*affiche PAUSE et ESC aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/10)+5, h/10 +45,
+        "RIGHT             D", /*affiche PAUSE et ESC aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/10)+5, h/10 +85,
+        "LEFT              Q", /*affiche PAUSE et ESC aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/10)+5, h/10 +125,
+        "DROP              S", /*affiche PAUSE et ESC aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/10)+5, h/10 +165,
+        "TURN RIGHT       E", /*affiche PAUSE et ESC aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
+    MLV_draw_text_with_font(
+        (w/10)+5, h/10 +205,
+        "TURN LEFT        A", /*affiche PAUSE et ESC aux bonnes coordonnées*/
         font, MLV_COLOR_WHITE
     );
     MLV_draw_text_with_font(
@@ -146,7 +241,7 @@ void createGameWindow(int w,int h){
         font, MLV_COLOR_WHITE
     );
     MLV_draw_text_with_font(
-        (w/20)*2, h/3,
+        (w/20)*2, h/3+100,
         "TIME",         /*affiche TIME aux bonnes coordonnées*/
         font, MLV_COLOR_WHITE
     );
@@ -279,13 +374,16 @@ E: rien
 S: rien
 */
 
-void setGameWindow(plateau *p){
+void setGameWindow(plateau *p,int fich){
     int i,width,height,t,hours,minutes,seconds,conteur_speed;
     struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
     char text[32];
     int unsigned temps,temps_pause;
     temps_pause=0;
+    if(fich==0){
+        setPlateau(p);
+    }
     if(MLV_path_exists( FONT_PATH)){
         font = MLV_load_font( FONT_PATH , 20 );
     }
@@ -299,8 +397,11 @@ void setGameWindow(plateau *p){
     MLV_actualise_window();
     clock_gettime(CLOCK_REALTIME, &debut_jeu);
     while(i){
+        i=gameoverWindow(p,fich);
         MLV_actualise_window();
         clock_gettime(CLOCK_REALTIME, &debut);
+
+        /*partie pause*/
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_deb);
             /*si on appuie sur echap, alors on ouvre le menu pause*/
@@ -310,10 +411,16 @@ void setGameWindow(plateau *p){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_fin);
             temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
+
+        /*partie jeu*/
         createGame(p,conteur_speed);
+        imput(p,conteur_speed);
+
+        /*partie affichage*/
+        affichage_pixel(p,t,width,height);
         afficherPlateau(p,t,width,height);
-        conteur_speed =  (conteur_speed+1)%30;
-        i=gameoverWindow(p);
+        conteur_speed = (conteur_speed+1)%30;
+
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
@@ -323,7 +430,7 @@ void setGameWindow(plateau *p){
         minutes = (temps % 3600) / 60;
         seconds = temps % 60;
         sprintf(text, "%02d:%02d:%02d", hours, minutes, seconds); /* Met un texte avec des int dans une variable "string"*/
-        printTime(text,font);
+        printTime(text,font,p);
         clock_gettime(CLOCK_REALTIME, &fin);
         if((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) MLV_wait_milliseconds((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
     }
