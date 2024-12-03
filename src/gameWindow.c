@@ -15,6 +15,21 @@
 #include "piece.h"
 
 /*
+R : active les imput 
+E : plateau
+S : rien
+*/
+
+void imput(plateau *p){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
+        if (!descendPiece(p)){
+            integratePiece(p);
+            generateNewPiece(p);
+        }
+    }
+}
+
+/*
 R : permet d'afficher la couleur
 E : plateau et taille ecran
 S : rien 
@@ -334,6 +349,7 @@ void setGameWindow(plateau *p){
 
         /*partie jeu*/
         createGame(p,conteur_speed);
+        imput(p);
 
         /*partie affichage*/
         affichage_pixel(p,t,width,height);

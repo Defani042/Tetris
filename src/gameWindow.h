@@ -15,6 +15,8 @@
 /*macro*/
 #define SCORE_PRINT 32
 
+void imput(plateau *p);
+
 void affichage_pixel(plateau *p,int t,int w,int h);
 
 int gameoverWindow(plateau *p);
