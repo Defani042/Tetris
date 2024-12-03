@@ -124,7 +124,7 @@ S: 1 entier (nb ligne qui ont été clear)
 int checkPlateauState(plateau* p){
   int i,nb_line= 0;
   /*on parcourps toute les lignes du plateau*/
-  for(i=LONGUEUR_P-1;i >= 0;i--){
+  for(i=2;i<LONGUEUR_P-2;i++){
     /*si une ligne est remplie*/
     if(lineIsFull(p,i)){
       clearLine(p,i); /*on la remet à zero*/
@@ -226,8 +226,8 @@ int canPlacePiece(plateau *plat, piece *p) {
       if (p->piece[i][j]>0) {
 	newX = p->x + j;
 	newY = p->y + i;
-	if (newX < 2 || newX >= LARGEUR_P-2 || newY < 2 || newY >= LONGUEUR_P-2 || plat->plateau[newY][newX] >0) {
 
+	if (newX < 1 || newX >= LARGEUR_P -2 || newY < 1 || newY >= LONGUEUR_P - 2 || plat->plateau[newY][newX] > 0) {
 
 	  return 0;
 	}
@@ -389,6 +389,34 @@ void supprPiece(plateau *p){
   }
 
 }
+/*
+R: gestion du déplacement latérale de la piece
+E: 1 pointeur vers plateau et 1 char (d => déplacement à droite sinon gauche)
+S: vide
+*/
 
+void movepiece(plateau *p, char c) {
+    /* Pointeur vers la pièce courante */
+    piece *pp = &p->p_cur;
 
+    /* Cas où on se déplace à droite */
+    if (c == 'd') {
+        pp->x += 1; /* Tentative de déplacement à droite */
+        if (!canPlacePiece(p, pp)) {
+            pp->x -= 1; /* Annulation du déplacement si impossible */
+        } else {
+            integratePiece(p); /* Intégration de la pièce déplacée */
+        }
+    }
+    /* Cas où on se déplace à gauche */
+    else {
+        pp->x -= 1; /* Tentative de déplacement à gauche */
+        if (!canPlacePiece(p, pp)) {
+            pp->x += 1; /* Annulation du déplacement si impossible */
+        } else {
+           integratePiece(p); /* Intégration de la pièce déplacée */
+        }
+    }
+}
 #endif /*_PLATEAU_C_*/
+

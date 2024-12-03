@@ -59,4 +59,6 @@ void increaseSpeed(plateau *p);
 
 void supprPiece(plateau *p);
 
+void movepiece(plateau *p, char c);
+
 #endif /*_PLATEAU_H_*/

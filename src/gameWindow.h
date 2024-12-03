@@ -15,15 +15,15 @@
 /*macro*/
 #define SCORE_PRINT 32
 
-void imput(plateau *p);
+void imput(plateau *p,int compteur);
 
 void affichage_pixel(plateau *p,int t,int w,int h);
 
-int gameoverWindow(plateau *p);
+int gameoverWindow(plateau *p,int id_fich);
 
 void createGameplay(plateau *p, int conteur_speed);
 
-void printTime(char* t,MLV_Font* font);
+void printTime(char* t,MLV_Font* font,plateau *p);
 
 void createGameWindow(int w,int h);
 
@@ -31,6 +31,6 @@ void stopWindow(int w, int h);
 
 int setStopWindow(int w,int h,plateau *p);
 
-void setGameWindow(plateau *p);
+void setGameWindow(plateau *p,int fich);
 
 #endif /*_MAINWINDOW_H_*/
