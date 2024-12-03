@@ -75,6 +75,7 @@ void saveInFich(plateau* p, char* filename,int score){
         }
         fprintf(fich,"\n%d %d %d %d %d %d\n",p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a,p->p_next.x,p->p_next.y);
         /*copie la couleur et le placement x et y dans la save*/
+        fprintf(fich,"%d",p->temps_jeu);
         fclose(fich);
     }
 }
@@ -134,6 +135,9 @@ void loadInFich(plateau* p,char* filename,int id_fich){
         if (fscanf(fich,"\n%d %d %d %d %d %d\n",&(p->p_next.r),&(p->p_next.g),&(p->p_next.b),&(p->p_next.a),&(p->p_next.x),&(p->p_next.y))!=6){
             printf("0\n");/*copie des couleurs et axes du fich au tableau*/
         }
+        if (fscanf(fich,"%d",&(p->temps_jeu))!=1){
+                    printf("0");        /*copie du temps du fich au tableau*/
+                }
         fclose(fich);
         switch(id_fich){
             case 1: setGameWindow(p,1);break;/*lance le jeu*/

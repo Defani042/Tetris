@@ -379,10 +379,13 @@ void setGameWindow(plateau *p,int fich){
     struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
     char text[32];
-    int unsigned temps,temps_pause;
-    temps_pause=0;
+    int temps,temps_pause,temps_save,temps_saved;
+    temps_save=0;             /*variable met le temps actuel dans p->temps_jeu pour la savegarde*/
+    temps_pause=0;            /*variable qui prends le temps en pause*/
+    temps_saved=p->temps_jeu; /*variable qui prends le temps de la save*/
     if(fich==0){
         setPlateau(p);
+        temps_saved=0;
     }
     if(MLV_path_exists( FONT_PATH)){
         font = MLV_load_font( FONT_PATH , 20 );
@@ -405,6 +408,7 @@ void setGameWindow(plateau *p,int fich){
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_deb);
             /*si on appuie sur echap, alors on ouvre le menu pause*/
+            p->temps_jeu=temps_save;
             i=setStopWindow(width,height,p);
             MLV_clear_window(MLV_COLOR_BLACK);
             createGameWindow(width,height);
@@ -425,6 +429,8 @@ void setGameWindow(plateau *p,int fich){
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
         temps -=temps_pause;
+        temps =temps+temps_saved;
+        temps_save=temps;
         temps/=1000;
         hours = temps / 3600;
         minutes = (temps % 3600) / 60;
