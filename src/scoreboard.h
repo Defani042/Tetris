@@ -11,7 +11,8 @@
 /*Macro*/
 #define NB_MAX 15
 #define LINE_MAX 32
-#define SCORE_SAVE "fich/scoreboard.txt"
+#define SCORE_SAVE "fich/scoreboard.txt"/*macro*/
+#define SCORE_PRINT 32
 
 
 void readFich(char* filename,int tab[NB_MAX], int new_score);

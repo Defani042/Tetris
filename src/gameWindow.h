@@ -15,6 +15,8 @@
 /*macro*/
 #define SCORE_PRINT 32
 
+void affichage_pixel(plateau *p,int t,int w,int h);
+
 int gameoverWindow(plateau *p);
 
 void createGameplay(plateau *p, int conteur_speed);
