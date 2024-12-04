@@ -16,6 +16,8 @@
 #define FILE3 "fich/save3.txt"
 #define FILE4 "fich/save4.txt"
 
+void loadInFich(plateau* p,char* filename,int id_fich);
+
 void setSaveButton(int width, int height);
 
 void setButonBack(int w,int h);

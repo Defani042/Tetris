@@ -77,6 +77,7 @@ void setPlateau(plateau *p){
   p->gameover = 0; /* on met la variable gameover à 0 */
   p->score = 0; /*le score est à 0 de base*/
   p->speed = 1; /*speed est à 1*/
+  p->temps_jeu = 0;
   piececpy(&(p->p_cur),&(p->tpiece[SelectPiece()])); /*piece courente séléctionner aléatoirement*/
   piececpy(&(p->p_next),&(p->tpiece[SelectPiece()])); /*piece suivante courente séléctionner aléatoirement*/
 }
@@ -227,7 +228,9 @@ int canPlacePiece(plateau *plat, piece *p) {
 	newX = p->x + j;
 	newY = p->y + i;
 
+
 	if (newX < 1 || newX >= LARGEUR_P -2 || newY < 1 || newY >= LONGUEUR_P - 2 || plat->plateau[newY][newX] > 0) {
+
 
 	  return 0;
 	}
@@ -246,6 +249,7 @@ S: vide
 void integratePiece(plateau *plat) {
   int i,j;
   piece *p = &plat->p_cur;
+  supprPiece(plat);
   if (canPlacePiece(plat, p)) {
     for (i = 0; i < ROW; i++) {
       for (j = 0; j < COLUMN; j++) {
@@ -276,6 +280,7 @@ void Plateaucpy(plateau *p1,plateau *p2){
   p1->gameover = p2->gameover;
   p1->score = p2->score;
   p1->speed = p2->speed;
+  p1->temps_jeu = p2->temps_jeu;
 
   /* copy des pieces */
   piececpy(&(p1->p_cur),&(p2->p_cur));
@@ -376,6 +381,7 @@ R: supprime la piece (dans le but de réafficher la piece quand on a un deplacem
 E: 1 pointeur vers plateau
 S: vide
 */
+
 void supprPiece(plateau *p){
   int i,j;
   int x = p->p_cur.x;
@@ -384,21 +390,22 @@ void supprPiece(plateau *p){
     for(j = 0; j < COLUMN ;j++){  
       if(p->p_cur.piece[i][j] != 0){
 	p->plateau[y+i][x+j]=0;
+
       }
     }
   }
 
 }
+
 /*
 R: gestion du déplacement latérale de la piece
 E: 1 pointeur vers plateau et 1 char (d => déplacement à droite sinon gauche)
 S: vide
 */
 
-
 void movepiece(plateau *p, char c) {
     /* Pointeur vers la pièce courante */
-    piece* pp = &p->p_cur;
+    piece *pp = &p->p_cur;
 
     /* Cas où on se déplace à droite */
     if (c == 'd') {
@@ -406,7 +413,7 @@ void movepiece(plateau *p, char c) {
         if (!canPlacePiece(p, pp)) {
             pp->x -= 1; /* Annulation du déplacement si impossible */
         } else {
-	  integratePiece(p); /* Intégration de la pièce déplacée */
+            integratePiece(p); /* Intégration de la pièce déplacée */
         }
     }
     /* Cas où on se déplace à gauche */

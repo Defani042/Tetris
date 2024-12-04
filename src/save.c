@@ -75,6 +75,7 @@ void saveInFich(plateau* p, char* filename,int score){
         }
         fprintf(fich,"\n%d %d %d %d %d %d\n",p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a,p->p_next.x,p->p_next.y);
         /*copie la couleur et le placement x et y dans la save*/
+        fprintf(fich,"%d",p->temps_jeu);
         fclose(fich);
     }
 }
@@ -85,7 +86,7 @@ E: plateau, nom du fichier de save
 S: rien
 */
 
-void loadInFich(plateau* p,char* filename){
+void loadInFich(plateau* p,char* filename,int id_fich){
     int i,j;    /*def indice*/
     FILE* fich;
     fich = fopen(filename,"r+"); /*ouverture en r+*/
@@ -134,8 +135,17 @@ void loadInFich(plateau* p,char* filename){
         if (fscanf(fich,"\n%d %d %d %d %d %d\n",&(p->p_next.r),&(p->p_next.g),&(p->p_next.b),&(p->p_next.a),&(p->p_next.x),&(p->p_next.y))!=6){
             printf("0\n");/*copie des couleurs et axes du fich au tableau*/
         }
+        if (fscanf(fich,"%d",&(p->temps_jeu))!=1){
+                    printf("0");        /*copie du temps du fich au tableau*/
+                }
         fclose(fich);
-        setGameWindow(p);/*lance le jeu*/
+        switch(id_fich){
+            case 1: setGameWindow(p,1);break;/*lance le jeu*/
+            case 2: setGameWindow(p,2);break;
+            case 3: setGameWindow(p,3);break;
+            case 4: setGameWindow(p,4);break;
+            default:setGameWindow(p,0);break;
+        }
     }
 }
 
@@ -318,7 +328,7 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 1*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,FILE1);
+                    loadInFich(p,FILE1,1);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
@@ -333,7 +343,7 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>((height/40)*5) && y<((height/40)*5+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 2*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,FILE2);
+                    loadInFich(p,FILE2,2);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
@@ -348,7 +358,7 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*3/20) && x<(width*3/20+((width*6)/20)) && y>((height/40)*21) && y<((height/40)*21+((height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 3*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,FILE3);
+                    loadInFich(p,FILE3,3);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
@@ -363,7 +373,7 @@ void setSaveMenu(int page, plateau* p){
             if (x>(width*11/20) && x<(width*11/20+((width*6)/20)) && y>(height/40)*21 && y<(((height/40)*21+(height*6)/20))){
                 if (page == 1){ /*si on clique sur le bouton de la save 4*/
                     /*si depuis le menu savgarde du menu pricipale, alors lance le jeu avec les bonnes données*/
-                    loadInFich(p,FILE4);
+                    loadInFich(p,FILE4,4);
                     MLV_clear_window(MLV_COLOR_BLACK);
                     createAllSaveMenu(width,height);
                 }
