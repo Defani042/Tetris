@@ -129,11 +129,14 @@ int checkPlateauState(plateau* p){
     /*si une ligne est remplie*/
     if(lineIsFull(p,i)){
       clearLine(p,i); /*on la remet à zero*/
+      gapline(p,i); /*on decale les lignes du tableau*/
       nb_line++; /*incrémentation de la variable nb_line*/ 
     }
     
   }
-  gapline(p);
+
+  /* Mettre à jour le score en fonction des lignes effacées */
+  updateScore(p, nb_line);
   return nb_line;
 }
 
@@ -153,25 +156,31 @@ void filledline(plateau *p, int n){
 }
 
 /*
-R: fonction qui permet de décaller une ligne du plateau
+R: fonction qui permet de décaler les lignes du plateau vers le bas
 E: 1 pointeur Plateau 
 S: vide
 */
 
-void gapline(plateau *p) {
-  int i,j,dec=0;
-  for(i=2;i<LONGUEUR_P-2;i++){
-    if(lineIsEmpty(p,i)){
-      dec++;
+void gapline(plateau *p, int n) {
+  int i,j;
+  /* Vérifie que n est dans les limites valides*/
+    if (n <= 0 || n >= LONGUEUR_P - 1) {
+        return;
     }
-    else if (dec > 0) {
-      for(j=2;j<LARGEUR_P-2;j++){
-	p->plateau[i-dec][j] = 	p->plateau[i][j];	
-      }
-      clearLine(p,i);
+
+    /* Décale chaque ligne au-dessus de la ligne n d'une ligne vers le bas*/
+    for (i = n; i > 1; i--) {
+        for (j = 2; j < LARGEUR_P - 1; j++) {
+            p->plateau[i][j] = p->plateau[i-1][j];
+        }
     }
-  }    
+
+    /* La première ligne après le décalage (ligne 1) est mise à 0 (vide)*/
+    for (j = 1; j < LARGEUR_P - 1; j++) {
+        p->plateau[2][j] = 0;
+    }
 }
+
 /*
 R: Fonction permettant d'insérer une valeur dans une case d'indice n,m
 E: 1 pointeur plateau et 3 entiers (n et m indice de la case dans le plateau) (valeur de la case) 
@@ -330,30 +339,23 @@ E: 1 pointeur vers plateau
 S: vide
 */
 
-void increaseScore(plateau *p){
-  int lineclear;
-  lineclear = checkPlateauState(p);
-  switch(lineclear){
-  /* si on a clear 1 ligne*/
-  case 1:
-    p->score+=10;
-    break;
-  /* si on a clear 2 lignes*/   
-  case 2:
-    p->score+=25;
-    break;
-  /* si on a clear 3 lignes*/
-  case 3:
-    p->score+=50;
-    break;
-  /* si on a clear 4 ligne*/
-  case 4:
-    p->score+=100;
-    break;
-  /* cas default */
-  default:
-    break;
-  }
+void updateScore(plateau* p, int linesCleared) {
+    switch(linesCleared) {
+    case 1:
+      p->score += 10;  /* 40 points pour 1 ligne */
+      break;
+    case 2:
+      p->score += 25; /* 100 points pour 2 lignes */
+      break;
+    case 3:
+      p->score += 50; /* 300 points pour 3 lignes */
+      break;
+    case 4:
+      p->score += 100; /* 1200 points pour 4 lignes (Tetris) */
+      break;
+    default:
+      break;
+    }
 }
 
 /*

@@ -21,7 +21,7 @@ S : rien
 */
 
 void imput(plateau *p,int compteur){
-
+  int line_c = 0;
     if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%2==0) ){
         movepiece(p,'d');
     }
@@ -39,10 +39,13 @@ void imput(plateau *p,int compteur){
     if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
         if (!descendPiece(p)){
             integratePiece(p);
+	    line_c = checkPlateauState(p);
+	    printf("ligne clear: %d\n",line_c);
             generateNewPiece(p);
         }
     }
-    /*increaseScore(p);*/
+   
+
     increaseSpeed(p);
 }
 
@@ -83,6 +86,7 @@ int gameoverWindow(plateau *p,int id_fich){
     char afficscore[SCORE_PRINT];
     FILE* fich = NULL;
     MLV_Font* font=NULL;
+ 
     supprPiece(p);
     h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     w = MLV_get_desktop_width();
@@ -129,11 +133,18 @@ S : rien
 void createGame(plateau *p, int conteur_speed){
     if ((conteur_speed-(p->speed))==(29-p->speed)){
         if (!descendPiece(p)){
-            integratePiece(p);
-            generateNewPiece(p);
+
+	  integratePiece(p);
+	  generateNewPiece(p);
         }
     }
-    printf("%d\n",p->tpiece->y);
+    /*DEBUG MODE*/
+    printf("\033[H\033[J");
+    printf("y p_cur: %d\n",p->p_cur.y);
+    printf("x p_cur; %d\n",p->p_cur.x);
+    printf("gameover: %d\n",p->gameover);
+    printf("score: %d\n",p->score);
+    printf("speed: %d\n",p->speed);
     printPlateau(p);
     printf("\n");
 }
@@ -380,6 +391,7 @@ void setGameWindow(plateau *p,int fich){
     MLV_Font* font=NULL;
     char text[32];
     int temps,temps_pause,temps_save,temps_saved;
+
     temps_save=0;             /*variable met le temps actuel dans p->temps_jeu pour la savegarde*/
     temps_pause=0;            /*variable qui prends le temps en pause*/
     temps_saved=p->temps_jeu; /*variable qui prends le temps de la save*/
@@ -403,7 +415,7 @@ void setGameWindow(plateau *p,int fich){
         i=gameoverWindow(p,fich);
         MLV_actualise_window();
         clock_gettime(CLOCK_REALTIME, &debut);
-
+	
         /*partie pause*/
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_deb);
@@ -418,6 +430,7 @@ void setGameWindow(plateau *p,int fich){
 
         /*partie jeu*/
         createGame(p,conteur_speed);
+
         imput(p,conteur_speed);
 
         /*partie affichage*/

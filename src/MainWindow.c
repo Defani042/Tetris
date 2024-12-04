@@ -245,7 +245,6 @@ S:rien
 
 void createWindow(){
     int width,height;
-    printf("DEBUT creatW \n");
     height = MLV_get_desktop_height(); /*prends la taille de l'ecran*/
     width = MLV_get_desktop_width();
     

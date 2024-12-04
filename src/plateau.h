@@ -38,7 +38,7 @@ int checkPlateauState(plateau* p);
 
 void filledline(plateau *p, int n);
 
-void gapline(plateau *p);
+void gapline(plateau *p,int n);
 
 void setcase(plateau *p , int n , int m, int value);
 
@@ -54,7 +54,7 @@ int descendPiece(plateau *plat);
 
 void generateNewPiece(plateau *plat);
 
-void increaseScore(plateau *p);
+void updateScore(plateau* p, int linesCleared);
 
 void increaseSpeed(plateau *p);
 
