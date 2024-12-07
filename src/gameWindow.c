@@ -410,6 +410,7 @@ void setGameWindow(plateau *p,int fich){
     t=height/24;                             /*taille des carré de Tetris par rapport à la hauteur de l'écran*/
     createGameWindow(width,height);
     MLV_actualise_window();
+    increaseSpeed(p);
     clock_gettime(CLOCK_REALTIME, &debut_jeu);
     while(i){
         clock_gettime(CLOCK_REALTIME, &debut);
