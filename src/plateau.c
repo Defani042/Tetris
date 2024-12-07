@@ -365,17 +365,17 @@ S: vide
 */
 
 void increaseSpeed(plateau *p){
-  if(p->score >= 0 && p->score < 500) p->speed = 0;           /*  level 0  */
-  if(p->score >= 500 && p->score < 1000) p->speed = 1;        /*  level 1  */
-  if(p->score >= 1000 && p->score < 2000) p->speed = 2;       /*  level 2  */
-  if(p->score >= 2000 && p->score < 4000) p->speed = 3;       /*  level 3  */
-  if(p->score >= 4000 && p->score < 8000) p->speed = 4;       /*  level 4  */
-  if(p->score >= 8000 && p->score < 16000) p->speed = 5;      /*  level 5  */
-  if(p->score >= 16000 && p->score < 32000) p->speed = 6;     /*  level 6  */
-  if(p->score >= 32000 && p->score < 64000) p->speed = 7;     /*  level 7  */
-  if(p->score >= 64000 && p->score < 128000) p->speed = 8;    /*  level 8  */
-  if(p->score >= 128000 && p->score < 256000) p->speed = 9;   /*  level 9  */
-  if(p->score > 256000) p->speed = 10;                        /*  level 10 */
+  if(p->score >= 0 && p->score < 500) p->speed = 2;           /*  level 0  */
+  if(p->score >= 500 && p->score < 1000) p->speed = 4;        /*  level 1  */
+  if(p->score >= 1000 && p->score < 2000) p->speed = 6;       /*  level 2  */
+  if(p->score >= 2000 && p->score < 4000) p->speed = 8;       /*  level 3  */
+  if(p->score >= 4000 && p->score < 8000) p->speed = 12;       /*  level 4  */
+  if(p->score >= 8000 && p->score < 16000) p->speed = 14;      /*  level 5  */
+  if(p->score >= 16000 && p->score < 32000) p->speed = 16;     /*  level 6  */
+  if(p->score >= 32000 && p->score < 64000) p->speed = 18;     /*  level 7  */
+  if(p->score >= 64000 && p->score < 128000) p->speed = 22;    /*  level 8  */
+  if(p->score >= 128000 && p->score < 256000) p->speed = 26;   /*  level 9  */
+  if(p->score > 256000) p->speed = 28;                        /*  level 10 */
 }
 
 /*

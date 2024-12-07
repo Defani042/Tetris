@@ -24,12 +24,12 @@ void imput(plateau *p,int compteur){
   int line_c = 0;
     if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%2==0) ){
         movepiece(p,'d');
-    }
+    }/*permet de bouger la piece vers la droite quand on appuie sur d*/
     else{
         if( (MLV_get_keyboard_state( MLV_KEYBOARD_q ) == MLV_PRESSED) && (compteur%2==0)){
             movepiece(p,'g');
         }
-    } 
+    } /*permet de bouger la piece vers la gauche quand on appuie sur q*/
     /*if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED ){
         rotate_anticlockwise(p->p_cur);
     } 
@@ -43,12 +43,9 @@ void imput(plateau *p,int compteur){
 	    printf("ligne clear: %d\n",line_c);
             generateNewPiece(p);
         }
-    }
-   
-
     increaseSpeed(p);
+    }
 }
-
 /*
 R : permet d'afficher la couleur
 E : plateau et taille ecran
@@ -70,6 +67,7 @@ void affichage_pixel(plateau *p,int t,int w,int h){
                 case 6:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,128,0,255));break;
                 case 7:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,0,255,255));break;
             }
+            /*permet d'afficher les case aux bonnes couleurs*/ 
         }
     }
 }
@@ -119,6 +117,7 @@ int gameoverWindow(plateau *p,int id_fich){
             case 3: fich=fopen(FILE3,"w");fclose(fich);break;
             case 4: fich=fopen(FILE4,"w");fclose(fich);break;
         }
+        setPlateau(p);
         return 0;
     }
     return 1;
@@ -131,7 +130,8 @@ S : rien
 */
 
 void createGame(plateau *p, int conteur_speed){
-    if ((conteur_speed-(p->speed))==(29-p->speed)){
+    printf("%d %d\n",conteur_speed-(p->speed),(29-p->speed));
+    if ((conteur_speed)==(29-p->speed)){
         if (!descendPiece(p)){
 
 	  integratePiece(p);
@@ -412,9 +412,9 @@ void setGameWindow(plateau *p,int fich){
     MLV_actualise_window();
     clock_gettime(CLOCK_REALTIME, &debut_jeu);
     while(i){
+        clock_gettime(CLOCK_REALTIME, &debut);
         i=gameoverWindow(p,fich);
         MLV_actualise_window();
-        clock_gettime(CLOCK_REALTIME, &debut);
 	
         /*partie pause*/
         if (MLV_get_keyboard_state(MLV_KEYBOARD_ESCAPE)== MLV_PRESSED){
@@ -436,7 +436,8 @@ void setGameWindow(plateau *p,int fich){
         /*partie affichage*/
         affichage_pixel(p,t,width,height);
         afficherPlateau(p,t,width,height);
-        conteur_speed = (conteur_speed+1)%30;
+        conteur_speed = (conteur_speed+1)%(30-p->speed);
+        printf("%d\n",conteur_speed);
 
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
@@ -451,7 +452,9 @@ void setGameWindow(plateau *p,int fich){
         sprintf(text, "%02d:%02d:%02d", hours, minutes, seconds); /* Met un texte avec des int dans une variable "string"*/
         printTime(text,font,p);
         clock_gettime(CLOCK_REALTIME, &fin);
-        if((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) MLV_wait_milliseconds((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
+        if((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000)))>0) {
+            MLV_wait_milliseconds((1000/30)-(((fin.tv_sec*1000)+(fin.tv_nsec/1000000))-((debut.tv_sec*1000)+(debut.tv_nsec/1000000))));
+        }
     }
 }
 
