@@ -30,12 +30,12 @@ void imput(plateau *p,int compteur){
             movepiece(p,'g');
         }
     } 
-    /*if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED ){
-        rotate_anticlockwise(p->p_cur);
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%2==0) ){
+        rotateCurrentPiece(p, 1);
     } 
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED ){
-        rotate_clockwise(p->p_cur);
-    } */
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%2==0) ){
+      rotateCurrentPiece(p, -1);
+    } 
     if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
         if (!descendPiece(p)){
             integratePiece(p);

@@ -43,16 +43,6 @@ void setPieceL(piece *p);
 
 void setPieceLinv(piece *p);
 
-void transpose(piece *p);
-
-void reverse_rows(piece *p);
-
-void rotate_anticlockwise(piece *p);
-
-void reverse_columns(piece *p);
-
-void rotate_clockwise(piece *p);
-
 void printTabPiece(tabpiece t);
 
 void setTabpiece(tabpiece t);
@@ -60,5 +50,7 @@ void setTabpiece(tabpiece t);
 int SelectPiece();
 
 void piececpy(piece* p1, piece *p2);
+
+void rotatePieceArray(piece *p, int direction);
 
 #endif /*_PIECE_H_*/

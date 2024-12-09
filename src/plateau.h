@@ -62,4 +62,6 @@ void supprPiece(plateau *p);
 
 void movepiece(plateau *p, char c);
 
+void rotateCurrentPiece(plateau *plat, int direction);
+
 #endif /*_PLATEAU_H_*/

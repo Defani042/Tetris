@@ -222,79 +222,6 @@ void setPieceLinv(piece *p){
   p->id = 7;
 }
 
-/*
-R: fonction pour faire une transpose d'une piece
-E: un pointeur piece
-S: vide
-*/
-
-void transpose(piece *p) {
-  int i,j,tmp;
-
-  for(i = 0; i < ROW; i++) {
-    for (j = i + 1; j < ROW; j++) {
-      tmp = p->piece[i][j];
-      p->piece[i][j] = p->piece[j][i];
-      p->piece[j][i] = tmp;
-    }
-  }
-}
-
-/*
-R: fonction pour faire une inverse d'une piece en fonction des lignes
-E: un pointeur piece
-S: vide
-*/
-
-void reverse_rows(piece *p) {
-  int i,j,tmp;
-  for (i = 0; i < ROW / 2; i++) {
-    for (j = 0; j < ROW; j++) {
-      tmp = p->piece[i][j];
-      p->piece[i][j] = p->piece[COLUMN - i - 1][j];
-      p->piece[ROW - i - 1][j] = tmp;
-    }
-  }
-}
-
-/*
-R: fonction pour faire une rotation anti horaire
-E: un pointeur piece
-S: vide
-*/
-
-void rotate_anticlockwise(piece *p) {
-    transpose(p);
-    reverse_rows(p);
-}
-
-/*
-R: fonction pour faire une inverse d'une piece en fonction des colomnes
-E: un pointeur piece
-S: vide
-*/
-
-void reverse_columns(piece *p) {
-  int i,j,tmp;
-  for (i = 0; i < COLUMN; i++) {
-    for (j = 0; j < COLUMN / 2; j++) {
-      tmp = p->piece[i][j];
-      p->piece[i][j] = p->piece[i][COLUMN - j - 1];
-      p->piece[i][COLUMN - j - 1] = tmp;
-    }
-  }
-}
-
-/*
-R: fonction pour faire une rotation horaire
-E: un pointeur piece
-S: vide
-*/
-
-void rotate_clockwise(piece *p) {
-    transpose(p);
-    reverse_columns(p);
-}
 
 /*
 R: fonction de remplissage du tableau avec les pieces de base du tetris
@@ -367,6 +294,55 @@ void piececpy(piece* p1, piece *p2){
   p1->id=p2->id; /*copy de l'id */
   
 }
+
+
+
+
+/*
+R: Fait tourner la pièce de 90 degrés dans la direction spécifiée
+E: 1 pointeur vers une structure pièce et 1 entier pour la direction (1 pour horaire, -1 pour anti-horaire)
+S: vide
+*/
+void rotatePieceArray(piece *p, int direction) {
+    int temp[ROW][COLUMN];
+    int i, j;
+    
+    /* Transposer la matrice */
+    for (i = 0; i < ROW; i++) {
+        for (j = 0; j < COLUMN; j++) {
+            temp[j][i] = p->piece[i][j];
+        }
+    }
+    
+    /* Inverser les lignes pour une rotation horaire ou les colonnes pour une rotation anti-horaire */
+    if (direction == 1) {
+        /* Rotation horaire */
+        for (i = 0; i < ROW; i++) {
+            for (j = 0; j < COLUMN / 2; j++) {
+                int tmp = temp[i][j];
+                temp[i][j] = temp[i][COLUMN - 1 - j];
+                temp[i][COLUMN - 1 - j] = tmp;
+            }
+        }
+    } else if (direction == -1) {
+        /* Rotation anti-horaire */
+        for (i = 0; i < ROW / 2; i++) {
+            for (j = 0; j < COLUMN; j++) {
+                int tmp = temp[i][j];
+                temp[i][j] = temp[ROW - 1 - i][j];
+                temp[ROW - 1 - i][j] = tmp;
+            }
+        }
+    }
+    
+    /* Copier la matrice tournée dans le tableau original de la pièce */
+    for (i = 0; i < ROW; i++) {
+        for (j = 0; j < COLUMN; j++) {
+            p->piece[i][j] = temp[i][j];
+        }
+    }
+}
+
 
 
 
