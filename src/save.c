@@ -162,7 +162,7 @@ void setSaveButton(int width, int height){
     if(MLV_path_exists( FONT_PATH)){
         font = MLV_load_font(  FONT_PATH, 50 );    
     }
-    MLV_draw_filled_rectangle(width*3/20,(height/40)*5,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    drawCarreAuxBordArrondis(width*3/20,(height/40)*5,(width*6)/20,(height*6)/20,10,MLV_COLOR_BLUE);
     w=(200*width)/1000;                                 /*créer le carré pour les fichier de save*/
     h=(150*height)/1000;
     MLV_draw_text_with_font(
@@ -176,7 +176,7 @@ void setSaveButton(int width, int height){
         font, MLV_COLOR_WHITE
     );
     w=((600*width)/1000);
-    MLV_draw_filled_rectangle((width*11)/20,(height/40)*5,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    drawCarreAuxBordArrondis((width*11)/20,(height/40)*5,(width*6)/20,(height*6)/20,10,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w, h,
         "FILE 2", 
@@ -188,7 +188,7 @@ void setSaveButton(int width, int height){
         font, MLV_COLOR_WHITE
     );
     h=(550*height)/1000;
-    MLV_draw_filled_rectangle((width*11)/20,(height/40)*21,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    drawCarreAuxBordArrondis((width*11)/20,(height/40)*21,(width*6)/20,(height*6)/20,10,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w, h,
         "FILE 4", 
@@ -200,7 +200,7 @@ void setSaveButton(int width, int height){
         font, MLV_COLOR_WHITE
     );
     w=(200*width)/1000;
-    MLV_draw_filled_rectangle(width*3/20,(height/40)*21,(width*6)/20,(height*6)/20,MLV_COLOR_BLUE);
+    drawCarreAuxBordArrondis(width*3/20,(height/40)*21,(width*6)/20,(height*6)/20,10,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w, h,
         "FILE 3", 
@@ -231,7 +231,7 @@ void setButonBack(int w,int h){
     if(MLV_path_exists( FONT_PATH)){
         font = MLV_load_font( FONT_PATH , p );
     }
-    MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE); /*crrer le carré du bouton back*/
+    drawCarreAuxBordArrondis(w1,h1,w2,h2,10,MLV_COLOR_BLUE); /*crrer le carré du bouton back*/
     MLV_draw_text_with_font(
         w3, h3,
         "BACK",  /*affiche le back */

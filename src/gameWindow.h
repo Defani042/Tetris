@@ -11,6 +11,7 @@
 #include "plateau.h"
 #include "MainWindow.h"
 #include "scoreboard.h"
+#include "MainWindow.h"
 
 /*macro*/
 #define SCORE_PRINT 32
