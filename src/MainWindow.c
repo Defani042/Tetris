@@ -24,17 +24,21 @@ S : rien
 */
 
 void drawCarreAuxBordArrondis(int x, int y, int width, int height, int radius, MLV_Color color) {
-    /*Dessiner les quatre coins arrondis*/
-    MLV_draw_filled_circle(x + radius, y + radius, radius, color);
-    MLV_draw_filled_circle(x + width - radius, y + radius, radius, color);
-    MLV_draw_filled_circle(x + radius, y + height - radius, radius, color);
-    MLV_draw_filled_circle(x + width - radius, y + height - radius, radius, color);
+    /*Dessiner les quatre bords arrondis*/
+    MLV_draw_filled_circle(x + radius, y + radius, radius, color);/*bord sup gauche*/
+    MLV_draw_filled_circle(x + width - radius, y + radius, radius, color);/*bord sup droit*/
+    MLV_draw_filled_circle(x + radius, y + height - radius, radius, color);/*bord inf gauche*/
+    MLV_draw_filled_circle(x + width - radius, y + height - radius, radius, color);/*bord inf droit */
 
     /*Dessiner les rectangles reliant les coins arrondis*/
+    /*rectangle haut*/
     MLV_draw_filled_rectangle(x + radius, y, width - 2 * radius, radius, color);
+    /*rectangle bas*/
     MLV_draw_filled_rectangle(x + radius, y + height - radius, width - 2 * radius, radius, color);
+    /*rectangle gauche*/
     MLV_draw_filled_rectangle(x, y + radius, radius, height - 2 * radius, color);
-    MLV_draw_filled_rectangle(x + width - radius, y + radius, radius, height - 2 * radius, color);
+    /*rectangle droit*/
+    MLV_draw_filled_rectangle(x + width - radius, y + radius, radius+1, height - 2 * radius, color);
 
     /*Dessiner le rectangle central*/
     MLV_draw_filled_rectangle(x + radius, y + radius,width - 2 * radius,  + height - 2 * radius, color);
