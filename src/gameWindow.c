@@ -186,7 +186,7 @@ void printTime(char* t,MLV_Font* font,plateau *p){
             t,         /*affiche le temps aux bonnes coordonnées*/
             font, MLV_COLOR_WHITE
         );
-    drawCarreAuxBordArrondis((w/20)*14, h/2-80,(w/20)*2,0,10,MLV_COLOR_BLACK);
+    drawCarreAuxBordArrondis((w/20)*14, h/2-70,(w/20)*5,0,10,MLV_COLOR_BLACK);
     MLV_draw_text_with_font(
         (w/20)*16, h/2-75,
         score_txt,         /*affiche le score aux bonnes coordonnées*/

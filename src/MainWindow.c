@@ -34,11 +34,11 @@ void drawCarreAuxBordArrondis(int x, int y, int width, int height, int radius, M
     /*rectangle haut*/
     MLV_draw_filled_rectangle(x + radius, y, width - 2 * radius, radius, color);
     /*rectangle bas*/
-    MLV_draw_filled_rectangle(x + radius, y + height - radius, width - 2 * radius, radius, color);
+    MLV_draw_filled_rectangle(x + radius, y + height - radius, width - 2 * radius, radius + 1, color);
     /*rectangle gauche*/
     MLV_draw_filled_rectangle(x, y + radius, radius, height - 2 * radius, color);
     /*rectangle droit*/
-    MLV_draw_filled_rectangle(x + width - radius, y + radius, radius+1, height - 2 * radius, color);
+    MLV_draw_filled_rectangle(x + width - radius, y + radius, radius + 1, height - 2 * radius, color);
 
     /*Dessiner le rectangle central*/
     MLV_draw_filled_rectangle(x + radius, y + radius,width - 2 * radius,  + height - 2 * radius, color);
