@@ -184,14 +184,14 @@ void printTime(char* t,MLV_Font* font,plateau *p){
     int w = MLV_get_desktop_width();
     
     sprintf(score_txt,"%d",p->score);
-    drawCarreAuxBordArrondis((w/20)*2, h/3+120,(w/160)*11,25,10,MLV_COLOR_BLACK);
+    drawCarreAuxBordArrondis((w/20)*2-7, h/3+120,140,25,10,MLV_COLOR_BLACK);
         MLV_draw_text_with_font(
             (w/20)*2, h/3+125,
             t,         /*affiche le temps aux bonnes coordonnées*/
             font, MLV_COLOR_WHITE
         );
         
-    drawCarreAuxBordArrondis((w/20)*16-15, h/2-100,(w/40)*3,50,10,MLV_COLOR_BLACK);
+    drawCarreAuxBordArrondis((w/20)*16-15, h/2-100,120,50,10,MLV_COLOR_BLACK);
     
     MLV_draw_text_with_font(
         (w/20)*16, h/2-75,
@@ -268,7 +268,7 @@ void createGameWindow(int w,int h,MLV_Image* background){
         "TIME",         /*affiche TIME aux bonnes coordonnées*/
         font, MLV_COLOR_WHITE
     );
-    MLV_draw_rectangle((w/20)*16-15, h/2-100,(w/40)*3,50,MLV_COLOR_BLUE);
+    MLV_draw_rectangle((w/20)*16-15, h/2-100,120,50,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         (w/20)*16, h/2-100,
         "SCORE",        /*affiche SCORE aux bonnes coordonnées*/
