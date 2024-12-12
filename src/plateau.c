@@ -448,8 +448,7 @@ void rotateCurrentPiece(plateau *plat, int direction) {
     if (canPlacePiece(plat, &tempPiece)) {
         /* Appliquer la rotation à la pièce actuelle si elle peut être placée */
         rotatePieceArray(&(plat->p_cur), direction);
-	/* Ajuste la position de la piéce*/
-	adjustPiecePosition(&tempPiece);
+
     }
 }
 
