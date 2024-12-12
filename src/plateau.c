@@ -446,6 +446,28 @@ void rotateCurrentPiece(plateau *plat, int direction) {
         /* Appliquer la rotation à la pièce actuelle si elle peut être placée */
         rotatePieceArray(&(plat->p_cur), direction);
     }
+    else if(direction){
+        movepiece(plat,'d');
+        if (canPlacePiece(plat,&tempPiece)){
+            supprPiece(plat);
+            rotatePieceArray(&(plat->p_cur), direction);
+        }
+        else{
+            supprPiece(plat);
+            movepiece(plat,'g');
+        }
+    }
+    else{
+        movepiece(plat,'g');
+        if (canPlacePiece(plat,&tempPiece)){
+            supprPiece(plat);
+            rotatePieceArray(&(plat->p_cur), direction);
+        }
+        else{
+            supprPiece(plat);
+            movepiece(plat,'d');
+        }
+    }
 }
 
 #endif /*_PLATEAU_C_*/

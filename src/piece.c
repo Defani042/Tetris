@@ -61,10 +61,10 @@ void setPieceLine(piece *p){
   p->b=255;
   p->a=255;
   /* aspect de la pièce */  
-  p->piece[0][3]=1;
-  p->piece[1][3]=1;
-  p->piece[2][3]=1;
-  p->piece[3][3]=1;
+  p->piece[0][2]=1;
+  p->piece[1][2]=1;
+  p->piece[2][2]=1;
+  p->piece[3][2]=1;
   /*position de la piece*/
   p->x= INITX;
   p->y= INITY+1;
@@ -86,10 +86,10 @@ void setPieceSquare(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[2][3]=2;
+  p->piece[1][1]=2;
+  p->piece[1][2]=2;
+  p->piece[2][1]=2;
   p->piece[2][2]=2;
-  p->piece[3][3]=2;
-  p->piece[3][2]=2;
   /*position de la piece*/
   p->x= INITX;
   p->y= INITY-1;
@@ -111,13 +111,13 @@ void setPieceT(piece *p){
   p->b=238;
   p->a=255;
   /* aspect de la pièce */
+  p->piece[1][2]=3;
+  p->piece[2][3]=3;
   p->piece[2][2]=3;
-  p->piece[3][3]=3;
-  p->piece[3][2]=3;
-  p->piece[3][1]=3;
+  p->piece[2][1]=3;
   /*position de la piece*/
   p->x= INITX;
-  p->y= INITY-1;
+  p->y= INITY;
   /*id de la piece*/
   p->id = 3;
 }
@@ -137,9 +137,9 @@ void setPieceZ(piece *p){
   p->a=255;
   /* aspect de la pièce */
   p->piece[1][2]=4;
+  p->piece[2][1]=4;
   p->piece[2][2]=4;
-  p->piece[2][3]=4;
-  p->piece[3][3]=4;
+  p->piece[3][1]=4;
   /*position de la piece*/
   p->x= INITX;
   p->y= INITY;
@@ -161,9 +161,9 @@ void setPieceZinv(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][3]=5;
+  p->piece[1][1]=5;
   p->piece[2][2]=5;
-  p->piece[2][3]=5;
+  p->piece[2][1]=5;
   p->piece[3][2]=5;
   /*position de la piece*/
   p->x= INITX;
@@ -186,10 +186,10 @@ void setPieceL(piece *p){
   p->b=0;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][2]=6;
+  p->piece[0][1]=6;
+  p->piece[1][1]=6;
+  p->piece[2][1]=6;
   p->piece[2][2]=6;
-  p->piece[3][3]=6;
-  p->piece[3][2]=6;
   /*position de la piece*/
   p->x= INITX;
   p->y= INITY;
@@ -211,10 +211,10 @@ void setPieceLinv(piece *p){
   p->b=255;
   p->a=255;
   /* aspect de la pièce */
-  p->piece[1][3]=7;
-  p->piece[2][3]=7;
-  p->piece[3][3]=7;
-  p->piece[3][2]=7;
+  p->piece[0][2]=7;
+  p->piece[1][2]=7;
+  p->piece[2][1]=7;
+  p->piece[2][2]=7;
   /*position de la piece*/
   p->x= INITX;
   p->y= INITY;
