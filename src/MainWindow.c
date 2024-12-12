@@ -13,10 +13,6 @@
 #include "gameWindow.h"
 #include "plateau.h"
 
-/*Macro*/
-#define LINE_MAX 32
-#define FONT_PATH "fich/04B_30__.TTF"
-
 /*
 R : permet de créer des carrés avec des bors arrondis
 E : coordonnées x et y de la case, longueur et largeur de la case, longueur de l'arrondi et couleur
@@ -291,11 +287,15 @@ S: vide
 void SetMainWindow(plateau *p){
 
     int x,y,i,width,height;
+    MLV_Image* background;
     height = MLV_get_desktop_height();  /*prend la hauteur de l'ecran*/
     width = MLV_get_desktop_width();    /*prends la largeur de l'ecran*/
     i=1;                                /*indice boucle while à vrai*/
     MLV_create_window("Tetris","Tetris-like",width,height);/*vréer le fenêtre*/
     MLV_enable_full_screen( );          /*met en plein écran*/;
+    background = MLV_load_image(PATH_IMAGE);
+    MLV_resize_image(background,width,height);
+    MLV_draw_image(background,0,0);
     createWindow();
     while(i){
         MLV_wait_mouse(&x,&y);
@@ -303,12 +303,14 @@ void SetMainWindow(plateau *p){
             /*prends les cordonées de la case pour lancer une game et lance si on clique*/
             setGameWindow(p,0);
             MLV_clear_window( MLV_COLOR_BLACK );
+            MLV_draw_image(background,0,0);
             createWindow();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
             /*prends les cordonées de la case pour charger une game et lance si on clique*/
             setSaveMenu(1,p);
             MLV_clear_window( MLV_COLOR_BLACK );
+            MLV_draw_image(background,0,0);
             createWindow();
         }
         /*if (x>(350*width/1000) && x<(650*width/1000) && y>(675*height/1000) && y<(750*height/1000)){

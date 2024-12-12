@@ -13,6 +13,7 @@
 /*Macro*/
 #define LINE_MAX 32
 #define FONT_PATH "fich/04B_30__.TTF"
+#define PATH_IMAGE "fich/background.jpeg"
 
 /* Fonctions */
 
