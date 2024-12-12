@@ -427,24 +427,29 @@ void movepiece(plateau *p, char c) {
            integratePiece(p); /* Intégration de la pièce déplacée */
         }
     }
+
 }
+
 
 /*
 R: Fait tourner la pièce actuelle du plateau dans la direction spécifiée
 E: 1 pointeur vers plateau et 1 entier pour la direction (1 pour horaire, -1 pour anti-horaire)
 S: vide
 */
+
 void rotateCurrentPiece(plateau *plat, int direction) {
     piece tempPiece;
     /* Copier la pièce actuelle dans une pièce temporaire */
     piececpy(&tempPiece, &(plat->p_cur));
     /* Tourner la pièce temporaire */
     rotatePieceArray(&tempPiece, direction);
-    
+  
     /* Vérifier si la pièce temporaire peut être placée sur le plateau */
     if (canPlacePiece(plat, &tempPiece)) {
         /* Appliquer la rotation à la pièce actuelle si elle peut être placée */
         rotatePieceArray(&(plat->p_cur), direction);
+	/* Ajuste la position de la piéce*/
+	adjustPiecePosition(&tempPiece);
     }
 }
 
