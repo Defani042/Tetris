@@ -31,10 +31,10 @@ void imput(plateau *p,int compteur){
         }
     } /*permet de bouger la piece vers la gauche quand on appuie sur q*/
  
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%2==0) ){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%4==0) ){
         rotateCurrentPiece(p, 1);
     } 
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%2==0) ){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%4==0) ){
       rotateCurrentPiece(p, -1);
     } 
     if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
@@ -186,13 +186,17 @@ void printTime(char* t,MLV_Font* font,plateau *p){
             t,         /*affiche le temps aux bonnes coordonnées*/
             font, MLV_COLOR_WHITE
         );
-    drawCarreAuxBordArrondis((w/20)*14, h/2-70,(w/20)*5,0,10,MLV_COLOR_BLACK);
+    drawCarreAuxBordArrondis((w/20)*14, h/2-80,(w/20)*5,(h/20*5),0,MLV_COLOR_BLACK);
     MLV_draw_text_with_font(
         (w/20)*16, h/2-75,
         score_txt,         /*affiche le score aux bonnes coordonnées*/
         font, MLV_COLOR_WHITE
     );
-
+        MLV_draw_text_with_font(
+        (w/20)*16, h/2-100,
+        "SCORE",        /*affiche SCORE aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
 }
 
 /*
