@@ -323,11 +323,15 @@ S: vide
 */
 
 void generateNewPiece(plateau *plat) {
-    /*la piece suivante devient p_cur*/
-    piececpy(&(plat->p_cur),&(plat->p_next));
-    /*nouvelle valuer pour p_next*/
-    piececpy(&(plat->p_next),&(plat->tpiece[SelectPiece()]));
-
+  int p_id;
+  /*la piece suivante devient p_cur*/
+  piececpy(&(plat->p_cur),&(plat->p_next));
+  p_id = plat->p_cur.id;
+  /*nouvelle valuer pour p_next qui n'est pas p_cur*/
+    do {
+        piececpy(&(plat->p_next), &(plat->tpiece[SelectPiece()]));
+    } while (p_id == plat->p_next.id);
+      
     if (!canPlacePiece(plat, &plat->p_cur)) {
       plat->gameover = 1; /* Si la nouvelle pièce ne peut pas être placée, le jeu est terminé */
     }
