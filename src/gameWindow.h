@@ -11,25 +11,28 @@
 #include "plateau.h"
 #include "MainWindow.h"
 #include "scoreboard.h"
+#include "MainWindow.h"
 
 /*macro*/
 #define SCORE_PRINT 32
 
-void imput(plateau *p,int compteur);
+void input(plateau *p,int compteur);
 
 void affichage_pixel(plateau *p,int t,int w,int h);
 
 int gameoverWindow(plateau *p,int id_fich);
 
-void createGameplay(plateau *p, int conteur_speed);
+void createGame(plateau *p, int conteur_speed);
+
+void afficherPlateau(plateau *p,int t,int w,int h);
 
 void printTime(char* t,MLV_Font* font,plateau *p);
 
-void createGameWindow(int w,int h);
+void createGameWindow(int w,int h,MLV_Image* background);
 
 void stopWindow(int w, int h);
 
-int setStopWindow(int w,int h,plateau *p);
+int setStopWindow(int w,int h,plateau *p,MLV_Image* background);
 
 void setGameWindow(plateau *p,int fich);
 

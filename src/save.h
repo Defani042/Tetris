@@ -8,6 +8,7 @@
 
 /*local lib*/
 #include "plateau.h"
+#include "MainWindow.h"
 
 /*Macro*/
 #define LINE_MAX 32

@@ -13,8 +13,11 @@
 /*Macro*/
 #define LINE_MAX 32
 #define FONT_PATH "fich/04B_30__.TTF"
+#define PATH_IMAGE "fich/background.jpeg"
 
 /* Fonctions */
+
+void drawCarreAuxBordArrondis(int x, int y, int width, int height, int radius, MLV_Color color);
 
 void printScore(char *filename,int w,int h);
 
@@ -24,7 +27,7 @@ void setButonStart(int w,int h);
 
 void setButonLoad(int w,int h);
 
-void setButonOption(int w,int h);
+/*void setButonOption(int w,int h);*/
 
 void setButonExit(int w,int h);
 

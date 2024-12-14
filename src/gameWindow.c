@@ -13,6 +13,7 @@
 #include "save.h"
 #include "plateau.h"
 #include "piece.h"
+#include "MainWindow.h"
 
 /*
 R : active les imput 
@@ -20,7 +21,7 @@ E : plateau
 S : rien
 */
 
-void imput(plateau *p,int compteur){
+void input(plateau *p,int compteur){
   int line_c = 0;
     if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%2==0) ){
         movepiece(p,'d');
@@ -31,10 +32,10 @@ void imput(plateau *p,int compteur){
         }
     } /*permet de bouger la piece vers la gauche quand on appuie sur q*/
  
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%2==0) ){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%4==0) ){
         rotateCurrentPiece(p, 1);
     } 
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%2==0) ){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%4==0) ){
       rotateCurrentPiece(p, -1);
     } 
     if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
@@ -59,14 +60,14 @@ void affichage_pixel(plateau *p,int t,int w,int h){
     for(k=2;k<LARGEUR_P-2;k++){
         for(j=2;j<LONGUEUR_P-2;j++){
             switch(p->plateau[j][k]){
-                case 0:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(10,10,10,255));break;
-		        case 1:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(43,255,255,255));break;
-                case 2:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,255,0,255));break;
-                case 3:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(238,130,238,255));break;
-                case 4:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,0,0,255));break;
-                case 5:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,255,0,255));break;
-                case 6:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(255,128,0,255));break;
-                case 7:MLV_draw_filled_rectangle((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,MLV_rgba(0,0,255,255));break;
+                case 0:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(10,10,10,255));break;
+		        case 1:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(43,255,255,255));break;
+                case 2:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(255,255,0,255));break;
+                case 3:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(238,130,238,255));break;
+                case 4:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(255,0,0,255));break;
+                case 5:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(0,255,0,255));break;
+                case 6:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(255,128,0,255));break;
+                case 7:drawCarreAuxBordArrondis((w/2)-(5*t)-4+(t+1)*(k-2),(h/2)-(11*t)+(t+1)*(j-2),t,t,5,MLV_rgba(0,0,255,255));break;
             }
             /*permet d'afficher les case aux bonnes couleurs*/ 
         }
@@ -131,7 +132,7 @@ S : rien
 */
 
 void createGame(plateau *p, int conteur_speed){
-    printf("%d %d\n",conteur_speed-(p->speed),(29-p->speed));
+   
     if ((conteur_speed)==(29-p->speed)){
         if (!descendPiece(p)){
 
@@ -139,6 +140,7 @@ void createGame(plateau *p, int conteur_speed){
 	  generateNewPiece(p);
         }
     }
+    
     /*DEBUG MODE*/
     printf("\033[H\033[J");
     printf("y p_cur: %d\n",p->p_cur.y);
@@ -146,6 +148,7 @@ void createGame(plateau *p, int conteur_speed){
     printf("gameover: %d\n",p->gameover);
     printf("score: %d\n",p->score);
     printf("speed: %d\n",p->speed);
+    printf("%d %d\n",conteur_speed-(p->speed),(29-p->speed));
     printPlateau(p);
     printf("\n");
 }
@@ -161,10 +164,10 @@ void afficherPlateau(plateau *p,int t,int w,int h){
     for(k=0;k<ROW;k++){
         for(j=0;j<COLUMN;j++){
             if (p->p_next.piece[j][k]>0){
-                MLV_draw_filled_rectangle((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,MLV_rgba(p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a));
+                drawCarreAuxBordArrondis((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,10,MLV_rgba(p->p_next.r,p->p_next.g,p->p_next.b,p->p_next.a));
             }
             else {
-                MLV_draw_filled_rectangle((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,MLV_rgba(10,10,10,255));
+                drawCarreAuxBordArrondis((w/20)*13+(t+1)*k,(h/20)*2+(t+1)*j,t,t,10,MLV_rgba(10,10,10,255));
             }
         }
     }
@@ -179,20 +182,27 @@ void printTime(char* t,MLV_Font* font,plateau *p){
     char score_txt[SCORE_PRINT];
     int h = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     int w = MLV_get_desktop_width();
+    
     sprintf(score_txt,"%d",p->score);
-    MLV_draw_filled_rectangle((w/20)*2, h/3+120,(w/20)*2,25,MLV_COLOR_BLACK);
+    drawCarreAuxBordArrondis((w/20)*2-7, h/3+120,140,25,10,MLV_COLOR_BLACK);
         MLV_draw_text_with_font(
             (w/20)*2, h/3+125,
             t,         /*affiche le temps aux bonnes coordonnées*/
             font, MLV_COLOR_WHITE
         );
-    MLV_draw_filled_rectangle((w/20)*16, h/2-80,(w/20)*2,25,MLV_COLOR_BLACK);
+        
+    drawCarreAuxBordArrondis((w/20)*16-15, h/2-100,120,50,10,MLV_COLOR_BLACK);
+    
     MLV_draw_text_with_font(
         (w/20)*16, h/2-75,
         score_txt,         /*affiche le score aux bonnes coordonnées*/
         font, MLV_COLOR_WHITE
     );
-
+        MLV_draw_text_with_font(
+        (w/20)*16, h/2-100,
+        "SCORE",        /*affiche SCORE aux bonnes coordonnées*/
+        font, MLV_COLOR_WHITE
+    );
 }
 
 /*
@@ -201,7 +211,7 @@ E: taille de l'ecran
 S: rien
 */
 
-void createGameWindow(int w,int h){
+void createGameWindow(int w,int h,MLV_Image* background){
     int t;
     MLV_Font* font=NULL;
     if(MLV_path_exists( FONT_PATH)){
@@ -209,14 +219,15 @@ void createGameWindow(int w,int h){
     }
     t=h/24;
     MLV_clear_window( MLV_COLOR_BLACK );
-    MLV_draw_rectangle((w/2)-(5*t)-5,(h/2)-(11*t)-1,t*10+11,t*22+23,MLV_COLOR_WHITE); /*contour grille*/
-    MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5,t*4+5,MLV_COLOR_BLUE);                 /*contour prochaine pièce*/
-    MLV_draw_filled_rectangle(w/10,h/10,100,30,MLV_COLOR_BLUE);          /*carré pause*/ 
-    MLV_draw_filled_rectangle(w/10,h/10+40,90,30,MLV_COLOR_BLUE);          /*carré droite*/
-    MLV_draw_filled_rectangle(w/10,h/10+80,80,30,MLV_COLOR_BLUE);          /*carré gauche*/
-    MLV_draw_filled_rectangle(w/10,h/10+120,80,30,MLV_COLOR_BLUE);          /*carré bas*/
-    MLV_draw_filled_rectangle(w/10,h/10+160,185,30,MLV_COLOR_BLUE);          /*carré rota h*/
-    MLV_draw_filled_rectangle(w/10,h/10+200,175,30,MLV_COLOR_BLUE);          /*carré rota ah*/                  
+    MLV_draw_image(background,0,0);
+    MLV_draw_rectangle((w/2)-(5*t)-5,(h/2)-(11*t)-1,t*10+11+1,t*22+23+1,MLV_COLOR_WHITE); /*contour grille*/
+    MLV_draw_rectangle((w/20)*13-1,(h/20)*2-1,t*4+5+1,t*4+5+1,MLV_COLOR_BLUE);                 /*contour prochaine pièce*/
+    drawCarreAuxBordArrondis(w/10,h/10,100,30,10,MLV_COLOR_BLUE);          /*carré pause*/ 
+    drawCarreAuxBordArrondis(w/10,h/10+40,90,30,10,MLV_COLOR_BLUE);          /*carré droite*/
+    drawCarreAuxBordArrondis(w/10,h/10+80,80,30,10,MLV_COLOR_BLUE);          /*carré gauche*/
+    drawCarreAuxBordArrondis(w/10,h/10+120,80,30,10,MLV_COLOR_BLUE);          /*carré bas*/
+    drawCarreAuxBordArrondis(w/10,h/10+160,185,30,10,MLV_COLOR_BLUE);          /*carré rota h*/
+    drawCarreAuxBordArrondis(w/10,h/10+200,175,30,10,MLV_COLOR_BLUE);          /*carré rota ah*/                  
     MLV_draw_text_with_font(
         (w/10)+5, h/10 +5,
         "PAUSE           ESC", /*affiche PAUSE et ESC aux bonnes coordonnées*/
@@ -257,6 +268,7 @@ void createGameWindow(int w,int h){
         "TIME",         /*affiche TIME aux bonnes coordonnées*/
         font, MLV_COLOR_WHITE
     );
+    MLV_draw_rectangle((w/20)*16-15, h/2-100,120,50,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         (w/20)*16, h/2-100,
         "SCORE",        /*affiche SCORE aux bonnes coordonnées*/
@@ -277,9 +289,9 @@ void stopWindow(int w, int h){
     }
     MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLACK);     /*carré pause*/
     MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLUE);             /*contour pause*/
-    MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10,w/5,50,MLV_COLOR_BLUE);     /*carré RESUME*/
-    MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10+130,w/5,50,MLV_COLOR_BLUE); /*carré SAVE */
-    MLV_draw_filled_rectangle(w/2-w/10,h/2-h/10+260,w/5,50,MLV_COLOR_RED);  /*carré LEAVE*/
+    drawCarreAuxBordArrondis(w/2-w/10,h/2-h/10,w/5,50,10,MLV_COLOR_BLUE);     /*carré RESUME*/
+    drawCarreAuxBordArrondis(w/2-w/10,h/2-h/10+130,w/5,50,10,MLV_COLOR_BLUE); /*carré SAVE */
+    drawCarreAuxBordArrondis(w/2-w/10,h/2-h/10+260,w/5,50,10,MLV_COLOR_RED);  /*carré LEAVE*/
     MLV_draw_text_with_font(
         (w/2)-70, h/2-h/4,
         "PAUSE",    /*affiche PAUSE aux bonnes coordonnées*/
@@ -310,7 +322,7 @@ E: taille de l'écran et le plateau
 S: rien
 */
 
-int setStopWindow(int w,int h,plateau* p){
+int setStopWindow(int w,int h,plateau* p,MLV_Image* background){
     int x,y,i=1,j=1; /*initialise i et j à vrai*/
     MLV_Font* font=NULL;
     if(MLV_path_exists( FONT_PATH)){
@@ -325,17 +337,18 @@ int setStopWindow(int w,int h,plateau* p){
         if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/2-h/10+130) && y<(h/2-h/10+50+130)){
             setSaveMenu(2,p);
             MLV_clear_window(MLV_COLOR_BLACK);
+            MLV_draw_image(background,0,0);
             stopWindow(w,h);
             /*si on clique sur SAVE alors ouvre le menu de sauvegarde */
 
         }
         if (x>(w/2-w/10) && x<(w/2-w/10+w/5) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
             /*si on clique sur EXIT alors ouvre le menu de confirmation pour quitter */
-            MLV_draw_filled_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLACK); /*carré exit*/
+            drawCarreAuxBordArrondis(w/5,h/5,(w/5)*3,(h/10)*7,10,MLV_COLOR_BLACK); /*carré exit*/
             MLV_draw_rectangle(w/5,h/5,(w/5)*3,(h/10)*7,MLV_COLOR_BLUE);         /*contour exit*/
-            MLV_draw_filled_rectangle(w/5+(w/25)*3,h/2-h/10+260,(w/25)*3,50,MLV_COLOR_RED);
+            drawCarreAuxBordArrondis(w/5+(w/25)*3,h/2-h/10+260,(w/25)*3,50,10,MLV_COLOR_RED);
             /*carré yes*/
-            MLV_draw_filled_rectangle(w/5+(w/25)*9,h/2-h/10+260,(w/25)*3,50,MLV_COLOR_BLUE);
+            drawCarreAuxBordArrondis(w/5+(w/25)*9,h/2-h/10+260,(w/25)*3,50,10,MLV_COLOR_BLUE);
             /*carré no*/
 
             MLV_draw_text_with_font(
@@ -364,7 +377,8 @@ int setStopWindow(int w,int h,plateau* p){
             while (j){
                 MLV_wait_mouse(&x,&y);
                 if (x>(w/5+(w/25)*3) && x<(w/5+(w/25)*6) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
-                        srand(time(NULL));return 0;
+                        srand(time(NULL));
+                        return 0;
                         /*si on clique sur yes, alors reviens au menu proncipale ou à la save*/
                 }
                 if (x>(w/5+(w/25)*9) && x<(w/5+(w/25)*12) && y>(h/2-h/10+260) && y<(h/2-h/10+50+310)){
@@ -388,11 +402,12 @@ S: rien
 
 void setGameWindow(plateau *p,int fich){
     int i,width,height,t,hours,minutes,seconds,conteur_speed;
+    MLV_Image* background;
     struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
     char text[32];
     int temps,temps_pause,temps_save,temps_saved;
-
+    
     temps_save=0;             /*variable met le temps actuel dans p->temps_jeu pour la savegarde*/
     temps_pause=0;            /*variable qui prends le temps en pause*/
     temps_saved=p->temps_jeu; /*variable qui prends le temps de la save*/
@@ -408,8 +423,13 @@ void setGameWindow(plateau *p,int fich){
     srand(time(NULL));
     height = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     width = MLV_get_desktop_width();
+
+    /*partie image*/
+    background = MLV_load_image(PATH_IMAGE);
+    MLV_resize_image(background,width,height);
+    
     t=height/24;                             /*taille des carré de Tetris par rapport à la hauteur de l'écran*/
-    createGameWindow(width,height);
+    createGameWindow(width,height,background);
     MLV_actualise_window();
     increaseSpeed(p);
     clock_gettime(CLOCK_REALTIME, &debut_jeu);
@@ -423,17 +443,16 @@ void setGameWindow(plateau *p,int fich){
             clock_gettime(CLOCK_REALTIME, &tmp_pause_deb);
             /*si on appuie sur echap, alors on ouvre le menu pause*/
             p->temps_jeu=temps_save;
-            i=setStopWindow(width,height,p);
+            i=setStopWindow(width,height,p,background);
             MLV_clear_window(MLV_COLOR_BLACK);
-            createGameWindow(width,height);
+            createGameWindow(width,height,background);
             clock_gettime(CLOCK_REALTIME, &tmp_pause_fin);
             temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
 
         /*partie jeu*/
         createGame(p,conteur_speed);
-
-        imput(p,conteur_speed);
+        input(p,conteur_speed);
 
         /*partie affichage*/
         affichage_pixel(p,t,width,height);
@@ -443,7 +462,9 @@ void setGameWindow(plateau *p,int fich){
 
         /*partie par rapport au temps*/
         clock_gettime(CLOCK_REALTIME, &mid_jeu);
+        
         temps = (((mid_jeu.tv_sec*1000)+(mid_jeu.tv_nsec/1000000))-((debut_jeu.tv_sec*1000)+(debut_jeu.tv_nsec/1000000)));
+        
         temps -=temps_pause;
         temps =temps+temps_saved;
         temps_save=temps;

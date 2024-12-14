@@ -1,4 +1,9 @@
 # Ignorer le dossier build
 # ce dossier contient tous les fichier .o
 build/
+<<<<<<< HEAD
 fich/
+=======
+fich/*.txt
+
+>>>>>>> 064415d541b90717a9ead8ea7700dddfc8cb7f79

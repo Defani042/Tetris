@@ -13,10 +13,32 @@
 #include "gameWindow.h"
 #include "plateau.h"
 
-/*Macro*/
-#define LINE_MAX 32
-#define FONT_PATH "fich/04B_30__.TTF"
+/*
+R : permet de créer des carrés avec des bors arrondis
+E : coordonnées x et y de la case, longueur et largeur de la case, longueur de l'arrondi et couleur
+S : rien
+*/
 
+void drawCarreAuxBordArrondis(int x, int y, int width, int height, int radius, MLV_Color color) {
+    /*Dessiner les quatre bords arrondis*/
+    MLV_draw_filled_circle(x + radius, y + radius, radius, color);/*bord sup gauche*/
+    MLV_draw_filled_circle(x + width - radius, y + radius, radius, color);/*bord sup droit*/
+    MLV_draw_filled_circle(x + radius, y + height - radius, radius, color);/*bord inf gauche*/
+    MLV_draw_filled_circle(x + width - radius, y + height - radius, radius, color);/*bord inf droit */
+
+    /*Dessiner les rectangles reliant les coins arrondis*/
+    /*rectangle haut*/
+    MLV_draw_filled_rectangle(x + radius, y, width - 2 * radius, radius, color);
+    /*rectangle bas*/
+    MLV_draw_filled_rectangle(x + radius, y + height - radius, width - 2 * radius, radius + 1, color);
+    /*rectangle gauche*/
+    MLV_draw_filled_rectangle(x, y + radius, radius, height - 2 * radius, color);
+    /*rectangle droit*/
+    MLV_draw_filled_rectangle(x + width - radius, y + radius, radius + 1, height - 2 * radius, color);
+
+    /*Dessiner le rectangle central*/
+    MLV_draw_filled_rectangle(x + radius, y + radius,width - 2 * radius,  + height - 2 * radius, color);
+}
 
 /* 
 R: Permet de creer le logo
@@ -137,7 +159,7 @@ void setButonStart(int w,int h){
     if(MLV_path_exists(FONT_PATH)){
         font = MLV_load_font( FONT_PATH , p );
     }
-    MLV_draw_filled_rectangle(w1,h1,w3,h3,MLV_COLOR_BLUE);
+    drawCarreAuxBordArrondis(w1,h1,w3,h3,20,MLV_COLOR_BLUE);
     MLV_draw_text_with_font(
         w2, h2,
         "START NEW GAME", 
@@ -163,7 +185,7 @@ void setButonLoad(int w,int h){
     if(MLV_path_exists(FONT_PATH)){
         font = MLV_load_font(FONT_PATH , p );
     }
-     MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_rgba(0,0,255,255));
+     drawCarreAuxBordArrondis(w1,h1,w2,h2,20,MLV_rgba(0,0,255,255));
      MLV_draw_text_with_font(
         w3, h3,
         "LOAD A GAME",  /*affiche LOAD A GAME aux bonnes coordonnées*/
@@ -176,10 +198,10 @@ R: Permet de creer le bouton load
 E: longueur ecran,hauteur ecran
 S: Vide
 */
-void setButonOption(int w,int h){
+/*void setButonOption(int w,int h){
     int w1,w2,w3,h1,h2,h3,p;
     MLV_Font* font=NULL;
-    w1=(350*w)/1000;    /*prends toutes les coordonnées h pour hauteur, w pour largeur et p pour police*/
+    w1=(350*w)/1000;    prends toutes les coordonnées h pour hauteur, w pour largeur et p pour police
     w2=(300*w)/1000;
     w3=(430*w)/1000;
     h1=(675*h)/1000;
@@ -189,13 +211,13 @@ void setButonOption(int w,int h){
     if(MLV_path_exists(FONT_PATH)){
         font = MLV_load_font( FONT_PATH , p );
     }
-    MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_BLUE);
+    drawCarreAuxBordArrondis(w1,h1,w2,h2,20,MLV_rgba(0,0,255,255));
     MLV_draw_text_with_font(
         w3,h3,
-        "OPTION",   /*affiche OPTION aux bonnes coordonnées*/
+        "OPTION",   affiche OPTION aux bonnes coordonnées
         font, MLV_COLOR_WHITE
     );
-}
+}*/
 
 /* 
 R: Permet de creer le bouton exit
@@ -215,7 +237,7 @@ void setButonExit(int w,int h){
     if(MLV_path_exists(FONT_PATH)){
         font = MLV_load_font(FONT_PATH , p );
     }
-    MLV_draw_filled_rectangle(w1,h1,w2,h2,MLV_COLOR_RED);
+    drawCarreAuxBordArrondis(w1,h1,w2,h2,20,MLV_rgba(255,0,0,255));
     MLV_draw_text_with_font(
         w3, h3,
         "EXIT",     /*affiche exit aux bonnes coordonnées*/
@@ -252,7 +274,7 @@ void createWindow(){
     printScore("fich/scoreboard.txt",width,height);
     setButonStart(width,height);
     setButonLoad(width,height);
-    setButonOption(width,height);
+    /*setButonOption(width,height);*/
     setButonExit(width,height);
     MLV_actualise_window();
 }
@@ -265,11 +287,15 @@ S: vide
 void SetMainWindow(plateau *p){
 
     int x,y,i,width,height;
+    MLV_Image* background;
     height = MLV_get_desktop_height();  /*prend la hauteur de l'ecran*/
     width = MLV_get_desktop_width();    /*prends la largeur de l'ecran*/
     i=1;                                /*indice boucle while à vrai*/
     MLV_create_window("Tetris","Tetris-like",width,height);/*vréer le fenêtre*/
     MLV_enable_full_screen( );          /*met en plein écran*/;
+    background = MLV_load_image(PATH_IMAGE);
+    MLV_resize_image(background,width,height);
+    MLV_draw_image(background,0,0);
     createWindow();
     while(i){
         MLV_wait_mouse(&x,&y);
@@ -277,18 +303,20 @@ void SetMainWindow(plateau *p){
             /*prends les cordonées de la case pour lancer une game et lance si on clique*/
             setGameWindow(p,0);
             MLV_clear_window( MLV_COLOR_BLACK );
+            MLV_draw_image(background,0,0);
             createWindow();
         }
         if (x>(350*width/1000) && x<(650*width/1000) && y>(550*height/1000) && y<(625*height/1000)){
             /*prends les cordonées de la case pour charger une game et lance si on clique*/
             setSaveMenu(1,p);
             MLV_clear_window( MLV_COLOR_BLACK );
+            MLV_draw_image(background,0,0);
             createWindow();
         }
-        if (x>(350*width/1000) && x<(650*width/1000) && y>(675*height/1000) && y<(750*height/1000)){
-            /*prends les cordonné de case option et lance si on clique*/
+        /*if (x>(350*width/1000) && x<(650*width/1000) && y>(675*height/1000) && y<(750*height/1000)){
+            prends les cordonné de case option et lance si on clique
             option();
-        }
+        }*/
         if (x>(350*width/1000) && x<(650*width/1000) && y>(800*height/1000) && y<(875*height/1000)){
             i=0; /*prends les cordonné de case exit et met i à faux si on clique*/
         }
