@@ -92,7 +92,7 @@ void setPieceSquare(piece *p){
   p->piece[2][2]=2;
   /*position de la piece*/
   p->x= INITX;
-  p->y= INITY-1;
+  p->y= INITY;
   /*id de la piece*/
   p->id = 2;
 }
@@ -192,7 +192,7 @@ void setPieceL(piece *p){
   p->piece[2][2]=6;
   /*position de la piece*/
   p->x= INITX;
-  p->y= INITY;
+  p->y= INITY+1;
   /*id de la piece*/
   p->id = 6;
 }
@@ -217,7 +217,7 @@ void setPieceLinv(piece *p){
   p->piece[2][2]=7;
   /*position de la piece*/
   p->x= INITX;
-  p->y= INITY;
+  p->y= INITY+1;
   /*id de la piece*/
   p->id = 7;
 }
