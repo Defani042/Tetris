@@ -443,46 +443,44 @@ S: vide
 
 void rotateCurrentPiece(plateau *plat, int direction) {
     piece tempPiece;
-    
+
     /* Copier la pièce actuelle dans une pièce temporaire */
     piececpy(&tempPiece, &(plat->p_cur));
-    
+
     /* Tourner la pièce temporaire */
+    rotatePieceArray(&tempPiece, direction);
 
     /* Vérifier si la pièce temporaire peut être placée sur le plateau */
     if (canPlacePiece(plat, &tempPiece)) {
         /* Appliquer la rotation à la pièce actuelle si elle peut être placée */
         rotatePieceArray(&(plat->p_cur), direction);
+    } else {
 
-
-    }
-    else {
-      
       /* Si la rotation initiale échoue, essayer de décaler la pièce */
       if (plat->p_cur.x<=2) { 
-	/* Si direction est vrai, essayer de décaler vers la droite */
-	plat->p_cur.x+=1;
-	piececpy(&tempPiece, &(plat->p_cur));
-            
-	if (canPlacePiece(plat, &tempPiece)) {
-	  rotatePieceArray(&(plat->p_cur), direction);
-	}
-	else{
-	  plat->p_cur.x-=1;
-	}
+    /* Si direction est vrai, essayer de décaler vers la droite */
+    plat->p_cur.x+=1;
+    piececpy(&tempPiece, &(plat->p_cur));
+
+    if (canPlacePiece(plat, &tempPiece)) {
+      rotatePieceArray(&(plat->p_cur), direction);
+    }
+    else{
+      plat->p_cur.x-=1;
+    }
       }
       else if(plat->p_cur.x>=9){ 
-	/* Sinon, essayer de décaler vers la gauche */
-	plat->p_cur.x-=1;
-	piececpy(&tempPiece, &(plat->p_cur));
-        
-	if (canPlacePiece(plat, &tempPiece)) {
-	    rotatePieceArray(&(plat->p_cur), direction);
-	  }
-	else{
-	  /* Restaurer la position initiale si la rotation échoue après décalage */
-	  plat->p_cur.x+=1;
-	}
+    /* Sinon, essayer de décaler vers la gauche */
+    plat->p_cur.x-=1;
+    piececpy(&tempPiece, &(plat->p_cur));
+
+    if (canPlacePiece(plat, &tempPiece)) {
+        rotatePieceArray(&(plat->p_cur), direction);
+      }
+    else{
+      /* Restaurer la position initiale si la rotation échoue après décalage */
+      plat->p_cur.x+=1;
+    }
       }
     }
 }
