@@ -23,19 +23,19 @@ S : rien
 
 void input(plateau *p,int compteur){
   int line_c = 0;
-    if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%4==0) ){
+    if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%2==0) ){
         movepiece(p,'d');
     }/*permet de bouger la piece vers la droite quand on appuie sur d*/
     else{
-        if( (MLV_get_keyboard_state( MLV_KEYBOARD_q ) == MLV_PRESSED) && (compteur%4==0)){
+        if( (MLV_get_keyboard_state( MLV_KEYBOARD_q ) == MLV_PRESSED) && (compteur%2==0)){
             movepiece(p,'g');
         }
     } /*permet de bouger la piece vers la gauche quand on appuie sur q*/
  
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%2==0) ){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%4==0) ){
         rotateCurrentPiece(p, 1);
     } 
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%2==0) ){
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%4==0) ){
       rotateCurrentPiece(p, -1);
     } 
     if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
