@@ -31,4 +31,31 @@ Toutes forment de distribution illégale à des fins monétaire est strictement 
 
 ## GITIGNORE
 
-Le fichier '.gitignore' permet d'ignorer les modifications effectuées sur le dossier '/build' ou sont stocker les fichiers objet du projet. Il ne faut donc pas mettre de fichier important dans ce répertoire.
+Le fichier .gitignore permet d'ignorer les modifications effectuées sur le dossier '/build' ou sont stocker les fichiers objet du projet. Il ne faut donc pas mettre de fichier important dans ce répertoire.
+
+## COMPILATION
+
+1) clonner le projet utiliser:
+     ```bash
+     git clone https://github.com/Defani042/Tetris
+
+2) Netoyage du projet
+   ```bash
+   male clean
+
+3) compilation du projet
+   ```bash
+   make
+
+4)lancement de l'executable
+   ```bash
+   .\Tetris
+
+ ## PORTABILITE
+
+le projet est stable sur les systeêmes d'exploitations suivant:
+   - ubuntu
+   - debian
+
+   
+     

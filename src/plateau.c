@@ -443,7 +443,7 @@ S: vide
 
 void rotateCurrentPiece(plateau *plat, int direction) {
     piece tempPiece;
-
+    int dec = 1;
     /* Copier la pièce actuelle dans une pièce temporaire */
     piececpy(&tempPiece, &(plat->p_cur));
 
@@ -455,23 +455,31 @@ void rotateCurrentPiece(plateau *plat, int direction) {
         /* Appliquer la rotation à la pièce actuelle si elle peut être placée */
         rotatePieceArray(&(plat->p_cur), direction);
     } else {
-
+      /*calcul du décalage pour tourner la piece*/
+      /*si la piece est la barre dec = 2*/
+      /*tentative de patch bug*/
+      /*
+      if(plat->p_cur.id == 1){
+	dec = 2;
+      }
+      */
+      
       /* Si la rotation initiale échoue, essayer de décaler la pièce */
       if (plat->p_cur.x<=2) { 
     /* Si direction est vrai, essayer de décaler vers la droite */
-    plat->p_cur.x+=1;
+    plat->p_cur.x+=dec;
     piececpy(&tempPiece, &(plat->p_cur));
 
     if (canPlacePiece(plat, &tempPiece)) {
       rotatePieceArray(&(plat->p_cur), direction);
     }
     else{
-      plat->p_cur.x-=1;
+      plat->p_cur.x-=dec;
     }
       }
       else if(plat->p_cur.x>=9){ 
     /* Sinon, essayer de décaler vers la gauche */
-    plat->p_cur.x-=1;
+    plat->p_cur.x-=dec;
     piececpy(&tempPiece, &(plat->p_cur));
 
     if (canPlacePiece(plat, &tempPiece)) {
@@ -479,7 +487,7 @@ void rotateCurrentPiece(plateau *plat, int direction) {
       }
     else{
       /* Restaurer la position initiale si la rotation échoue après décalage */
-      plat->p_cur.x+=1;
+      plat->p_cur.x+=dec;
     }
       }
     }
