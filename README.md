@@ -36,7 +36,7 @@ Toutes forment de distribution illégale à des fins monétaire est strictement 
 
 ## GITIGNORE
 
-Le fichier .gitignore permet d'ignorer les modifications effectuées sur le dossier '/build' ou sont stocker les fichiers objet du projet. Il ne faut donc pas mettre de fichier important dans ce répertoire.
+Le fichier .gitignore permet d'ignorer les modifications effectuées sur le dossier  **`build/`** et tous les fichier txt du dossier  **`fich/`** ou sont stocker les fichiers objet du projet. Il ne faut donc pas mettre de fichier important dans ce répertoire.
 
 ## COMPILATION
 
