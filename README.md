@@ -1,7 +1,7 @@
 # Tetris 
 
 ## Avant propos
-Le jeu tetris et son concept sont attribué à Alekseï Pajitnov, pour plus d'information consulter [le lien](https://fr.wikipedia.org/wiki/Tetris).
+Le jeu Tetris et son concept sont attribué à Alekseï Pajitnov, pour plus d'information consulter [le lien](https://fr.wikipedia.org/wiki/Tetris).
 
 ## Préambule
 Ce jeu a été réalisé dans un cadre universitaire en tant que projet de programmation impérative pour la seconde année de licence en informatique à l'université Jean Monnet. 
@@ -12,6 +12,11 @@ Les personnes ayant participé au projet sont :
 ## Prérequis
 Pour pouvoir exécuter le Makefile du projet, il vous faut installer la librairie MLV pour plus d'information veuillez consulter le site officiel de MLV et rendez vous dans la rubrique installation : [MLV_INSTALATION](http://www-igm.univ-mlv.fr/~boussica/mlv/api/French/html/installation.html)  
 
+## Répertoires Principaux
+
+   - **`src/`** : Contient le code source de l'application.
+   - **`fich/`** : Contient les fichiers de configuration et les scripts auxiliaires.
+   - **`build/`** : Contient les fichiers objets créer pendant la compilation du projet
 
 ## Module et structure du code
 
@@ -35,7 +40,7 @@ Le fichier .gitignore permet d'ignorer les modifications effectuées sur le doss
 
 ## COMPILATION
 
-   1) clonner le projet utiliser:
+   1) Cloner le projet utiliser:
       ```bash
       git clone https://github.com/Defani042/Tetris
 
@@ -43,19 +48,19 @@ Le fichier .gitignore permet d'ignorer les modifications effectuées sur le doss
       ```bash
       male clean
 
-   3) compilation du projet
+   3) Compilation du projet
       ```bash
       make
 
-   4) lancement de l'executable
+   4) Lancement de l'exécutable
       ```bash
       .\Tetris
 
  ## PORTABILITÉ
 
 Le projet est stable sur les systèmes d'exploitation suivants :
-   - ubuntu
-   - debian
-
+   - Ubuntu
+   - Debian
+   
    
      
