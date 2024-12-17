@@ -20,7 +20,7 @@ Pour pouvoir exécuter le Makefile du projet, il vous faut installer la librairi
 
 ## Module et structure du code
 
-le code est aagencer en différent module :
+le code est agencer en différent module :
 
    - **MainWindow**: gestion de la fentre de menu principal
    - **Plateau**: gestion et création du plateau de jeu
@@ -46,7 +46,7 @@ Le fichier .gitignore permet d'ignorer les modifications effectuées sur le doss
 
    2) Netoyage du projet
       ```bash
-      male clean
+      make clean
 
    3) Compilation du projet
       ```bash
