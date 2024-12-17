@@ -35,25 +35,25 @@ Le fichier .gitignore permet d'ignorer les modifications effectuées sur le doss
 
 ## COMPILATION
 
-1) clonner le projet utiliser:
-     ```bash
-     git clone https://github.com/Defani042/Tetris
+   1) clonner le projet utiliser:
+      ```bash
+      git clone https://github.com/Defani042/Tetris
 
-2) Netoyage du projet
-   ```bash
-   male clean
+   2) Netoyage du projet
+      ```bash
+      male clean
 
-3) compilation du projet
-   ```bash
-   make
+   3) compilation du projet
+      ```bash
+      make
 
-4)lancement de l'executable
-   ```bash
-   .\Tetris
+   4)lancement de l'executable
+      ```bash
+      .\Tetris
 
- ## PORTABILITE
+ ## PORTABILITÉ
 
-le projet est stable sur les systeêmes d'exploitations suivant:
+Le projet est stable sur les systèmes d'exploitation suivants :
    - ubuntu
    - debian
 
