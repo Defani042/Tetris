@@ -47,7 +47,7 @@ Le fichier .gitignore permet d'ignorer les modifications effectuées sur le doss
       ```bash
       make
 
-   4)lancement de l'executable
+   4) lancement de l'executable
       ```bash
       .\Tetris
 
