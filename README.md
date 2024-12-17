@@ -16,19 +16,19 @@ Pour pouvoir exécuter le Makefile du projet, il vous faut installer la librairi
 
    - **`src/`** : Contient le code source de l'application.
    - **`fich/`** : Contient les fichiers de configuration et les scripts auxiliaires.
-   - **`build/`** : Contient les fichiers objets créer pendant la compilation du projet
+   - **`build/`** : Contient les fichiers objets créer pendant la compilation du projet.
 
 ## Module et structure du code
 
 le code est aagencer en différent module :
 
-   - MainWindow: gestion de la fentre de menu principal
-   - Plateau: gestion et création du plateau de jeu
-   - Piece: gestion et création des piéce du jeu
-   - Main: le module principale
-   - Scoreboard: module pour gerer gestion de la savegarde du scoreboard
-   - Save: module de gestion des sauvegarde
-   - Gamewindow: module de gestion de la fenetre de jeux  
+   - **MainWindow**: gestion de la fentre de menu principal
+   - **Plateau**: gestion et création du plateau de jeu
+   - **Piece**: gestion et création des piéce du jeu
+   - **Main**: le module principale
+   - **Scoreboard**: module pour gerer gestion de la savegarde du scoreboard
+   - **Save**: module de gestion des sauvegarde
+   - **Gamewindow**: module de gestion de la fenetre de jeux  
 
 ## Condition d'utilisation
 
