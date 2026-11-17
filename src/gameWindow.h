@@ -16,7 +16,7 @@
 /*macro*/
 #define SCORE_PRINT 32
 
-void input(plateau *p,int compteur);
+void input(plateau *p,int compteur, int* rotation, int* a, int *e);
 
 void affichage_pixel(plateau *p,int t,int w,int h);
 

@@ -21,8 +21,8 @@ E : plateau
 S : rien
 */
 
-void input(plateau *p,int compteur){
-  int line_c = 0;
+void input(plateau *p,int compteur, int* rotation, int* a, int *e){
+    int line_c = 0;
     if( (MLV_get_keyboard_state( MLV_KEYBOARD_d ) == MLV_PRESSED) && (compteur%2==0) ){
         movepiece(p,'d');
     }/*permet de bouger la piece vers la droite quand on appuie sur d*/
@@ -32,11 +32,19 @@ void input(plateau *p,int compteur){
         }
     } /*permet de bouger la piece vers la gauche quand on appuie sur q*/
  
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && (compteur%4==0) ){
-        rotateCurrentPiece(p, 1);
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_PRESSED && *a == 1){
+        *rotation = 1;
+        *a = 0;
     } 
-    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && (compteur%4==0) ){
-      rotateCurrentPiece(p, -1);
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_PRESSED && *e == 1){
+        *rotation = -1;
+        *e = 0;
+    } 
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_a ) == MLV_RELEASED){
+        *a = 1;
+    } 
+    if( MLV_get_keyboard_state( MLV_KEYBOARD_e ) == MLV_RELEASED ){
+        *e = 1;
     } 
     if( MLV_get_keyboard_state( MLV_KEYBOARD_s ) == MLV_PRESSED ){
         if (!descendPiece(p)){
@@ -402,6 +410,9 @@ S: rien
 
 void setGameWindow(plateau *p,int fich){
     int i,width,height,t,hours,minutes,seconds,conteur_speed;
+    int rotation;
+    int a_pressed = 1;
+    int e_pressed = 1;
     MLV_Image* background;
     struct timespec debut, fin,debut_jeu,mid_jeu,tmp_pause_deb,tmp_pause_fin;
     MLV_Font* font=NULL;
@@ -411,6 +422,7 @@ void setGameWindow(plateau *p,int fich){
     temps_save=0;             /*variable met le temps actuel dans p->temps_jeu pour la savegarde*/
     temps_pause=0;            /*variable qui prends le temps en pause*/
     temps_saved=p->temps_jeu; /*variable qui prends le temps de la save*/
+    
     if(fich==0){
         setPlateau(p);
         temps_saved=0;
@@ -420,6 +432,7 @@ void setGameWindow(plateau *p,int fich){
     }
     i=1;
     conteur_speed=0;
+    rotation = 0;
     srand(time(NULL));
     height = MLV_get_desktop_height();  /*recupere la taille de l'ecran*/
     width = MLV_get_desktop_width();
@@ -450,9 +463,15 @@ void setGameWindow(plateau *p,int fich){
             temps_pause+=(((tmp_pause_fin.tv_sec*1000)+(tmp_pause_fin.tv_nsec/1000000))-((tmp_pause_deb.tv_sec*1000)+(tmp_pause_deb.tv_nsec/1000000)));
         }
 
+
         /*partie jeu*/
         createGame(p,conteur_speed);
-        input(p,conteur_speed);
+        input(p,conteur_speed,&rotation, &a_pressed, &e_pressed);
+
+        if(rotation != 0){
+            rotateCurrentPiece(p, rotation);
+            rotation = 0;
+        }
 
         /*partie affichage*/
         affichage_pixel(p,t,width,height);
