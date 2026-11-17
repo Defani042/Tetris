@@ -61,6 +61,7 @@ Le fichier .gitignore permet d'ignorer les modifications effectuées sur le doss
 Le projet est stable sur les systèmes d'exploitation suivants :
    - Ubuntu
    - Debian
+   - Arch Linux
    
    
      
